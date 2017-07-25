@@ -18,6 +18,8 @@ export default class Signup1 extends Component{
   _validateButtonPress = () => {
     console.log(this.state.license);
     console.log(this.state.email);
+
+    this.props.navigation.navigate('Signup2');
   }
 
   render(){
@@ -25,12 +27,17 @@ export default class Signup1 extends Component{
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
         <Text style={styles.label}>License Key:</Text>
         <TextInput style={styles.input} placeholder="License Key"
+          onSubmitEditing={(event) => {
+            this.refs.SecondInput.focus();
+          }}
           onChangeText={(text) => this.setState({license: text})}
+          returnKeyType = {"next"}
           value = {this.state.license}>
         </TextInput>
 
         <Text style={styles.label}>Email:</Text>
         <TextInput style={styles.input} placeholder="Email"
+          ref = 'SecondInput'
           onChangeText={(text) => this.setState({email: text})}
           value = {this.state.email}>
         </TextInput>

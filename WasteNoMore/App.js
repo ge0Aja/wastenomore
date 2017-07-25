@@ -5,32 +5,26 @@ import { StackNavigator } from 'react-navigation';
 import  MainComponent from './app/components/MainComponent';
 import Signup1 from './app/components/signup/Signup1';
 import Signup2 from './app/components/signup/Signup2';
+import ManagerHome from './app/components/companyManager/MainComponentManager';
 
-const WasteNoMoreNav = StackNavigator({
-  Home: { screen: MainComponent },
+const WasteNoMoreNavUser = StackNavigator({
+  Home: { screen: MainComponent }, //this should be the sign in page
   Signup: { screen: Signup1 },
   Signup2: { screen: Signup2 },
+  ManagerMain: {screen: ManagerHome}
+},
+{
+   initialRouteName: 'Home'
 });
 
-const AppNavigation = () => (
-  <WasteNoMoreNav  />
+const AppNavigationUser = () => (
+  <WasteNoMoreNavUser  />
 );
 
 export default class app extends Component {
   render() {
     return (
-        <AppNavigation />
+        <AppNavigationUser />
     );
   }
 }
-
-
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
