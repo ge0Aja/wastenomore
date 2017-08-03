@@ -29,13 +29,11 @@ export default class Signup1 extends Component{
 
   if(! this.state.license) return;
 
-
-
   fetch('http://192.168.137.43:8000/api/license_authentication', {
      method: 'POST',
      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
      body: JSON.stringify({
-       "license": 'b8ce1afd883f59422ad672bd42cdabb8',//this.state.license,
+       "license": '4ed4286ac0c5379f66fc75bebf60cca7',//this.state.license,
        "timestamp": Date.now(),
      })
    })
@@ -43,8 +41,6 @@ export default class Signup1 extends Component{
    .then((responseData) => {
      console.log(responseData);
      if(responseData.status == "granted"){
-     //this.saveItem('license', responseData.license),
-     //this.saveItem('expiry', responseData.expiry),
      this.saveItem('role', responseData.role),
      this.saveItem('challange', responseData.random),
      this.props.navigation.navigate('Signup2');
