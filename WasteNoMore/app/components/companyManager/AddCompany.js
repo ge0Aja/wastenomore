@@ -26,12 +26,6 @@ export default class AddCompany extends Component{
     this.fetchDataCompanyTypes();
     }
 
-
-    getNewToken(){
-
-    }
-
-
     fetchDataCompanyTypes(){
 
       fetch('http://192.168.137.43:8000/api/getCompanyTypesApi', {
