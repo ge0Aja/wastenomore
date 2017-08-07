@@ -8,7 +8,7 @@ import Signup2 from './app/components/signup/Signup2';
 import ManagerHome from './app/components/companyManager/MainComponentManager';
 import AddCompany from './app/components/companyManager/AddCompany';
 import CompanyAttribs from './app/components/companyManager/CompanyAttributes';
-
+import AddBranch from './app/components/companyManager/AddBranch';
 
 const WasteNoMoreNavUser = StackNavigator({
   Home: { screen: MainComponent }, //this should be the sign in page
@@ -16,7 +16,8 @@ const WasteNoMoreNavUser = StackNavigator({
   Signup2: { screen: Signup2 },
   ManagerMain: {screen: ManagerHome},
   AddCompany: {screen: AddCompany},
-  CompanyAttribs: {screen: CompanyAttribs}
+  CompanyAttribs: {screen: CompanyAttribs},
+  AddBranch: {screen: AddBranch}
 },
 {
    initialRouteName: 'Home'

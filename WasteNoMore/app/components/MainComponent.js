@@ -13,9 +13,10 @@ export default class MainComponent extends Component {
     //const { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
-        <Button style={styles.btn} title="Sign Up!" color="#841584" onPress={() => this.props.navigation.navigate('Signup')}></Button>
-        <Button style={styles.btn} title="Add Company" color="#841584" onPress={() => this.props.navigation.navigate('AddCompany')}></Button>
-        <Button style={styles.btn} title="Company Attribs" color="#841584" onPress={() => this.props.navigation.navigate('CompanyAttribs')}></Button>
+        <View style={styles.btn}><Button  title="Sign Up!" color="#841584" onPress={() => this.props.navigation.navigate('Signup')}></Button></View>
+        <View style={styles.btn}><Button  title="Add Company" color="#841584" onPress={() => this.props.navigation.navigate('AddCompany')}></Button></View>
+        <View style={styles.btn}><Button  title="Company Attribs" color="#841584" onPress={() => this.props.navigation.navigate('CompanyAttribs')}></Button></View>
+        <View style={styles.btn}><Button  title="Add Branch" color="#841584" onPress={() => this.props.navigation.navigate('AddBranch')}></Button></View>
       </View>
     );
   }
@@ -28,7 +29,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+     padding: 12
   }, btn:{
-    margin:10
+    //margin:20
+      padding:20
   }
 });
