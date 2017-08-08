@@ -28,6 +28,7 @@ export default class AddCompany extends Component{
 
     fetchDataCompanyTypes(){
 
+        //var TOKEN = await AsyncStorage.getItem('token');
       fetch('http://192.168.137.43:8000/api/getCompanyTypesApi', {
         headers: {
           'Accept': 'application/json',
@@ -79,6 +80,7 @@ export default class AddCompany extends Component{
   }
 
   _validateSubmitPress = () => {
+      //var TOKEN = await AsyncStorage.getItem('token');
       fetch('http://192.168.137.43:8000/api/newCompanyRecord',{
         method: 'POST',
         headers: {
