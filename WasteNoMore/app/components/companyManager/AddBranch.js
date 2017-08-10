@@ -111,6 +111,15 @@ export default class AddBranch extends Component {
   };
 
   handelBranchAdd = () => {
+
+    if(this.state.branchStaffCount == '') return alert('Please Insert Staff Count');
+
+    if(this.state.branchOpeningDate == '') return alert('Please Choose An Opening Date');
+
+    if(this.state.branchLocation == '' || this.state.branchLocationEdit == '0') return alert('Please Choose A Location');
+
+    if(this.state.branchAddress == '') return alert('Please Insert Address');
+
         //var TOKEN = await AsyncStorage.getItem('token');
     fetch('http://192.168.137.43:8000/api/newCompanyBranch',{
       method: 'POST',
@@ -146,6 +155,14 @@ export default class AddBranch extends Component {
   }
 
   handelBranchEdit = () => {
+
+    if(this.state.branchStaffCountEdit == '') return alert('Please Insert Staff Count');
+
+    if(this.state.branchOpeningDateEdit == '') return alert('Please Choose An Opening Date');
+
+    if(this.state.branchLocationEdit == '' || this.state.branchLocationEdit == '0') return alert('Please Choose A Location');
+
+    if(this.state.branchAddressEdit == '') return alert('Please Insert Address');
     //var TOKEN = await AsyncStorage.getItem('token');
     fetch('http://192.168.137.43:8000/api/editBranchBasicInfo',{
       method: 'POST',
@@ -273,7 +290,7 @@ export default class AddBranch extends Component {
   };
 
   getBranches(){
-    this.setState({gotBranches:false});
+      this.setState({gotBranches:false});
       const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
     //var TOKEN = await AsyncStorage.getItem('token');
@@ -286,7 +303,7 @@ export default class AddBranch extends Component {
     })
         .then((response) => response.json())
         .then((responseData) => {
-          console.log(responseData);
+        //  console.log(responseData);
           if("message" in responseData){
                 console.log(responseData.message);
           }

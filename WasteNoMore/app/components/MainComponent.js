@@ -17,6 +17,8 @@ export default class MainComponent extends Component {
         <View style={styles.btn}><Button  title="Add Company" color="#841584" onPress={() => this.props.navigation.navigate('AddCompany')}></Button></View>
         <View style={styles.btn}><Button  title="Company Attribs" color="#841584" onPress={() => this.props.navigation.navigate('CompanyAttribs')}></Button></View>
         <View style={styles.btn}><Button  title="Add Branch" color="#841584" onPress={() => this.props.navigation.navigate('AddBranch')}></Button></View>
+        <View style={styles.btn}><Button  title="License Manage" color="#841584" onPress={() => this.props.navigation.navigate('ManageLicense')}></Button></View>
+
       </View>
     );
   }

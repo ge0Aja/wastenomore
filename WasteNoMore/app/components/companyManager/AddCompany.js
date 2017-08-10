@@ -80,6 +80,16 @@ export default class AddCompany extends Component{
   }
 
   _validateSubmitPress = () => {
+
+    if(this.state.companyName == '') return alert('Please Insert Company Name');
+
+    if(this.state.establishmentDate == '') return alert('Please Choose Establishment Date');
+
+    if(this.state.companyType == '' || this.state.companyType == '0') return alert('Please Choose Company Type');
+
+    if(this.state.annualSales == '' || this.state.annualSales == '0') return alert('Please Choose Annual Sales Range');
+
+
       //var TOKEN = await AsyncStorage.getItem('token');
       fetch('http://192.168.137.43:8000/api/newCompanyRecord',{
         method: 'POST',
@@ -166,7 +176,7 @@ export default class AddCompany extends Component{
               selectedValue={this.state.companyType}
               style={styles.pick}
               onValueChange={(itemValue) => this.setState({companyType: itemValue})}>
-
+              <Picker.Item key={0} value={"0"} label={"Choose Company Type"} />
               {this.state.companyTypeList.map( (s, i) => {
                 return <Picker.Item key={i} value={s} label={s} />
               })}
@@ -179,7 +189,7 @@ export default class AddCompany extends Component{
               selectedValue={this.state.annualSales}
               style={styles.pick}
               onValueChange={(itemValue) => this.setState({annualSales: itemValue})}>
-
+              <Picker.Item key={"0"} value={"0"} label={"Choose Annual Sales"} />
               {this.state.annualSalesList.map( (s, i) => {
                 return <Picker.Item key={i} value={s} label={s} />
               })}
