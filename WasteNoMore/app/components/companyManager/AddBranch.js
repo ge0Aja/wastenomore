@@ -439,7 +439,6 @@ export default class AddBranch extends Component {
           </View>
         </Modal>
 
-
         <Modal
           animationType={"fade"}
           transparent={true}
@@ -567,7 +566,6 @@ export default class AddBranch extends Component {
     }
   }
 }
-
 
 const styles = StyleSheet.create({
   container: {
