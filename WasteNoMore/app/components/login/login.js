@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import {
     AppRegistry,
@@ -70,7 +69,7 @@ export default class LoginScreen extends Component {
         //remove logs after testing
 
         // if(! this.state.license) return;
-        fetch('http://192.168.1.111:19000/api/token_authentication', {
+        fetch('http://192.168.1.111:9111/api/token_authentication', {
             method: 'POST',
             headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
             body: JSON.stringify({
