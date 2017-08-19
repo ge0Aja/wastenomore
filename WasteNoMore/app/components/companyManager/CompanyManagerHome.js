@@ -4,6 +4,7 @@ import { TabNavigator } from "react-navigation";
 import ChartView from 'react-native-highcharts';
 
 import DateTimePicker from 'react-native-modal-datetime-picker';
+import ModalPicker from 'react-native-modal-picker';
 import Moment from 'moment';
 
 //import NoDataDisplay from 'highcharts-no-data-to-display';
@@ -82,7 +83,7 @@ class Graph1 extends Component{
     }
 
     getGraphData = () => {
-      this.setState({graph1gotData:false});
+    //  this.setState({graph1gotData:false});
 
   //var TOKEN = await AsyncStorage.getItem('token');
     fetch('http://192.168.137.43:8000/api/getWasteGraph1', {
@@ -90,7 +91,7 @@ class Graph1 extends Component{
       headers: {
         //'Accept': 'application/json',
         //  'Authorization': 'Bearer ' + TOKEN
-        'Authorization': 'Bearer eyJhbGciOiJSUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJnZW9hamEiLCJpYXQiOjE1MDI2NTQ0NDEsImV4cCI6MTUwMjY1ODA0MX0.dlifAvytkxstlH0HY4ebwl8Vr8mcXvTPiAbZuQ0LlJ1RwMLxs6WBBzQ0R1-uN1jAVJvst9tcQZfRQQskVAHBaKdf0W54yXUKNel29rDSYR3YCdDFO9zsogKuTS3MpuxFIDJbGFya72u17kWMlat9JFurn4aollS5DdMHsaCkhz9fpnpN6aDeiw0YT7u1k25j59WrQPa0OYCcV_kQa1R90tpXwyPqulxFJTv2spc2IMzAkx6elJvGBtIz_Z5LUlGklgmDBnDwHEO-i1qmBkGJkFnFgLEuNJSGTSF8SdvspWHYMa_fKqGvuaHKmTMd7zv-iB50gt9FCV0AgHNCogNqtJiXaY5ZmxdugosfjtbKACDCoTn82jtlzDtftGVVuPlv3giyreZhYtKhymv44dxljPct7sZMl7b8hkeBUfaF5opatDlkucGFEArNZ4z5Xvegq3yy1wd1mKwgHj3t7FDT96GJeQNh2yriU4j1cVWnsV5fF9cST2yx9M66W2f6KUU5T3L2s9xpnJ6s8NW_4v5U03OTHGZrR4t7o3wB5PYIxjHaInIjCWOTaXep7d-aE8OIsT1_iS_yG3_TkABdJdfxsIBfakwWaCcWIT4jvGdUV6_3yzuJzk9oC4meD3FVfD_fKduklnf-5lffC9S0V5zVHQS5O9lyI94iL9J9RKYpwxk'
+        'Authorization': 'Bearer eyJhbGciOiJSUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJnZW9hamEiLCJpYXQiOjE1MDMxNDUxNTMsImV4cCI6MTUwMzE0ODc1M30.fgeWkXR_kvy_H1PaLGJr7XycNGbbsG5xIaIMp8bx_tQo-nkgIHMgfVauX5oWXe_nv1nqqWQYAT6L5vM9T5FwPB8akMpNdIy-3lvivrp9enllIybCYGtZsAH_nEviab49l6rK9-mPZnAkSwTApUP8lJPtwMMRfndIdohJ5iy07OyOjugrLdN7i-4G2cOOSpTt-2tJMCO5Itzd_eV504uxmnXAK5NBolPDm1jHQs33twb-6fAYwgxu6fV_0u-SQqLUaGrZRCqfY6e8WWRsl0YdG3lxEpP8BDtCNdTwTdB-XaB0t9dwKwIVwB5iTJLzDbKmG68-OU0vCN1_16fhVeGo5-H3ZXxbF8VT1p6-FV9kWoF3DtHjxn3wmuRpgQsbHM1Xftu8vjvUnSgtZSdlKuui-OROejyC94QPfoZv-R_qbrzEL1o7n-Kx67yyEr0S2CCSDmzBCO6CqK_6ANDvK8rJb8UYGP1tWsnbGApjy01Sq7Xk313P0saLTDZ71ynmNMOHGEXOEvEi7VSklKrEVOd38ClDcMWerevYcI-zozBYVNHtIg3yFvhggcNxcIiXKT3HBP8uMe-CBFxyzDPxvUWo7CGVnitJ-STXO4FSvyNdWST-3bNsiHPBLiwt9KTJBCd-eWs78XdfpQKDVytVAgoVaJNlMZpLzDs2ewjBnTIjvxw'
       },
 
       body: JSON.stringify({
@@ -101,14 +102,14 @@ class Graph1 extends Component{
     })
         .then((response) => response.json())
         .then((responseData) => {
-        //  console.log(responseData);
+          console.log(responseData.categories);
           if("message" in responseData){
                 console.log(responseData.message);
           }
           if(responseData.status == "error"){
               console.log("error");
           }else if(responseData.status == "success"){
-            this.setState({ graph1Category:responseData.categories,grpah1Data: responseData.data, graph1gotData:true,branches:responseData.branches , isPremium:responseData.premium}); //isLoading: false,
+            this.setState({ graph1Category:responseData.categories,grpah1Data: responseData.data, graph1gotData:true,branches:responseData.branches , isPremium:responseData.premium},console.log(this.state.grpah1Data)); //isLoading: false,
           }
         })
         .done();
@@ -117,10 +118,10 @@ class Graph1 extends Component{
   render(){
     if(this.state.graph1gotData){
         var Highcharts='Highcharts';
+        if(this.state.branchId == '' || this.state.branchId == '0'){
          var conf={
                  chart: {
                      type: 'bar',
-
                 },
                  title: {
                      text: 'Waste Percentage By Category'
@@ -139,29 +140,58 @@ class Graph1 extends Component{
                  exporting: {
                      enabled: false
                  },
-                 series: [{
-                     data:this.state.grpah1Data
-                 }],
+                 series: this.state.grpah1Data
+                 ,
                  lang: {
                     noData: "No Data to Display"
                   },
-
-
              };
-             if(this.state.isPremium){
+           }else{
+             var conf={
+                     chart: {
+                         type: 'bar',
+
+                    },
+                     title: {
+                         text: 'Waste Percentage By Category'
+                     },
+                     xAxis: {
+                        categories:this.state.graph1Category
+                     },
+                     yAxis: {
+                         title: {
+                             text: 'Waste %'
+                         },
+                     },
+                     legend: {
+                         enabled: false
+                     },
+                     exporting: {
+                         enabled: false
+                     },
+                     series: [{
+                       data: this.state.grpah1Data
+                     }],
+                     lang: {
+                        noData: "No Data to Display"
+                      },
+                 };
+           }
+        if(this.state.isPremium){
 
          if(this.state.grpah1Data.length > 0){
                    return (
                      <View >
-                       <ChartView style={{height:300}} config={conf}></ChartView>
+                       <ChartView style={{height:320}} config={conf}></ChartView>
 
-                       <View style={{  position:'absolute',top:350,flex:1}}>
+                       <View style={{  position:'absolute',top:325,flex:1}}>
                          <View style={styles.modalLines}>
                            <Text style={styles.label}>
                              Date From:
                            </Text>
                            <TextInput style={styles.tinput}
                              ref='FirstInput'
+                             editable={false}
                              onFocus={() => {Keyboard.dismiss();this._showDateTimePicker1();}}
                              value = {this.state.fromDateBeauty}
                            >
@@ -172,51 +202,35 @@ class Graph1 extends Component{
                            </Text>
                            <TextInput style={styles.tinput}
                              ref='SecondInput'
+                             editable={false}
                              onFocus={() => {Keyboard.dismiss();this._showDateTimePicker2();}}
                              value = {this.state.toDateBeauty}
                            >
                            </TextInput>
                          </View>
 
-                         <View style={styles.modalLines}>
-                           <Text style={styles.label}>
-                             Branch:
-                           </Text>
-                           <Picker style={styles.pick}
-                             selectedValue={this.state.branchId}
-                             onValueChange= {(itemValue) => {
+                         <View style={[styles.modalLines,{marginLeft:80}]}>
+
+                           <ModalPicker
+                             data={this.state.branches}
+                             initValue={"Choose Branch"}
+                             onChange={(option) => {
                                if((this.state.toDate == '' && this.state.fromDate != '') || (this.state.toDate != '' && this.state.fromDate == ''))
                                return alert("Please set Both Dates");
 
                                if(this.state.fromDate > this.state.toDate)
                                return alert("Start Date should be less than End Date");
 
-                               this.setState({branchId: itemValue})
-                             }}
-                           >
+                               this.setState({branchId: option.key},this.getGraphData)
+                             }}>
 
-                             <Picker.Item key={0} value={"0"} label={"Choose Branch"}  />
-                             {
-                               this.state.branches.map( (s, i) => {
-                                 return <Picker.Item key={i} value={s.id} label={s.city+"/"+s.address} />
-                               })
-                             }
-
-                           </Picker>
-
+                           </ModalPicker>
                            <TouchableOpacity style={styles.resetDate} onPress={this.rstDate}>
                              <Text style={{color:'black'}}>
                                Reset Dates
                              </Text>
                            </TouchableOpacity>
-                         </View>
 
-                         <View style={styles.modalLines}>
-                           <TouchableOpacity style={styles.getData} onPress={this.getGraphData}>
-                             <Text style={{color:'black'}}>
-                               Get Data
-                             </Text>
-                           </TouchableOpacity>
                          </View>
 
                          <DateTimePicker
@@ -270,44 +284,27 @@ class Graph1 extends Component{
                                </View>
 
                                <View style={styles.modalLines}>
-                                 <Text style={styles.label}>
-                                   Branch:
-                                 </Text>
-                                 <Picker style={styles.pick}
-                                   selectedValue={this.state.branchId}
-                                   onValueChange= {(itemValue) => {
+
+                                 <ModalPicker
+                                   data={this.state.branches}
+                                   initValue={"Choose Branch"}
+                                   onChange={(option) => {
                                      if((this.state.toDate == '' && this.state.fromDate != '') || (this.state.toDate != '' && this.state.fromDate == ''))
                                      return alert("Please set Both Dates");
 
                                      if(this.state.fromDate > this.state.toDate)
                                      return alert("Start Date should be less than End Date");
 
-                                     this.setState({branchId: itemValue})
-                                   }}
-                                 >
+                                     this.setState({branchId: option.key},this.getGraphData)
+                                   }}>
 
-                                   <Picker.Item key={0} value={"0"} label={"Choose Branch"}  />
-                                   {
-                                     this.state.branches.map( (s, i) => {
-                                       return <Picker.Item key={i} value={s.id} label={s.city+"/"+s.address} />
-                                     })
-                                   }
-
-                                 </Picker>
-
+                                 </ModalPicker>
                                  <TouchableOpacity style={styles.resetDate} onPress={this.rstDate}>
                                    <Text style={{color:'black'}}>
                                      Reset Dates
                                    </Text>
                                  </TouchableOpacity>
-                               </View>
 
-                               <View style={styles.modalLines}>
-                                 <TouchableOpacity style={styles.getData} onPress={this.getGraphData}>
-                                   <Text style={{color:'black'}}>
-                                     Get Data
-                                   </Text>
-                                 </TouchableOpacity>
                                </View>
 
                                <DateTimePicker
@@ -333,7 +330,7 @@ class Graph1 extends Component{
                          if(this.state.grpah1Data.length > 0){
                                return(
                                  <View>
-                                   <ChartView style={{height:300}} config={conf}></ChartView>
+                                   <ChartView style={{height:320}} config={conf}></ChartView>
                                  </View>
                                );
                              }else{
@@ -361,11 +358,330 @@ class Graph1 extends Component{
 }
 
 class Graph2 extends Component{
+  constructor(){
+    super();
+
+    this.state = {
+      grpah1Data:[],
+      graph1Category:[],
+      graph1gotData:false,
+      branchId:'',
+      isPremium:false,
+      isDateTimePickerVisible1:false,
+      isDateTimePickerVisible2:false,
+      toDate:'',
+      toDateBeauty:'',
+      fromDate:'',
+      fromDateBeauty:'',
+      branches:[],
+    }
+  }
+
+    componentDidMount() {
+      this.getGraphData();
+    }
+
+    _showDateTimePicker1 = () => this.setState({ isDateTimePickerVisible1: true });
+
+    _hideDateTimePicker1 = () => this.setState({ isDateTimePickerVisible1: false });
+
+    _showDateTimePicker2 = () => this.setState({ isDateTimePickerVisible2: true });
+
+    _hideDateTimePicker2 = () => this.setState({ isDateTimePickerVisible2: false });
+
+
+    _handleDatePicked1 = (date) => {
+      console.log('A date has been picked: ', date);
+      console.log('The formatted date is: ', Moment(date).format('MMM-DD-YYYY'));
+      this.setState({ fromDate: date });
+      this.setState({fromDateBeauty: Moment(date).format('MMM-DD-YYYY')});
+      this._hideDateTimePicker1();
+    };
+
+    _handleDatePicked2 = (date) => {
+      console.log('A date has been picked: ', date);
+      console.log('The formatted date is: ', Moment(date).format('MMM-DD-YYYY'));
+      this.setState({ toDate: date });
+      this.setState({toDateBeauty: Moment(date).format('MMM-DD-YYYY')});
+      this._hideDateTimePicker2();
+    };
+
+    rstDate = () => {
+      this.setState({toDate:'',toDateBeauty:'',fromDate:'',fromDateBeauty:''});
+    }
+
+    getGraphData = () => {
+    //  this.setState({graph1gotData:false});
+
+  //var TOKEN = await AsyncStorage.getItem('token');
+    fetch('http://192.168.137.43:8000/api/getWasteGraph2', {
+      method: 'POST',
+      headers: {
+        //'Accept': 'application/json',
+        //  'Authorization': 'Bearer ' + TOKEN
+        'Authorization': 'Bearer eyJhbGciOiJSUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJnZW9hamEiLCJpYXQiOjE1MDMxNDUxNTMsImV4cCI6MTUwMzE0ODc1M30.fgeWkXR_kvy_H1PaLGJr7XycNGbbsG5xIaIMp8bx_tQo-nkgIHMgfVauX5oWXe_nv1nqqWQYAT6L5vM9T5FwPB8akMpNdIy-3lvivrp9enllIybCYGtZsAH_nEviab49l6rK9-mPZnAkSwTApUP8lJPtwMMRfndIdohJ5iy07OyOjugrLdN7i-4G2cOOSpTt-2tJMCO5Itzd_eV504uxmnXAK5NBolPDm1jHQs33twb-6fAYwgxu6fV_0u-SQqLUaGrZRCqfY6e8WWRsl0YdG3lxEpP8BDtCNdTwTdB-XaB0t9dwKwIVwB5iTJLzDbKmG68-OU0vCN1_16fhVeGo5-H3ZXxbF8VT1p6-FV9kWoF3DtHjxn3wmuRpgQsbHM1Xftu8vjvUnSgtZSdlKuui-OROejyC94QPfoZv-R_qbrzEL1o7n-Kx67yyEr0S2CCSDmzBCO6CqK_6ANDvK8rJb8UYGP1tWsnbGApjy01Sq7Xk313P0saLTDZ71ynmNMOHGEXOEvEi7VSklKrEVOd38ClDcMWerevYcI-zozBYVNHtIg3yFvhggcNxcIiXKT3HBP8uMe-CBFxyzDPxvUWo7CGVnitJ-STXO4FSvyNdWST-3bNsiHPBLiwt9KTJBCd-eWs78XdfpQKDVytVAgoVaJNlMZpLzDs2ewjBnTIjvxw'
+      },
+
+      body: JSON.stringify({
+            "branch":this.state.branchId,
+            "fromDate":this.state.fromDate,
+            "toDate":this.state.toDate
+      })
+    })
+        .then((response) => response.json())
+        .then((responseData) => {
+          console.log(responseData.categories);
+          if("message" in responseData){
+                console.log(responseData.message);
+          }
+          if(responseData.status == "error"){
+              console.log("error");
+          }else if(responseData.status == "success"){
+            this.setState({ graph1Category:responseData.categories,grpah1Data: responseData.data, graph1gotData:true,branches:responseData.branches , isPremium:responseData.premium},console.log(this.state.grpah1Data)); //isLoading: false,
+          }
+        })
+        .done();
+    }
 
   render(){
-    return(
-      <Text>This is Graph 2</Text>
-    );
+    if(this.state.graph1gotData){
+        var Highcharts='Highcharts';
+        if(this.state.branchId == '' || this.state.branchId == '0'){
+         var conf={
+                 chart: {
+                     type: 'bar',
+                },
+                 title: {
+                     text: 'Waste Percentage By Category'
+                 },
+                 xAxis: {
+                    categories:this.state.graph1Category
+                 },
+                 yAxis: {
+                     title: {
+                         text: 'Waste %'
+                     },
+                 },
+                 legend: {
+                     enabled: false
+                 },
+                 exporting: {
+                     enabled: false
+                 },
+                 series: this.state.grpah1Data
+                 ,
+                 lang: {
+                    noData: "No Data to Display"
+                  },
+             };
+           }else{
+             var conf={
+                     chart: {
+                         type: 'bar',
+
+                    },
+                     title: {
+                         text: 'Waste Percentage By Category'
+                     },
+                     xAxis: {
+                        categories:this.state.graph1Category
+                     },
+                     yAxis: {
+                         title: {
+                             text: 'Waste %'
+                         },
+                     },
+                     legend: {
+                         enabled: false
+                     },
+                     exporting: {
+                         enabled: false
+                     },
+                     series: [{
+                       data: this.state.grpah1Data
+                     }],
+                     lang: {
+                        noData: "No Data to Display"
+                      },
+                 };
+           }
+        if(this.state.isPremium){
+
+         if(this.state.grpah1Data.length > 0){
+                   return (
+                     <View >
+                       <ChartView style={{height:320}} config={conf}></ChartView>
+
+                       <View style={{  position:'absolute',top:325,flex:1}}>
+                         <View style={styles.modalLines}>
+                           <Text style={styles.label}>
+                             Date From:
+                           </Text>
+                           <TextInput style={styles.tinput}
+                             ref='FirstInput'
+                             editable={false}
+                             onFocus={() => {Keyboard.dismiss();this._showDateTimePicker1();}}
+                             value = {this.state.fromDateBeauty}
+                           >
+
+                           </TextInput>
+                           <Text style={styles.label}>
+                             Date To:
+                           </Text>
+                           <TextInput style={styles.tinput}
+                             ref='SecondInput'
+                             editable={false}
+                             onFocus={() => {Keyboard.dismiss();this._showDateTimePicker2();}}
+                             value = {this.state.toDateBeauty}
+                           >
+                           </TextInput>
+                         </View>
+
+                         <View style={[styles.modalLines,{marginLeft:80}]}>
+
+                           <ModalPicker
+                             data={this.state.branches}
+                             initValue={"Choose Branch"}
+                             onChange={(option) => {
+                               if((this.state.toDate == '' && this.state.fromDate != '') || (this.state.toDate != '' && this.state.fromDate == ''))
+                               return alert("Please set Both Dates");
+
+                               if(this.state.fromDate > this.state.toDate)
+                               return alert("Start Date should be less than End Date");
+
+                               this.setState({branchId: option.key},this.getGraphData)
+                             }}>
+
+                           </ModalPicker>
+                           <TouchableOpacity style={styles.resetDate} onPress={this.rstDate}>
+                             <Text style={{color:'black'}}>
+                               Reset Dates
+                             </Text>
+                           </TouchableOpacity>
+
+                         </View>
+
+                         <DateTimePicker
+                           isVisible={this.state.isDateTimePickerVisible1}
+                           onConfirm={this._handleDatePicked1}
+                           onCancel={this._hideDateTimePicker1}
+                           mode="date"
+                         />
+
+                         <DateTimePicker
+                           isVisible={this.state.isDateTimePickerVisible2}
+                           onConfirm={this._handleDatePicked2}
+                           onCancel={this._hideDateTimePicker2}
+                           mode="date"
+                         />
+
+                       </View>
+                     </View>
+                         );
+                       }else{
+
+                         return (
+                           <View >
+                             <View>
+                               <Text style={styles.label}>
+                                 No Data to Display
+                               </Text>
+                             </View>
+
+                             <View style={{  position:'absolute',top:350,flex:1}}>
+                               <View style={styles.modalLines}>
+                                 <Text style={styles.label}>
+                                   Date From:
+                                 </Text>
+                                 <TextInput style={styles.tinput}
+                                   ref='FirstInput'
+                                   onFocus={() => {Keyboard.dismiss();this._showDateTimePicker1();}}
+                                   value = {this.state.fromDateBeauty}
+                                 >
+
+                                 </TextInput>
+                                 <Text style={styles.label}>
+                                   Date To:
+                                 </Text>
+                                 <TextInput style={styles.tinput}
+                                   ref='SecondInput'
+                                   onFocus={() => {Keyboard.dismiss();this._showDateTimePicker2();}}
+                                   value = {this.state.toDateBeauty}
+                                 >
+                                 </TextInput>
+                               </View>
+
+                               <View style={styles.modalLines}>
+
+                                 <ModalPicker
+                                   data={this.state.branches}
+                                   initValue={"Choose Branch"}
+                                   onChange={(option) => {
+                                     if((this.state.toDate == '' && this.state.fromDate != '') || (this.state.toDate != '' && this.state.fromDate == ''))
+                                     return alert("Please set Both Dates");
+
+                                     if(this.state.fromDate > this.state.toDate)
+                                     return alert("Start Date should be less than End Date");
+
+                                     this.setState({branchId: option.key},this.getGraphData)
+                                   }}>
+
+                                 </ModalPicker>
+                                 <TouchableOpacity style={styles.resetDate} onPress={this.rstDate}>
+                                   <Text style={{color:'black'}}>
+                                     Reset Dates
+                                   </Text>
+                                 </TouchableOpacity>
+
+                               </View>
+
+                               <DateTimePicker
+                                 isVisible={this.state.isDateTimePickerVisible1}
+                                 onConfirm={this._handleDatePicked1}
+                                 onCancel={this._hideDateTimePicker1}
+                                 mode="date"
+                               />
+
+                               <DateTimePicker
+                                 isVisible={this.state.isDateTimePickerVisible2}
+                                 onConfirm={this._handleDatePicked2}
+                                 onCancel={this._hideDateTimePicker2}
+                                 mode="date"
+                               />
+
+                             </View>
+                           </View>
+                               );
+
+                       }
+                       }else{
+                         if(this.state.grpah1Data.length > 0){
+                               return(
+                                 <View>
+                                   <ChartView style={{height:320}} config={conf}></ChartView>
+                                 </View>
+                               );
+                             }else{
+                               <View>
+                                 <Text style={styles.label}>
+                                   No Data To Display
+                                 </Text>
+                               </View>
+                             }
+       }
+   }else{
+     return(
+     <View style={styles.container}>
+       <ActivityIndicator
+         animating={!this.state.attrExist}
+         size={"large"}
+         hidesWhenStopped={true}
+       >
+       </ActivityIndicator>
+
+     </View>
+   );
+   }
   }
 }
 
@@ -410,9 +726,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   modalLines:{
+    marginTop:15,
+    marginLeft:5,
     flex:1,
   //  justifyContent: 'center',
-    flexDirection:'row'
+    flexDirection:'row',
+    alignItems: 'center'
   },
   label:{
      fontSize: 16,

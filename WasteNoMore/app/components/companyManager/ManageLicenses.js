@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import { StyleSheet, Text, View,AppRegistry, TouchableOpacity,ActivityIndicator,Picker,Alert, Modal, Dimensions, ListView, TextInput,Keyboard,TouchableHighlight, Switch} from 'react-native';
-
+import ModalPicker from 'react-native-modal-picker';
 
 export default class ManageLicenses extends Component{
 
@@ -9,6 +9,7 @@ constructor(){
 
   this.state = {
     licenseBranch:'',
+    licenseBranchLoc:'',
     licensePicked:'',
     listCurrentRowIndex:'',
     modalVisible:false,
@@ -33,9 +34,10 @@ setModalVisible(visible) {
   this.setState({modalVisible: visible});
 }
 
-_resetModal(){
+_resetModal = () => {
   this.setState({
     licenseBranch:'',
+    licenseBranchLoc:'',
     licensePicked:'',
     pickedLicenseString:'',
     listCurrentRowIndex:'',
@@ -52,7 +54,7 @@ getLicenses = () => {
       headers: {
         'Accept': 'application/json',
         //  'Authorization': 'Bearer ' + TOKEN
-        'Authorization': 'Bearer eyJhbGciOiJSUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJnZW9hamEiLCJpYXQiOjE1MDIzNzY1NzcsImV4cCI6MTUwMjM4MDE3N30.M5VAJqJQ5DrkGSyxEkoxAGGAWyNUSggtVy1xPkJCI9_Jgw62wXFFJBdbZMyrmwdqe_iCfqVNJN97IYyuKoORj_6B2Zj5p_jPgYT429TJX7N1cfz9yuPLTRO9yjrouUATaaDaTdynkdutzdMD4ddJ5zYtzuyXEcF4GRqSfne7EXw_g9Or9nri-FsHavwcgJFQzCaaQsHKF70q_EdhJ-Udxi1rgc43og1U52oqjZUv7W5rVFvjnFPftgHg8z6g03WvlSvcMZJ0uHpJk7Pb2rLF3fFIL0TPlUAZbXRYhrB5drJrnAHdXhH_LkXQJ4RFLkBGqnNSKp9FXmLFN4c9aQ4uyz3Tp-HQnwNunfoFeXxgsd4Qi2B-ZbjydSDzuf67tDBbfAm9S5wKvTyob9D89fbcBo6k9v4ApFYQjqc2AxPPwQ8K9pQTzUm_Hc2Scli9uSgXzMGcZHGxuO1j3m3Sj8ho7jcE389gvOicuH-PLAq7la2ZkCZ3WRDg3AjNRxZY9XO8uCqJg0z_YYpcD3dFGQec2Tyw4Qicu6ctre3W_YWkbiR9PxqsGblqH7OOKY5ZRZZg2naGAPBZhJYj6Wg6gJKir1dEYBSL17i38zPAZbDyMD7wdNhOJa8zjQ4HPDAnJOwMEA0ZYWGgGm1rcY1w_x_TBdjweye-lNi_O5-RUUJpq4M'
+        'Authorization': 'Bearer eyJhbGciOiJSUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJnZW9hamEiLCJpYXQiOjE1MDMxNDg3MzIsImV4cCI6MTUwMzE1MjMzMn0.hyqPxZKybkd_CZzNqn2P2CsQbyVxffXs257QU8-4U9o6DbOfoxs5VJpvgPaswCqmfXdDfHYRS3Wj1lwKqtiQrFeMKylinX_dxcNEUw6zPcl3Iv2HYyAOSiIdc1FOdm7scwBd3fhwjb5TLVEFe6OTFztoBl9jpVAL6zvrxZwfMryBVD8Q1aGF4ackzRJF_YEeAWWu9-6a_m7d4oGfQNJRDKGX_lx8kYn5qPl5lZA1byWOe5Qq5-Mw9TGrB4T4LhadXPPnoF0RbJ-ZhYn1fN6AWFJ5mY94eLCxYbF7ppkkQVaVA__TBSp52aoG3yLJrJWDrIJ9rn-arnw7j8gwwEVblcilVsZEn3nLjEQ6MGFlH9H4q5KGrRWsa1SWfz5G191qlI_YONe47newnKDd5Z8iKAEUr-MB5EXbHUHTBXCzyYTtaoPda0IjHfOzJYqF2p-d4uoU2i9Mou3wJT1GLEfrm73hHs83mjLhKOa67mD158-p2jykhpONK8nmtwiw0FfbSvxP8_saUwAv8M42BH9rIx5c5MnOoa1L36V93QhBmjkTMKPrJ6A0Elr2jE3owMfHZv-avqbx6tRQR5c0ULExURApth_WszZy6kjf2weVCUe0Vlmtv7Bn1KrBRzzDL_hBR2m-9LF2iJcUpfsDkFa4I3WmtcZN3RsTbNcvRz351XE'
       }
     })
     .then((response) => response.json())
@@ -79,7 +81,7 @@ getLicenses = () => {
         headers: {
           'Accept': 'application/json',
           //  'Authorization': 'Bearer ' + TOKEN
-          'Authorization': 'Bearer eyJhbGciOiJSUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJnZW9hamEiLCJpYXQiOjE1MDIzNzY1NzcsImV4cCI6MTUwMjM4MDE3N30.M5VAJqJQ5DrkGSyxEkoxAGGAWyNUSggtVy1xPkJCI9_Jgw62wXFFJBdbZMyrmwdqe_iCfqVNJN97IYyuKoORj_6B2Zj5p_jPgYT429TJX7N1cfz9yuPLTRO9yjrouUATaaDaTdynkdutzdMD4ddJ5zYtzuyXEcF4GRqSfne7EXw_g9Or9nri-FsHavwcgJFQzCaaQsHKF70q_EdhJ-Udxi1rgc43og1U52oqjZUv7W5rVFvjnFPftgHg8z6g03WvlSvcMZJ0uHpJk7Pb2rLF3fFIL0TPlUAZbXRYhrB5drJrnAHdXhH_LkXQJ4RFLkBGqnNSKp9FXmLFN4c9aQ4uyz3Tp-HQnwNunfoFeXxgsd4Qi2B-ZbjydSDzuf67tDBbfAm9S5wKvTyob9D89fbcBo6k9v4ApFYQjqc2AxPPwQ8K9pQTzUm_Hc2Scli9uSgXzMGcZHGxuO1j3m3Sj8ho7jcE389gvOicuH-PLAq7la2ZkCZ3WRDg3AjNRxZY9XO8uCqJg0z_YYpcD3dFGQec2Tyw4Qicu6ctre3W_YWkbiR9PxqsGblqH7OOKY5ZRZZg2naGAPBZhJYj6Wg6gJKir1dEYBSL17i38zPAZbDyMD7wdNhOJa8zjQ4HPDAnJOwMEA0ZYWGgGm1rcY1w_x_TBdjweye-lNi_O5-RUUJpq4M'
+          'Authorization': 'Bearer eyJhbGciOiJSUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJnZW9hamEiLCJpYXQiOjE1MDMxNDg3MzIsImV4cCI6MTUwMzE1MjMzMn0.hyqPxZKybkd_CZzNqn2P2CsQbyVxffXs257QU8-4U9o6DbOfoxs5VJpvgPaswCqmfXdDfHYRS3Wj1lwKqtiQrFeMKylinX_dxcNEUw6zPcl3Iv2HYyAOSiIdc1FOdm7scwBd3fhwjb5TLVEFe6OTFztoBl9jpVAL6zvrxZwfMryBVD8Q1aGF4ackzRJF_YEeAWWu9-6a_m7d4oGfQNJRDKGX_lx8kYn5qPl5lZA1byWOe5Qq5-Mw9TGrB4T4LhadXPPnoF0RbJ-ZhYn1fN6AWFJ5mY94eLCxYbF7ppkkQVaVA__TBSp52aoG3yLJrJWDrIJ9rn-arnw7j8gwwEVblcilVsZEn3nLjEQ6MGFlH9H4q5KGrRWsa1SWfz5G191qlI_YONe47newnKDd5Z8iKAEUr-MB5EXbHUHTBXCzyYTtaoPda0IjHfOzJYqF2p-d4uoU2i9Mou3wJT1GLEfrm73hHs83mjLhKOa67mD158-p2jykhpONK8nmtwiw0FfbSvxP8_saUwAv8M42BH9rIx5c5MnOoa1L36V93QhBmjkTMKPrJ6A0Elr2jE3owMfHZv-avqbx6tRQR5c0ULExURApth_WszZy6kjf2weVCUe0Vlmtv7Bn1KrBRzzDL_hBR2m-9LF2iJcUpfsDkFa4I3WmtcZN3RsTbNcvRz351XE'
         }
       })
       .then((response) => response.json())
@@ -130,6 +132,7 @@ getLicenses = () => {
     this.setState({
       licensePicked: rowData.subLicId,
       pickedLicenseString:rowData.sublicString,
+      licenseBranchLoc:rowData.branchLocation,
       licenseBranch:rowData.branchId,
       listCurrentRowIndex:rowID
     });
@@ -144,7 +147,7 @@ getLicenses = () => {
       method: 'POST',
       headers: {
         //  'Authorization': 'Bearer ' + TOKEN
-        'Authorization': 'Bearer eyJhbGciOiJSUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJnZW9hamEiLCJpYXQiOjE1MDIzNzY1NzcsImV4cCI6MTUwMjM4MDE3N30.M5VAJqJQ5DrkGSyxEkoxAGGAWyNUSggtVy1xPkJCI9_Jgw62wXFFJBdbZMyrmwdqe_iCfqVNJN97IYyuKoORj_6B2Zj5p_jPgYT429TJX7N1cfz9yuPLTRO9yjrouUATaaDaTdynkdutzdMD4ddJ5zYtzuyXEcF4GRqSfne7EXw_g9Or9nri-FsHavwcgJFQzCaaQsHKF70q_EdhJ-Udxi1rgc43og1U52oqjZUv7W5rVFvjnFPftgHg8z6g03WvlSvcMZJ0uHpJk7Pb2rLF3fFIL0TPlUAZbXRYhrB5drJrnAHdXhH_LkXQJ4RFLkBGqnNSKp9FXmLFN4c9aQ4uyz3Tp-HQnwNunfoFeXxgsd4Qi2B-ZbjydSDzuf67tDBbfAm9S5wKvTyob9D89fbcBo6k9v4ApFYQjqc2AxPPwQ8K9pQTzUm_Hc2Scli9uSgXzMGcZHGxuO1j3m3Sj8ho7jcE389gvOicuH-PLAq7la2ZkCZ3WRDg3AjNRxZY9XO8uCqJg0z_YYpcD3dFGQec2Tyw4Qicu6ctre3W_YWkbiR9PxqsGblqH7OOKY5ZRZZg2naGAPBZhJYj6Wg6gJKir1dEYBSL17i38zPAZbDyMD7wdNhOJa8zjQ4HPDAnJOwMEA0ZYWGgGm1rcY1w_x_TBdjweye-lNi_O5-RUUJpq4M'},
+        'Authorization': 'Bearer eyJhbGciOiJSUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJnZW9hamEiLCJpYXQiOjE1MDMxNDg3MzIsImV4cCI6MTUwMzE1MjMzMn0.hyqPxZKybkd_CZzNqn2P2CsQbyVxffXs257QU8-4U9o6DbOfoxs5VJpvgPaswCqmfXdDfHYRS3Wj1lwKqtiQrFeMKylinX_dxcNEUw6zPcl3Iv2HYyAOSiIdc1FOdm7scwBd3fhwjb5TLVEFe6OTFztoBl9jpVAL6zvrxZwfMryBVD8Q1aGF4ackzRJF_YEeAWWu9-6a_m7d4oGfQNJRDKGX_lx8kYn5qPl5lZA1byWOe5Qq5-Mw9TGrB4T4LhadXPPnoF0RbJ-ZhYn1fN6AWFJ5mY94eLCxYbF7ppkkQVaVA__TBSp52aoG3yLJrJWDrIJ9rn-arnw7j8gwwEVblcilVsZEn3nLjEQ6MGFlH9H4q5KGrRWsa1SWfz5G191qlI_YONe47newnKDd5Z8iKAEUr-MB5EXbHUHTBXCzyYTtaoPda0IjHfOzJYqF2p-d4uoU2i9Mou3wJT1GLEfrm73hHs83mjLhKOa67mD158-p2jykhpONK8nmtwiw0FfbSvxP8_saUwAv8M42BH9rIx5c5MnOoa1L36V93QhBmjkTMKPrJ6A0Elr2jE3owMfHZv-avqbx6tRQR5c0ULExURApth_WszZy6kjf2weVCUe0Vlmtv7Bn1KrBRzzDL_hBR2m-9LF2iJcUpfsDkFa4I3WmtcZN3RsTbNcvRz351XE'},
 
         body: JSON.stringify({
           "sub_license":this.state.licensePicked,
@@ -192,25 +195,34 @@ getLicenses = () => {
                   </View>
                   <View style={styles.modalLines}>
                     <Text style={styles.topMargText}>Branch:</Text>
-                    <Picker
-                      style={styles.pick}
-                      selectedValue={this.state.licenseBranch}
-                      onValueChange={(itemValue) => this.setState({licenseBranch: itemValue})}
-                    >
-                      <Picker.Item key={0} value={"0"} label={"Choose Branch"}  />
 
-                      {
-                        this.state.branchesList.map( (s, i) => {
-                          return <Picker.Item key={i} value={s.BranchId} label={s.location+"/"+s.address} />
-                        })
-                      }
-                    </Picker>
+                    <ModalPicker
+                      data={this.state.branchesList}
+                      initValue={"Choose Branch"}
+                      onChange={(option) => {
+                        this.setState({licenseBranch: option.key,licenseBranchLoc:option.label})
+                      }}>
+
+                      <TextInput
+                        style={{borderWidth:1, borderColor:'#ccc', padding:2, height:30,width:150}}
+                        editable={false}
+
+                        value={this.state.licenseBranchLoc} />
+
+                    </ModalPicker>
                   </View>
-                  <TouchableOpacity style={styles.applyInner} onPress={this.handelLicenseEdit}>
-                    <Text style={{color:'darkviolet'}}>
-                      Apply
-                    </Text>
-                  </TouchableOpacity>
+                  <View style={{flex:1,flexDirection:"row"}}>
+                    <TouchableOpacity style={styles.cancelInner} onPress={this._resetModal}>
+                      <Text style={{color:'red'}}>
+                        Cancel
+                      </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.applyInner} onPress={this.handelLicenseEdit}>
+                      <Text style={{color:'darkviolet'}}>
+                        Apply
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
                 </View>
               </View>
             </Modal>
@@ -267,6 +279,17 @@ const styles = StyleSheet.create({
     borderWidth: StyleSheet.hairlineWidth,
     height: 30,
     width: 100,
+    margin:10,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  cancelInner:{
+    borderColor: 'red',
+    borderWidth: StyleSheet.hairlineWidth,
+    height: 30,
+    width: 100,
+    margin:10,
     borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center'

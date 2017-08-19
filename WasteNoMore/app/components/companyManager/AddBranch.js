@@ -4,6 +4,7 @@ import { StyleSheet, Text, View,AppRegistry, TouchableOpacity,ActivityIndicator,
 import demoData from './demoBranchData.js';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import Moment from 'moment';
+import ModalPicker from 'react-native-modal-picker';
 
 export default class AddBranch extends Component {
 
@@ -14,6 +15,7 @@ export default class AddBranch extends Component {
     var {height, width} = Dimensions.get('window');
     this.state = {
       branchLocation:'',
+      branchLocationSt:'',
       branchStaffCount:'',
       branchOpeningDate:'',
       branches:[],
@@ -30,6 +32,7 @@ export default class AddBranch extends Component {
       branchData:[],
       dataSource:[],
       branchLocationEdit:'',
+      branchLocationStEdit:'',
       branchStaffCountEdit:'',
       branchOpeningDateEdit:'',
       branchOpeningDateEditBeauty:'',
@@ -40,8 +43,6 @@ export default class AddBranch extends Component {
       branchAddressEdit:'',
       branchAddress:''
     }
-      this.getBranches = this.getBranches.bind(this);
-      this.getLocations = this.getLocations.bind(this);
   }
 
   componentDidMount() {
@@ -64,10 +65,11 @@ export default class AddBranch extends Component {
     this.setState({modal2Visible: visible});
   }
 
-  _resetModal(){
+  _resetModal =() => {
 
     this.setState({
       branchLocation:'',
+      branchLocationSt:'',
       branchStaffCount:'',
       branchOpeningDate:'',
       branchAddress:'',
@@ -77,10 +79,10 @@ export default class AddBranch extends Component {
   }
 
 
-  _resetModal2(){
-
+  _resetModal2 = () => {
     this.setState({
       branchLocationEdit:'',
+      branchLocationStEdit:'',
       branchStaffCountEdit:'',
       branchOpeningDateEdit:'',
       mainBranchEdit:false,
@@ -125,7 +127,7 @@ export default class AddBranch extends Component {
       method: 'POST',
       headers: {
         //  'Authorization': 'Bearer ' + TOKEN
-        'Authorization': 'Bearer eyJhbGciOiJSUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJnZW9hamEiLCJpYXQiOjE1MDIyMDIxMDMsImV4cCI6MTUwMjIwNTcwM30.D_8ngPFTtm07qwxoekPDR9pq8lGsNbSafLox3a6ecAH2qGFsMPbOUY1jVos-TFSsvOOJXOHy5_l9JMHk1I9rXObR6NA_G3lSq5VgWxNQ1mMfD8W-zCW-7Pn2qgFnZqv4FPJ65ezirfwmdbCpbCVZnfBQjQWA0bcCgtvzUSfZGkVh8tKvVZcACUc7scJB-zcBwc_ugb6LSBzdv6lI-CtkXobkg-AHkz67tyENv9w2iZE0XbxIuc0_QEkZTOrsAz1I9A5NKrK0WTnM7DLBHtVLofPf44xy0RRAfSQvE3KcUxJXL3uuZF5yxxrZvEciObIC9LZ0atuxnlR2UpyagiR-hfbFHw77MacOLoBqL2ByP53uODq5h0BAMLdtNKm2-N8vwLicaeBly-vxbqPmBNeex8GNB_Z3T3LQP5qfzuBH0U3EvTV5UUm3NM7uwJmXhz6-BZM0ZZbFElSImpUn_L35DatPWHiy0Eqb0hEBM4RH0gbwKluN4XruakgXko73xprjnizjMRETJSTXteP_3oVbUJZqmd6x-zIkPM5COnhpR8zry-iPDqO2TF8OaUgMCQzT17e4V-nzy89KNBp62pN294UrlOj2gAS9Qtiz5gJaAqr_uNjY4yE9KMzj40aqcYlE_b819lFS6s3FjPbHRskHqQdlx5O9vA8Poxy7kIf0pj4'},
+        'Authorization': 'Bearer eyJhbGciOiJSUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJnZW9hamEiLCJpYXQiOjE1MDMxNTgxNjMsImV4cCI6MTUwMzE2MTc2M30.Akx8WKjRWb72s9K6WU1t-LcniLBjh7cUj1VUBjBfRnAh3uPxB2HsAqIsCHbgO6ueTsSHMzDF6_CCw79633q_FvDCLI3G5LS0XPMaPYXRgEKDSW_YvOdMc5V6OvE3zDbTHnMdQf5CoIU_MeGCESAxmJe8KFOw-GYtg95Ic_0PE1yZS2oMsnyPtRFguxrB1pJc56JPGXF1yzbPM1WhqkfSszUTisGfPJOucwQMVep_ultvhnQVlATqGfF21CwjvTSTD8mz2jHqx95ZOcsIktJQha3j-vz_3d7jQuL89QkDPtG_jjjQd9SSWoi_A28ozWY3Al6mQworWYuiIyEQnbQiWURLMpMusVYbgzUopkfsiTRB0mdZ2HABII_2ubfEPApZsLxH2n6h8kJ85Y11lh7OyVZf2E85mUhM6Zdyn4ziOmo0B1_ZzjYzJ8Y1Ig_pJ9VjyUc1x8DOo9KOgfnA4dg-qqTzsXaykotXVgnxVT780N82PH0kp4TJOr7N40PPXY-ucpUN5vm8hSCnjDS-7u6liafqLqcmgncMnOLzb0IbIjPrWf6FldtuPWs30mE2eINvKBs1XadwRuqTKsrXVMltQKoRtYqwQ57CBBJa4BxYspPe03oO7pah5DTF8zQk10118UjPN-V1CsEVd9lWnZumG-Cnh_tvCwSTpe9cAtssvHs'},
 
         body: JSON.stringify({
           "staff_count": this.state.branchStaffCount,
@@ -156,19 +158,21 @@ export default class AddBranch extends Component {
 
   handelBranchEdit = () => {
 
+    if(this.state.branchLocationEdit == '' || this.state.branchLocationEdit == '0') return alert('Please Choose A Location');
+
+    if(this.state.branchAddressEdit == '') return alert('Please Insert Address');
+
     if(this.state.branchStaffCountEdit == '') return alert('Please Insert Staff Count');
 
     if(this.state.branchOpeningDateEdit == '') return alert('Please Choose An Opening Date');
 
-    if(this.state.branchLocationEdit == '' || this.state.branchLocationEdit == '0') return alert('Please Choose A Location');
 
-    if(this.state.branchAddressEdit == '') return alert('Please Insert Address');
     //var TOKEN = await AsyncStorage.getItem('token');
     fetch('http://192.168.137.43:8000/api/editBranchBasicInfo',{
       method: 'POST',
       headers: {
         //  'Authorization': 'Bearer ' + TOKEN
-        'Authorization': 'Bearer eyJhbGciOiJSUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJnZW9hamEiLCJpYXQiOjE1MDIyMDIxMDMsImV4cCI6MTUwMjIwNTcwM30.D_8ngPFTtm07qwxoekPDR9pq8lGsNbSafLox3a6ecAH2qGFsMPbOUY1jVos-TFSsvOOJXOHy5_l9JMHk1I9rXObR6NA_G3lSq5VgWxNQ1mMfD8W-zCW-7Pn2qgFnZqv4FPJ65ezirfwmdbCpbCVZnfBQjQWA0bcCgtvzUSfZGkVh8tKvVZcACUc7scJB-zcBwc_ugb6LSBzdv6lI-CtkXobkg-AHkz67tyENv9w2iZE0XbxIuc0_QEkZTOrsAz1I9A5NKrK0WTnM7DLBHtVLofPf44xy0RRAfSQvE3KcUxJXL3uuZF5yxxrZvEciObIC9LZ0atuxnlR2UpyagiR-hfbFHw77MacOLoBqL2ByP53uODq5h0BAMLdtNKm2-N8vwLicaeBly-vxbqPmBNeex8GNB_Z3T3LQP5qfzuBH0U3EvTV5UUm3NM7uwJmXhz6-BZM0ZZbFElSImpUn_L35DatPWHiy0Eqb0hEBM4RH0gbwKluN4XruakgXko73xprjnizjMRETJSTXteP_3oVbUJZqmd6x-zIkPM5COnhpR8zry-iPDqO2TF8OaUgMCQzT17e4V-nzy89KNBp62pN294UrlOj2gAS9Qtiz5gJaAqr_uNjY4yE9KMzj40aqcYlE_b819lFS6s3FjPbHRskHqQdlx5O9vA8Poxy7kIf0pj4'},
+        'Authorization': 'Bearer eyJhbGciOiJSUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJnZW9hamEiLCJpYXQiOjE1MDMxNTgxNjMsImV4cCI6MTUwMzE2MTc2M30.Akx8WKjRWb72s9K6WU1t-LcniLBjh7cUj1VUBjBfRnAh3uPxB2HsAqIsCHbgO6ueTsSHMzDF6_CCw79633q_FvDCLI3G5LS0XPMaPYXRgEKDSW_YvOdMc5V6OvE3zDbTHnMdQf5CoIU_MeGCESAxmJe8KFOw-GYtg95Ic_0PE1yZS2oMsnyPtRFguxrB1pJc56JPGXF1yzbPM1WhqkfSszUTisGfPJOucwQMVep_ultvhnQVlATqGfF21CwjvTSTD8mz2jHqx95ZOcsIktJQha3j-vz_3d7jQuL89QkDPtG_jjjQd9SSWoi_A28ozWY3Al6mQworWYuiIyEQnbQiWURLMpMusVYbgzUopkfsiTRB0mdZ2HABII_2ubfEPApZsLxH2n6h8kJ85Y11lh7OyVZf2E85mUhM6Zdyn4ziOmo0B1_ZzjYzJ8Y1Ig_pJ9VjyUc1x8DOo9KOgfnA4dg-qqTzsXaykotXVgnxVT780N82PH0kp4TJOr7N40PPXY-ucpUN5vm8hSCnjDS-7u6liafqLqcmgncMnOLzb0IbIjPrWf6FldtuPWs30mE2eINvKBs1XadwRuqTKsrXVMltQKoRtYqwQ57CBBJa4BxYspPe03oO7pah5DTF8zQk10118UjPN-V1CsEVd9lWnZumG-Cnh_tvCwSTpe9cAtssvHs'},
 
         body: JSON.stringify({
           "staff_count": this.state.branchStaffCountEdit,
@@ -200,12 +204,14 @@ export default class AddBranch extends Component {
 
   handleBranchDeleteAction =() => {
 
+    console.log(this.state.branchIdEdit);
+
     //var TOKEN = await AsyncStorage.getItem('token');
     fetch('http://192.168.137.43:8000/api/deleteBranchApi',{
       method: 'POST',
       headers: {
         //  'Authorization': 'Bearer ' + TOKEN
-        'Authorization': 'Bearer eyJhbGciOiJSUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJnZW9hamEiLCJpYXQiOjE1MDIyMDIxMDMsImV4cCI6MTUwMjIwNTcwM30.D_8ngPFTtm07qwxoekPDR9pq8lGsNbSafLox3a6ecAH2qGFsMPbOUY1jVos-TFSsvOOJXOHy5_l9JMHk1I9rXObR6NA_G3lSq5VgWxNQ1mMfD8W-zCW-7Pn2qgFnZqv4FPJ65ezirfwmdbCpbCVZnfBQjQWA0bcCgtvzUSfZGkVh8tKvVZcACUc7scJB-zcBwc_ugb6LSBzdv6lI-CtkXobkg-AHkz67tyENv9w2iZE0XbxIuc0_QEkZTOrsAz1I9A5NKrK0WTnM7DLBHtVLofPf44xy0RRAfSQvE3KcUxJXL3uuZF5yxxrZvEciObIC9LZ0atuxnlR2UpyagiR-hfbFHw77MacOLoBqL2ByP53uODq5h0BAMLdtNKm2-N8vwLicaeBly-vxbqPmBNeex8GNB_Z3T3LQP5qfzuBH0U3EvTV5UUm3NM7uwJmXhz6-BZM0ZZbFElSImpUn_L35DatPWHiy0Eqb0hEBM4RH0gbwKluN4XruakgXko73xprjnizjMRETJSTXteP_3oVbUJZqmd6x-zIkPM5COnhpR8zry-iPDqO2TF8OaUgMCQzT17e4V-nzy89KNBp62pN294UrlOj2gAS9Qtiz5gJaAqr_uNjY4yE9KMzj40aqcYlE_b819lFS6s3FjPbHRskHqQdlx5O9vA8Poxy7kIf0pj4'},
+        'Authorization': 'Bearer eyJhbGciOiJSUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJnZW9hamEiLCJpYXQiOjE1MDMxNTgxNjMsImV4cCI6MTUwMzE2MTc2M30.Akx8WKjRWb72s9K6WU1t-LcniLBjh7cUj1VUBjBfRnAh3uPxB2HsAqIsCHbgO6ueTsSHMzDF6_CCw79633q_FvDCLI3G5LS0XPMaPYXRgEKDSW_YvOdMc5V6OvE3zDbTHnMdQf5CoIU_MeGCESAxmJe8KFOw-GYtg95Ic_0PE1yZS2oMsnyPtRFguxrB1pJc56JPGXF1yzbPM1WhqkfSszUTisGfPJOucwQMVep_ultvhnQVlATqGfF21CwjvTSTD8mz2jHqx95ZOcsIktJQha3j-vz_3d7jQuL89QkDPtG_jjjQd9SSWoi_A28ozWY3Al6mQworWYuiIyEQnbQiWURLMpMusVYbgzUopkfsiTRB0mdZ2HABII_2ubfEPApZsLxH2n6h8kJ85Y11lh7OyVZf2E85mUhM6Zdyn4ziOmo0B1_ZzjYzJ8Y1Ig_pJ9VjyUc1x8DOo9KOgfnA4dg-qqTzsXaykotXVgnxVT780N82PH0kp4TJOr7N40PPXY-ucpUN5vm8hSCnjDS-7u6liafqLqcmgncMnOLzb0IbIjPrWf6FldtuPWs30mE2eINvKBs1XadwRuqTKsrXVMltQKoRtYqwQ57CBBJa4BxYspPe03oO7pah5DTF8zQk10118UjPN-V1CsEVd9lWnZumG-Cnh_tvCwSTpe9cAtssvHs'},
 
         body: JSON.stringify({
           "branch":this.state.branchIdEdit
@@ -228,8 +234,6 @@ export default class AddBranch extends Component {
       })
       .done();
 
-
-
   }
 
   handelBranchDelete = () => {
@@ -251,7 +255,7 @@ export default class AddBranch extends Component {
         <View style={{padding:5}}>
           <TouchableHighlight underlayColor='rgba(211,211,211,0.9)' onPress={ () => {this._onPressRow(rowData,rowID)}}>
             <View >
-              <Text style={styles.listTextLarge}>{rowData.location}/{rowData.location_district}/{rowData.location_governorate}</Text>
+              <Text style={styles.listTextLarge}>{rowData.location_governorate}-{rowData.location_district}-{rowData.location}</Text>
               <Text style={styles.listTextSmall}>(Main Branch)</Text>
               <Text style={styles.listTextSmall}>Address: {rowData.address}</Text>
               <Text style={styles.listTextSmall}>Staff Count: {rowData.staff_count}</Text>
@@ -265,7 +269,7 @@ export default class AddBranch extends Component {
        <View style={{padding:5}}>
          <TouchableHighlight underlayColor='rgba(211,211,211,0.9)' onPress={ () => {this._onPressRow(rowData,rowID)}}>
            <View >
-             <Text style={styles.listTextLarge}>{rowData.location}/{rowData.location_district}/{rowData.location_governorate}</Text>
+             <Text style={styles.listTextLarge}>{rowData.location_governorate}-{rowData.location_district}-{rowData.location}</Text>
              <Text style={styles.listTextSmall}>Address: {rowData.address}</Text>
              <Text style={styles.listTextSmall}>Staff Count: {rowData.staff_count}</Text>
              <Text style={styles.listTextSmall}>Opening Date: {Moment(rowData.opening_date.date).format('MMM-DD-YYYY')}</Text>
@@ -278,18 +282,20 @@ export default class AddBranch extends Component {
 
   _onPressRow = (rowData,rowID) => {
     this.setState({
-      branchLocationEdit:rowData.location+"/"+rowData.location_district+"/"+rowData.location_governorate,
+      branchLocationEdit:rowData.locationId,
+      branchLocationStEdit:rowData.location_governorate+"-"+rowData.location_district+"-"+rowData.location,
       branchAddressEdit:rowData.address,
       branchStaffCountEdit:String(rowData.staff_count),
       mainBranchEdit: rowData.mainBranch ,
       branchIdEdit:rowData.BranchId,
+      branchOpeningDateEdit:rowData.opening_date.date,
       listCurrentRowIndex:rowID
     });
     this.setState({branchOpeningDateEditBeauty: Moment(rowData.opening_date.date).format('MMM-DD-YYYY')});
     this.setModal2Visible(true);
   };
 
-  getBranches(){
+  getBranches = () => {
       this.setState({gotBranches:false});
       const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
@@ -298,7 +304,7 @@ export default class AddBranch extends Component {
       headers: {
         'Accept': 'application/json',
         //  'Authorization': 'Bearer ' + TOKEN
-        'Authorization': 'Bearer eyJhbGciOiJSUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJnZW9hamEiLCJpYXQiOjE1MDIyMDIxMDMsImV4cCI6MTUwMjIwNTcwM30.D_8ngPFTtm07qwxoekPDR9pq8lGsNbSafLox3a6ecAH2qGFsMPbOUY1jVos-TFSsvOOJXOHy5_l9JMHk1I9rXObR6NA_G3lSq5VgWxNQ1mMfD8W-zCW-7Pn2qgFnZqv4FPJ65ezirfwmdbCpbCVZnfBQjQWA0bcCgtvzUSfZGkVh8tKvVZcACUc7scJB-zcBwc_ugb6LSBzdv6lI-CtkXobkg-AHkz67tyENv9w2iZE0XbxIuc0_QEkZTOrsAz1I9A5NKrK0WTnM7DLBHtVLofPf44xy0RRAfSQvE3KcUxJXL3uuZF5yxxrZvEciObIC9LZ0atuxnlR2UpyagiR-hfbFHw77MacOLoBqL2ByP53uODq5h0BAMLdtNKm2-N8vwLicaeBly-vxbqPmBNeex8GNB_Z3T3LQP5qfzuBH0U3EvTV5UUm3NM7uwJmXhz6-BZM0ZZbFElSImpUn_L35DatPWHiy0Eqb0hEBM4RH0gbwKluN4XruakgXko73xprjnizjMRETJSTXteP_3oVbUJZqmd6x-zIkPM5COnhpR8zry-iPDqO2TF8OaUgMCQzT17e4V-nzy89KNBp62pN294UrlOj2gAS9Qtiz5gJaAqr_uNjY4yE9KMzj40aqcYlE_b819lFS6s3FjPbHRskHqQdlx5O9vA8Poxy7kIf0pj4'
+        'Authorization': 'Bearer eyJhbGciOiJSUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJnZW9hamEiLCJpYXQiOjE1MDMxNTgxNjMsImV4cCI6MTUwMzE2MTc2M30.Akx8WKjRWb72s9K6WU1t-LcniLBjh7cUj1VUBjBfRnAh3uPxB2HsAqIsCHbgO6ueTsSHMzDF6_CCw79633q_FvDCLI3G5LS0XPMaPYXRgEKDSW_YvOdMc5V6OvE3zDbTHnMdQf5CoIU_MeGCESAxmJe8KFOw-GYtg95Ic_0PE1yZS2oMsnyPtRFguxrB1pJc56JPGXF1yzbPM1WhqkfSszUTisGfPJOucwQMVep_ultvhnQVlATqGfF21CwjvTSTD8mz2jHqx95ZOcsIktJQha3j-vz_3d7jQuL89QkDPtG_jjjQd9SSWoi_A28ozWY3Al6mQworWYuiIyEQnbQiWURLMpMusVYbgzUopkfsiTRB0mdZ2HABII_2ubfEPApZsLxH2n6h8kJ85Y11lh7OyVZf2E85mUhM6Zdyn4ziOmo0B1_ZzjYzJ8Y1Ig_pJ9VjyUc1x8DOo9KOgfnA4dg-qqTzsXaykotXVgnxVT780N82PH0kp4TJOr7N40PPXY-ucpUN5vm8hSCnjDS-7u6liafqLqcmgncMnOLzb0IbIjPrWf6FldtuPWs30mE2eINvKBs1XadwRuqTKsrXVMltQKoRtYqwQ57CBBJa4BxYspPe03oO7pah5DTF8zQk10118UjPN-V1CsEVd9lWnZumG-Cnh_tvCwSTpe9cAtssvHs'
       }
     })
         .then((response) => response.json())
@@ -316,18 +322,18 @@ export default class AddBranch extends Component {
         .done();
   }
 
-  getLocations(){
+  getLocations = () => {
     //var TOKEN = await AsyncStorage.getItem('token');
     fetch('http://192.168.137.43:8000/api/getLocations', {
       headers: {
         'Accept': 'application/json',
         //  'Authorization': 'Bearer ' + TOKEN
-        'Authorization': 'Bearer eyJhbGciOiJSUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJnZW9hamEiLCJpYXQiOjE1MDIyMDIxMDMsImV4cCI6MTUwMjIwNTcwM30.D_8ngPFTtm07qwxoekPDR9pq8lGsNbSafLox3a6ecAH2qGFsMPbOUY1jVos-TFSsvOOJXOHy5_l9JMHk1I9rXObR6NA_G3lSq5VgWxNQ1mMfD8W-zCW-7Pn2qgFnZqv4FPJ65ezirfwmdbCpbCVZnfBQjQWA0bcCgtvzUSfZGkVh8tKvVZcACUc7scJB-zcBwc_ugb6LSBzdv6lI-CtkXobkg-AHkz67tyENv9w2iZE0XbxIuc0_QEkZTOrsAz1I9A5NKrK0WTnM7DLBHtVLofPf44xy0RRAfSQvE3KcUxJXL3uuZF5yxxrZvEciObIC9LZ0atuxnlR2UpyagiR-hfbFHw77MacOLoBqL2ByP53uODq5h0BAMLdtNKm2-N8vwLicaeBly-vxbqPmBNeex8GNB_Z3T3LQP5qfzuBH0U3EvTV5UUm3NM7uwJmXhz6-BZM0ZZbFElSImpUn_L35DatPWHiy0Eqb0hEBM4RH0gbwKluN4XruakgXko73xprjnizjMRETJSTXteP_3oVbUJZqmd6x-zIkPM5COnhpR8zry-iPDqO2TF8OaUgMCQzT17e4V-nzy89KNBp62pN294UrlOj2gAS9Qtiz5gJaAqr_uNjY4yE9KMzj40aqcYlE_b819lFS6s3FjPbHRskHqQdlx5O9vA8Poxy7kIf0pj4'
+        'Authorization': 'Bearer eyJhbGciOiJSUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJnZW9hamEiLCJpYXQiOjE1MDMxNTgxNjMsImV4cCI6MTUwMzE2MTc2M30.Akx8WKjRWb72s9K6WU1t-LcniLBjh7cUj1VUBjBfRnAh3uPxB2HsAqIsCHbgO6ueTsSHMzDF6_CCw79633q_FvDCLI3G5LS0XPMaPYXRgEKDSW_YvOdMc5V6OvE3zDbTHnMdQf5CoIU_MeGCESAxmJe8KFOw-GYtg95Ic_0PE1yZS2oMsnyPtRFguxrB1pJc56JPGXF1yzbPM1WhqkfSszUTisGfPJOucwQMVep_ultvhnQVlATqGfF21CwjvTSTD8mz2jHqx95ZOcsIktJQha3j-vz_3d7jQuL89QkDPtG_jjjQd9SSWoi_A28ozWY3Al6mQworWYuiIyEQnbQiWURLMpMusVYbgzUopkfsiTRB0mdZ2HABII_2ubfEPApZsLxH2n6h8kJ85Y11lh7OyVZf2E85mUhM6Zdyn4ziOmo0B1_ZzjYzJ8Y1Ig_pJ9VjyUc1x8DOo9KOgfnA4dg-qqTzsXaykotXVgnxVT780N82PH0kp4TJOr7N40PPXY-ucpUN5vm8hSCnjDS-7u6liafqLqcmgncMnOLzb0IbIjPrWf6FldtuPWs30mE2eINvKBs1XadwRuqTKsrXVMltQKoRtYqwQ57CBBJa4BxYspPe03oO7pah5DTF8zQk10118UjPN-V1CsEVd9lWnZumG-Cnh_tvCwSTpe9cAtssvHs'
       }
     })
         .then((response) => response.json())
         .then((responseData) => {
-          console.log(responseData);
+      //    console.log(responseData);
           if("message" in responseData){
                 console.log(responseData.message);
           }
@@ -365,21 +371,23 @@ export default class AddBranch extends Component {
             <View style={styles.lightBackgroundModal}>
               <View style={styles.modalLines}>
                 <Text style={styles.topMargText}>Location:</Text>
-                <Picker style={styles.pick}
-                  selectedValue={this.state.branchLocation}
-                  onValueChange={(itemValue) => this.setState({branchLocation: itemValue})}
-                >
-                  <Picker.Item key={0} value={"0"} label={"Choose Location"}  />
-                  {
-                    this.state.locationList.map( (s, i) => {
-                      return <Picker.Item key={i} value={s.city+"/"+s.district+"/"+s.governorate} label={s.city+"/"+s.district+"/"+s.governorate} />
-                    })
-                  }
-                </Picker>
+
+                <ModalPicker
+                  data={this.state.locationList}
+                  initValue={"Choose Location"}
+                  onChange={(option) => {
+                    this.setState({branchLocation: option.key,branchLocationSt:option.label})
+                  }}>
+
+                  <TextInput
+                    style={[styles.tinput,{marginLeft:46}]}
+                    editable={false}
+                    value={this.state.branchLocationSt} />
+                </ModalPicker>
               </View>
               <View style={styles.modalLines}>
-                <Text>Address</Text>
-                <TextInput style={styles.tinput} value={this.state.branchAddress}
+                <Text style={styles.topMargText}>Address</Text>
+                <TextInput style={[styles.tinput,{marginLeft:52}]} value={this.state.branchAddress}
                   ref='SecondInput'
                   onSubmitEditing={(event) => {
                     this.refs.ThirdInput.focus();
@@ -392,7 +400,8 @@ export default class AddBranch extends Component {
                 <Text style={styles.topMargText}>
                   Staff Count
                 </Text>
-                <TextInput style={styles.tinput}
+                <TextInput style={[styles.tinput,{marginLeft:32}]}
+                  keyboardType='numeric'
                   ref='ThirdInput'
                   onSubmitEditing={(event) => {
                     this.refs.ForthInput.focus();
@@ -422,19 +431,29 @@ export default class AddBranch extends Component {
                 onCancel={this._hideDateTimePicker}
                 mode="date"
               />
-              <View style={styles.modalLines}>
-                <Text>
+              <View style={[styles.modalLines,{marginTop:25}]}>
+                <Text style={{marginTop:9}}>
                   Main Branch
                 </Text>
-                <Switch value={this.state.mainBranchAdd} onValueChange={(value) => {this._setMainBranch(value);}}>
+                <Switch style={{marginLeft:35}} value={this.state.mainBranchAdd} onValueChange={(value) => {this._setMainBranch(value);}}>
 
                 </Switch>
               </View>
-              <TouchableOpacity style={styles.addBranchInner} onPress={this.handelBranchAdd}>
-                <Text style={{color:'darkviolet'}}>
-                  Add Branch
-                </Text>
-              </TouchableOpacity>
+
+              <View style={[styles.modalLines,{alignSelf:"center"}]}>
+                <TouchableOpacity style={styles.delBranchInner} onPress={this._resetModal}>
+                  <Text style={{color:'red'}}>
+                    Cancel
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.addBranchInner} onPress={this.handelBranchAdd}>
+                  <Text style={{color:'darkviolet'}}>
+                    Add Branch
+                  </Text>
+                </TouchableOpacity>
+              </View>
+
+
             </View>
           </View>
         </Modal>
@@ -451,22 +470,25 @@ export default class AddBranch extends Component {
             <View style={styles.lightBackgroundModal}>
               <View style={styles.modalLines}>
                 <Text style={styles.topMargText}>Location:</Text>
-                <Picker style={styles.pick}
-                  selectedValue={this.state.branchLocationEdit}
-                  onValueChange={(itemValue) => this.setState({branchLocationEdit: itemValue})}
-                >
-                  <Picker.Item key={0} value={"0"} label={"Choose Location"}  />
-                  {
-                    this.state.locationList.map( (s, i) => {
-                      return <Picker.Item key={i} value={s.city+"/"+s.district+"/"+s.governorate} label={s.city+"/"+s.district+"/"+s.governorate} />
-                    })
-                  }
-                </Picker>
+
+
+                <ModalPicker
+                  data={this.state.locationList}
+                  initValue={"Choose Location"}
+                  onChange={(option) => {
+                    this.setState({branchLocationEdit: option.key,branchLocationStEdit:option.label})
+                  }}>
+
+                  <TextInput
+                    style={[styles.tinput,{marginLeft:46}]}
+                    editable={false}
+                    value={this.state.branchLocationStEdit} />
+                </ModalPicker>
               </View>
 
               <View style={styles.modalLines}>
-                <Text>Address</Text>
-                <TextInput style={styles.tinput} value={this.state.branchAddressEdit}
+                <Text style={styles.topMargText}>Address</Text>
+                <TextInput style={[styles.tinput,{marginLeft:52}]} value={this.state.branchAddressEdit}
                   ref='SecondInput2'
                   onSubmitEditing={(event) => {
                     this.refs.ThirdInput2.focus();
@@ -480,7 +502,8 @@ export default class AddBranch extends Component {
                 <Text style={styles.topMargText}>
                   Staff Count
                 </Text>
-                <TextInput style={styles.tinput}
+                <TextInput style={[styles.tinput,{marginLeft:32}]}
+                  keyboardType='numeric'
                   ref='ThirdInput2'
                   onSubmitEditing={(event) => {
                     this.refs.ForthInput2.focus();
@@ -511,20 +534,28 @@ export default class AddBranch extends Component {
                 mode="date"
               />
 
-              <View style={styles.modalLines}>
-                <Text >
+              <View style={[styles.modalLines,{marginTop:25}]}>
+                <Text style={{marginTop:9}}>
                   Main Branch
                 </Text>
-                <Switch value={this.state.mainBranchEdit} onValueChange={(value) => {this._setMainBranchEdit(value);}}>
+                <Switch style={{marginLeft:35}} value={this.state.mainBranchEdit} onValueChange={(value) => {this._setMainBranchEdit(value);}}>
 
                 </Switch>
               </View>
+              <View style={[styles.modalLines,{alignSelf:"center"}]}>
+                <TouchableOpacity style={styles.delBranchInner} onPress={this._resetModal2}>
+                  <Text style={{color:'red'}}>
+                    Cancel
+                  </Text>
+                </TouchableOpacity>
 
-              <TouchableOpacity style={styles.addBranchInner} onPress={this.handelBranchEdit}>
-                <Text style={{color:'darkviolet'}}>
-                  Apply
-                </Text>
-              </TouchableOpacity>
+                <TouchableOpacity style={styles.addBranchInner} onPress={this.handelBranchEdit}>
+                  <Text style={{color:'darkviolet'}}>
+                    Apply
+                  </Text>
+                </TouchableOpacity>
+
+              </View>
               <View style={{marginTop:20}}>
                 <TouchableOpacity style={styles.delBranchInner} onPress={this.handelBranchDelete}>
                   <Text style={{color:'red'}}>
@@ -595,7 +626,8 @@ const styles = StyleSheet.create({
     width: 100,
     borderRadius: 20,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    marginLeft:15
   },
   delBranchInner:{
     borderColor: 'red',
@@ -618,8 +650,8 @@ const styles = StyleSheet.create({
   },
   addButtonPos:{
     position:'absolute',
-    left:275,
-    top:450
+    right:30,
+    bottom:30
   },
   addText:{
        fontSize: 30,
@@ -633,12 +665,12 @@ const styles = StyleSheet.create({
   },
   lightBackgroundModal:{
     backgroundColor: 'white',
-    alignItems: 'center',
-    justifyContent: 'center',
+    // alignItems: 'center',
+    // justifyContent: 'center',
     borderRadius: 5,
     padding:10,
-    width:300,
-    height:300
+    width:350,
+    height:400
   },
   modalLines:{
     flex:1,
@@ -659,12 +691,14 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     borderWidth: 1,
     borderRadius: 5,
-    margin: 5,
-    width: 100,
+    margin: 15,
+    marginLeft:18,
+    width: 200,
   //  alignSelf: 'center'
   },
   topMargText:{
-    marginTop:10
+    marginTop:23,
+    marginRight:15
   },
   icon: {
     width: 24,

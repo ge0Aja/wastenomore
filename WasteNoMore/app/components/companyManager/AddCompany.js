@@ -1,10 +1,10 @@
 import React,{Component} from 'react';
-import { StyleSheet, Text, View, TextInput,Picker, KeyboardAvoidingView, Button } from 'react-native';
+import { StyleSheet, Text, View, TextInput,Picker, KeyboardAvoidingView, Button,ActivityIndicator } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import Moment from 'moment';
+import ModalPicker from 'react-native-modal-picker';
 
 export default class AddCompany extends Component{
-
 
     constructor(){
       super();
@@ -16,24 +16,68 @@ export default class AddCompany extends Component{
         annualSalesList: [], //'5K - 10K','10K - 20K','25K - 50K','50K - 100K','>100K'
         companyType: '',
         companyTypeList: [],
-      //  isLoading: false,
+        annualSalesSt:'',
+        companyTypeSt:'',
+        gotCompanyInfo:false,
+        gotAnnualSalesList:false,
+        gotCompanyTypesList:false,
         isDateTimePickerVisible: false
       }
     }
 
     componentDidMount() {
+    this.getCompanyInfo();
     this.fetchDataAnnualSales();
     this.fetchDataCompanyTypes();
     }
 
-    fetchDataCompanyTypes(){
+    getCompanyInfo = () => {
+
+      fetch('http://192.168.137.43:8000/api/getCompanyInfo', {
+        headers: {
+          'Accept': 'application/json',
+          //  'Authorization': 'Bearer ' + TOKEN
+          'Authorization': 'Bearer eyJhbGciOiJSUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJnZW9hamEiLCJpYXQiOjE1MDMxNjI5NDgsImV4cCI6MTUwMzE2NjU0OH0.JLuY1GDbquZRN1NIFk81mcnn3knUAOrgMZ-vF1McPfzy05n2wdwaUMd0MqrzVMZtnTOdtu6_FpWYIi27HwvxP462fSRPPXtpkdv5-mr2XPicJOWlYnCWAYBRzjkKsSSyVLZ-QXDHaWx6-2f59Rw5di4ake2xTu9-TW4kjNPP8s4VyUAcg99zahB1hPhapeqoE1vs46Q-TF86ZUrAHJqHibSUEXDV0EB4rI3ifexwBj26kHtFPBb-FvS27aDlc2hW8iwitakNH069sgdCnOuYxethV_YfFWvtuypUYrQ2gfbBJ3u2fpP8ZCz842QFNRcc3fnTD8wfmV1sApr4-nmMPydNcCfH7tqPr0uIG0z0IgiqY5S3unQnlp-ZiBUMQBmc37oZ9-_zkQ6A4gFju09V9bqlOvGYLApj0viV6T-7wO8Q6ROh7t_tsg2ChOwwFo_v9M74QpwNq78m5QUHSevrkRXXHjneMpFN62perlGhyqkr-ONoaM0nTKlF1KQUe393CpblqDdNyxhs99IBy0ofjhctIwp0fy7jPboY0siFIGEhbw8Whb3TV3r_chzyi1JJLA_RczY-N4-1YS-2xfeKGeV_YpA605qEVQ7ZlkEqCXJbgG6G-mPasdStMg6yYTz0ol2Gs02Md1wYxTfIrK-kJ6qLxyPMwpPNcGzkzdrmUzA'
+        }
+      })
+          .then((response) => response.json())
+          .then((responseData) => {
+            if("message" in responseData){
+              console.log(responseData.message);
+            }
+            if(responseData.status == "error"){
+              console.log("error");
+            }else if(responseData.status == "new"){
+              this.setState({gotCompanyInfo:true});
+            }else if (responseData.status == "success"){
+              console.log(responseData);
+              this.setState({companyName:responseData.company_name,
+                establishmentDate:responseData.establishment_date.date,
+                annualSales:responseData.annual_sales,
+                annualSalesSt:responseData.annual_sales_st,
+                companyType:responseData.company_type,
+                companyTypeSt:responseData.company_type_st,
+                gotCompanyInfo:true}
+               );
+
+               this.setState({
+                 establishmentDateBeauty:Moment(responseData.establishment_date.date).format('MMM-DD-YYYY')
+               })
+            }
+          })
+          .done();
+
+
+    }
+
+    fetchDataCompanyTypes =() => {
 
         //var TOKEN = await AsyncStorage.getItem('token');
       fetch('http://192.168.137.43:8000/api/getCompanyTypesApi', {
         headers: {
           'Accept': 'application/json',
           //  'Authorization': 'Bearer ' + TOKEN
-          'Authorization': 'Bearer eyJhbGciOiJSUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJhc2Rhc2Rhc2R3YXNkdzExMTEiLCJpYXQiOjE1MDE3NzU0OTcsImV4cCI6MTUwMTc3OTA5N30.rbtrmXoTNclkIQRB6ZnJoJIB1n_o5sjnUAK4KylCS707fgsFPtI_pDbxKC-DkkEGIJJY0CWKw9oCTc2VIQQbb-8ifW4e4O1Sc57Dcuf-N4-F-1fR6xSscGC6nyN0fOH2XyoCvVaaycr2oOgT5Y-KE-5ItHLXcq4pCN1veueW9Amjj_R8u3XQQip6bQ26p101dkWkr59EVAyB5SqQmEu39KsbU2ddXd9CRZa3HXA9TJwW5wQfPkAI2BU4jnFPjPLM9CswBMSmNqxwLv7sWKjJ79PqomTIHqPR789rhkzgmY8yNYiaLRGVOHCgH1a5ioC2R7OzbcxK2ABmFTfy86ByYSHEx77Fx9BCqKuDuICCGf9W4YmgCzMPTySYsfzoS5MrwSe5hu5L0TrQvivmCk-jkss_n003O_yu18-SYUuhbeaLmFgUot8muC4nfJmobhkNe2kZAeNY3O-JDqxJrBkb5uJvdbvlWgYdOYmkbwLnAaxO86-5hxEzKFpMyXy-30dLunqpIiBCEZbWv11Q2gDEPOhgyF5rlqzQBoDLB_FsyaH_X7sDqKon07d-kZgFeZ-t6DWp28iDID2SJq8mkfh01nYfFrT9YVE3SqbSt_mQckcaVx-nfSxTL2nm6iRzYXH4xs3ky8owIX67SVOqQkQoPYW7AxpSVYpCGgCbJ_rU1Sg'
+          'Authorization': 'Bearer eyJhbGciOiJSUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJnZW9hamEiLCJpYXQiOjE1MDMxNjI5NDgsImV4cCI6MTUwMzE2NjU0OH0.JLuY1GDbquZRN1NIFk81mcnn3knUAOrgMZ-vF1McPfzy05n2wdwaUMd0MqrzVMZtnTOdtu6_FpWYIi27HwvxP462fSRPPXtpkdv5-mr2XPicJOWlYnCWAYBRzjkKsSSyVLZ-QXDHaWx6-2f59Rw5di4ake2xTu9-TW4kjNPP8s4VyUAcg99zahB1hPhapeqoE1vs46Q-TF86ZUrAHJqHibSUEXDV0EB4rI3ifexwBj26kHtFPBb-FvS27aDlc2hW8iwitakNH069sgdCnOuYxethV_YfFWvtuypUYrQ2gfbBJ3u2fpP8ZCz842QFNRcc3fnTD8wfmV1sApr4-nmMPydNcCfH7tqPr0uIG0z0IgiqY5S3unQnlp-ZiBUMQBmc37oZ9-_zkQ6A4gFju09V9bqlOvGYLApj0viV6T-7wO8Q6ROh7t_tsg2ChOwwFo_v9M74QpwNq78m5QUHSevrkRXXHjneMpFN62perlGhyqkr-ONoaM0nTKlF1KQUe393CpblqDdNyxhs99IBy0ofjhctIwp0fy7jPboY0siFIGEhbw8Whb3TV3r_chzyi1JJLA_RczY-N4-1YS-2xfeKGeV_YpA605qEVQ7ZlkEqCXJbgG6G-mPasdStMg6yYTz0ol2Gs02Md1wYxTfIrK-kJ6qLxyPMwpPNcGzkzdrmUzA'
         }
       })
           .then((response) => response.json())
@@ -44,36 +88,34 @@ export default class AddCompany extends Component{
             if(responseData.status == "error"){
               console.log("error");
             }else if(responseData.status == "success"){
-              console.log(responseData.types);
-              this.setState({companyTypeList:responseData.types});
+            //  console.log(responseData.types);
+              this.setState({companyTypeList:responseData.types,gotCompanyTypesList:true});
             }
           })
           .done();
 
     }
 
-    fetchDataAnnualSales() {
-
+    fetchDataAnnualSales = () => {
     //var TOKEN = await AsyncStorage.getItem('token');
 
     fetch('http://192.168.137.43:8000/api/getAnnualSalesApi', {
       headers: {
         'Accept': 'application/json',
         //  'Authorization': 'Bearer ' + TOKEN
-        'Authorization': 'Bearer eyJhbGciOiJSUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJhc2Rhc2Rhc2R3YXNkdzExMTEiLCJpYXQiOjE1MDE3NzU0OTcsImV4cCI6MTUwMTc3OTA5N30.rbtrmXoTNclkIQRB6ZnJoJIB1n_o5sjnUAK4KylCS707fgsFPtI_pDbxKC-DkkEGIJJY0CWKw9oCTc2VIQQbb-8ifW4e4O1Sc57Dcuf-N4-F-1fR6xSscGC6nyN0fOH2XyoCvVaaycr2oOgT5Y-KE-5ItHLXcq4pCN1veueW9Amjj_R8u3XQQip6bQ26p101dkWkr59EVAyB5SqQmEu39KsbU2ddXd9CRZa3HXA9TJwW5wQfPkAI2BU4jnFPjPLM9CswBMSmNqxwLv7sWKjJ79PqomTIHqPR789rhkzgmY8yNYiaLRGVOHCgH1a5ioC2R7OzbcxK2ABmFTfy86ByYSHEx77Fx9BCqKuDuICCGf9W4YmgCzMPTySYsfzoS5MrwSe5hu5L0TrQvivmCk-jkss_n003O_yu18-SYUuhbeaLmFgUot8muC4nfJmobhkNe2kZAeNY3O-JDqxJrBkb5uJvdbvlWgYdOYmkbwLnAaxO86-5hxEzKFpMyXy-30dLunqpIiBCEZbWv11Q2gDEPOhgyF5rlqzQBoDLB_FsyaH_X7sDqKon07d-kZgFeZ-t6DWp28iDID2SJq8mkfh01nYfFrT9YVE3SqbSt_mQckcaVx-nfSxTL2nm6iRzYXH4xs3ky8owIX67SVOqQkQoPYW7AxpSVYpCGgCbJ_rU1Sg'
+        'Authorization': 'Bearer eyJhbGciOiJSUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJnZW9hamEiLCJpYXQiOjE1MDMxNjI5NDgsImV4cCI6MTUwMzE2NjU0OH0.JLuY1GDbquZRN1NIFk81mcnn3knUAOrgMZ-vF1McPfzy05n2wdwaUMd0MqrzVMZtnTOdtu6_FpWYIi27HwvxP462fSRPPXtpkdv5-mr2XPicJOWlYnCWAYBRzjkKsSSyVLZ-QXDHaWx6-2f59Rw5di4ake2xTu9-TW4kjNPP8s4VyUAcg99zahB1hPhapeqoE1vs46Q-TF86ZUrAHJqHibSUEXDV0EB4rI3ifexwBj26kHtFPBb-FvS27aDlc2hW8iwitakNH069sgdCnOuYxethV_YfFWvtuypUYrQ2gfbBJ3u2fpP8ZCz842QFNRcc3fnTD8wfmV1sApr4-nmMPydNcCfH7tqPr0uIG0z0IgiqY5S3unQnlp-ZiBUMQBmc37oZ9-_zkQ6A4gFju09V9bqlOvGYLApj0viV6T-7wO8Q6ROh7t_tsg2ChOwwFo_v9M74QpwNq78m5QUHSevrkRXXHjneMpFN62perlGhyqkr-ONoaM0nTKlF1KQUe393CpblqDdNyxhs99IBy0ofjhctIwp0fy7jPboY0siFIGEhbw8Whb3TV3r_chzyi1JJLA_RczY-N4-1YS-2xfeKGeV_YpA605qEVQ7ZlkEqCXJbgG6G-mPasdStMg6yYTz0ol2Gs02Md1wYxTfIrK-kJ6qLxyPMwpPNcGzkzdrmUzA'
       }
     })
         .then((response) => response.json())
         .then((responseData) => {
-
           if("message" in responseData){
                 console.log(responseData.message);
           }
           if(responseData.status == "error"){
               console.log("error");
           }else if(responseData.status == "success"){
-            console.log(responseData.ranges);
-            this.setState({ annualSalesList:responseData.ranges}); //isLoading: false,
+          //  console.log(responseData.ranges);
+            this.setState({ annualSalesList:responseData.ranges,gotAnnualSalesList:true}); //isLoading: false,
           }
         })
         .done();
@@ -95,7 +137,7 @@ export default class AddCompany extends Component{
         method: 'POST',
         headers: {
           //  'Authorization': 'Bearer ' + TOKEN
-          'Authorization': 'Bearer eyJhbGciOiJSUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJhc2Rhc2Rhc2R3YXNkdzExMTEiLCJpYXQiOjE1MDE3NzU0OTcsImV4cCI6MTUwMTc3OTA5N30.rbtrmXoTNclkIQRB6ZnJoJIB1n_o5sjnUAK4KylCS707fgsFPtI_pDbxKC-DkkEGIJJY0CWKw9oCTc2VIQQbb-8ifW4e4O1Sc57Dcuf-N4-F-1fR6xSscGC6nyN0fOH2XyoCvVaaycr2oOgT5Y-KE-5ItHLXcq4pCN1veueW9Amjj_R8u3XQQip6bQ26p101dkWkr59EVAyB5SqQmEu39KsbU2ddXd9CRZa3HXA9TJwW5wQfPkAI2BU4jnFPjPLM9CswBMSmNqxwLv7sWKjJ79PqomTIHqPR789rhkzgmY8yNYiaLRGVOHCgH1a5ioC2R7OzbcxK2ABmFTfy86ByYSHEx77Fx9BCqKuDuICCGf9W4YmgCzMPTySYsfzoS5MrwSe5hu5L0TrQvivmCk-jkss_n003O_yu18-SYUuhbeaLmFgUot8muC4nfJmobhkNe2kZAeNY3O-JDqxJrBkb5uJvdbvlWgYdOYmkbwLnAaxO86-5hxEzKFpMyXy-30dLunqpIiBCEZbWv11Q2gDEPOhgyF5rlqzQBoDLB_FsyaH_X7sDqKon07d-kZgFeZ-t6DWp28iDID2SJq8mkfh01nYfFrT9YVE3SqbSt_mQckcaVx-nfSxTL2nm6iRzYXH4xs3ky8owIX67SVOqQkQoPYW7AxpSVYpCGgCbJ_rU1Sg'},
+          'Authorization': 'Bearer eyJhbGciOiJSUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJnZW9hamEiLCJpYXQiOjE1MDMxNjI5NDgsImV4cCI6MTUwMzE2NjU0OH0.JLuY1GDbquZRN1NIFk81mcnn3knUAOrgMZ-vF1McPfzy05n2wdwaUMd0MqrzVMZtnTOdtu6_FpWYIi27HwvxP462fSRPPXtpkdv5-mr2XPicJOWlYnCWAYBRzjkKsSSyVLZ-QXDHaWx6-2f59Rw5di4ake2xTu9-TW4kjNPP8s4VyUAcg99zahB1hPhapeqoE1vs46Q-TF86ZUrAHJqHibSUEXDV0EB4rI3ifexwBj26kHtFPBb-FvS27aDlc2hW8iwitakNH069sgdCnOuYxethV_YfFWvtuypUYrQ2gfbBJ3u2fpP8ZCz842QFNRcc3fnTD8wfmV1sApr4-nmMPydNcCfH7tqPr0uIG0z0IgiqY5S3unQnlp-ZiBUMQBmc37oZ9-_zkQ6A4gFju09V9bqlOvGYLApj0viV6T-7wO8Q6ROh7t_tsg2ChOwwFo_v9M74QpwNq78m5QUHSevrkRXXHjneMpFN62perlGhyqkr-ONoaM0nTKlF1KQUe393CpblqDdNyxhs99IBy0ofjhctIwp0fy7jPboY0siFIGEhbw8Whb3TV3r_chzyi1JJLA_RczY-N4-1YS-2xfeKGeV_YpA605qEVQ7ZlkEqCXJbgG6G-mPasdStMg6yYTz0ol2Gs02Md1wYxTfIrK-kJ6qLxyPMwpPNcGzkzdrmUzA'},
 
           body: JSON.stringify({
             "company_name": this.state.companyName,
@@ -136,8 +178,8 @@ export default class AddCompany extends Component{
 
   render(){
 
+if(this.state.gotAnnualSalesList && this.state.gotCompanyTypesList && this.state.gotCompanyInfo){
       return(
-
           <View behavior="padding" style={styles.container}>
             <Text style={styles.label}>
               Company Name:
@@ -172,28 +214,35 @@ export default class AddCompany extends Component{
             <Text style={styles.label}>
               Company Type:
             </Text>
-            <Picker
-              selectedValue={this.state.companyType}
-              style={styles.pick}
-              onValueChange={(itemValue) => this.setState({companyType: itemValue})}>
-              <Picker.Item key={0} value={"0"} label={"Choose Company Type"} />
-              {this.state.companyTypeList.map( (s, i) => {
-                return <Picker.Item key={i} value={s} label={s} />
-              })}
-            </Picker>
+
+            <ModalPicker
+              data={this.state.companyTypeList}
+              initValue={"Choose Company Type"}
+              onChange={(option) => {
+                this.setState({companyType: option.key,companyTypeSt:option.label})
+              }}>
+              <TextInput
+                style={styles.input}
+                editable={false}
+                value={this.state.companyTypeSt} />
+            </ModalPicker>
 
             <Text style={styles.label}>
               Annual Sales Range:
             </Text>
-            <Picker
-              selectedValue={this.state.annualSales}
-              style={styles.pick}
-              onValueChange={(itemValue) => this.setState({annualSales: itemValue})}>
-              <Picker.Item key={"0"} value={"0"} label={"Choose Annual Sales"} />
-              {this.state.annualSalesList.map( (s, i) => {
-                return <Picker.Item key={i} value={s} label={s} />
-              })}
-            </Picker>
+
+
+            <ModalPicker
+              data={this.state.annualSalesList}
+              initValue={"Choose Annual Sales Range"}
+              onChange={(option) => {
+                this.setState({annualSales: option.key,annualSalesSt:option.label})
+              }}>
+              <TextInput
+                style={styles.input}
+                editable={false}
+                value={this.state.annualSalesSt} />
+            </ModalPicker>
 
             <View style={styles.buttonContainer}>
               <Button color="#841584" title="Submit" onPress={this._validateSubmitPress}></Button>
@@ -201,6 +250,19 @@ export default class AddCompany extends Component{
 
           </View>
         );
+      }else{
+        return(
+        <View style={styles.container}>
+          <ActivityIndicator
+            animating={!this.state.attrExist}
+            size={"large"}
+            hidesWhenStopped={true}
+          >
+          </ActivityIndicator>
+
+        </View>
+      );
+      }
 
   }
 }
@@ -213,11 +275,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-
   pick:{
       width: 150,
         },
-
   input: {
     padding: 4,
     height: 40,
@@ -228,14 +288,16 @@ const styles = StyleSheet.create({
     width: 250,
     alignSelf: 'center'
   },
-
   label: {
     fontSize: 18
   },
-
   buttonContainer:{
     margin: 20,
     flexDirection: 'row',
     justifyContent: 'space-between'
+  },
+  rowContainer:{
+    flex:1,
+    flexDirection:"row"
   }
 });

@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import { StyleSheet, Text, View,AppRegistry, Button,ActivityIndicator,Picker,Alert} from 'react-native';
+import { StyleSheet, Text, View,AppRegistry, Button,ActivityIndicator,Picker,Alert,ScrollView} from 'react-native';
 //import Row from './Row';
 
 
@@ -11,7 +11,6 @@ export default class CompanyAttributes extends Component {
           comps:[],
           attrExist:false
         }
-
         this._validateSubmitPress = this._validateSubmitPress.bind(this);
         this.componentDidMount = this.componentDidMount.bind(this);
     }
@@ -45,21 +44,12 @@ export default class CompanyAttributes extends Component {
     if(Inputerror ==1)
       return;
 
-
-  console.log(JSON.stringify(
-    Object.keys(toUpload).map(function(keyName, keyIndex) {
-      return keyName+":"+"\""+toUpload[keyName]+"\""
-    })));
-
-  //  return;
-
-
     fetch('http://192.168.137.43:8000/api/newCompanyAttrSubAttr',{
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         //  'Authorization': 'Bearer ' + TOKEN
-        'Authorization': 'Bearer eyJhbGciOiJSUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJnZW9hamEiLCJpYXQiOjE1MDIwMzM1OTAsImV4cCI6MTUwMjAzNzE5MH0.A96_1uQVxkpW7gOTgDDsbbdyK3r3i2W_X_tjJtc2EkzTlkqn890QXF5cY99WHJz5TiGjTDaY5ETc7ZGCLEG_LeBVIO_q0EGzJyGqrnMGaZ-K6llqtC8WaFWYi2pmQo-yIrfh4bVHpbxDwg94QEwA33JTCd7cSGV1sHxNR3QkYenAM2RIS5fYf5cVFFT2aXZqr7ZdQ79-Qfw8aSTDtKlRHdHzhHbEx2x7-ETvSTt5KRPzTq3xpSpBCKtSsNjrXS_88lp7xWYDvqskuJuB_0ytykK4W5c0PFOYrePJA2fdfMvwVHjga7RyncdD_Mppm2-7TqVI9Yljxi_i8MugPCYbjcHyrC6KDCPUZfgkqTMr6m0kDUiJmMkPxEezQ__oR2nDtNkEgBhKh_Q057b3mcllGmiy9lWLqQNrBR6t5eSw1Ll__I0FKjgVq1XAK0Q94jFOuL6zawmYbWyn7cn2uDnDtX-HeHZms0vSHxWSi_1898eeora5cXZ1grjaLH-6JBUWqaUE4vabPV1og2OPhfPAHXTf11tDvEq0We0nmMJdc3yzTUEOUqsxLuzBcX8DP14D0scpFvAABIE5kKw6XRB63e7UiytVjOXV8Okj4Nh5z_r3iVqLhUFIoTCfpdbpF_nlcNloBzNvr6UzNX-0t0ayfJMPNH3uTrTZY2KSm04xjRA'},
+        'Authorization': 'Bearer eyJhbGciOiJSUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJnZW9hamEiLCJpYXQiOjE1MDMxNjI5NDgsImV4cCI6MTUwMzE2NjU0OH0.JLuY1GDbquZRN1NIFk81mcnn3knUAOrgMZ-vF1McPfzy05n2wdwaUMd0MqrzVMZtnTOdtu6_FpWYIi27HwvxP462fSRPPXtpkdv5-mr2XPicJOWlYnCWAYBRzjkKsSSyVLZ-QXDHaWx6-2f59Rw5di4ake2xTu9-TW4kjNPP8s4VyUAcg99zahB1hPhapeqoE1vs46Q-TF86ZUrAHJqHibSUEXDV0EB4rI3ifexwBj26kHtFPBb-FvS27aDlc2hW8iwitakNH069sgdCnOuYxethV_YfFWvtuypUYrQ2gfbBJ3u2fpP8ZCz842QFNRcc3fnTD8wfmV1sApr4-nmMPydNcCfH7tqPr0uIG0z0IgiqY5S3unQnlp-ZiBUMQBmc37oZ9-_zkQ6A4gFju09V9bqlOvGYLApj0viV6T-7wO8Q6ROh7t_tsg2ChOwwFo_v9M74QpwNq78m5QUHSevrkRXXHjneMpFN62perlGhyqkr-ONoaM0nTKlF1KQUe393CpblqDdNyxhs99IBy0ofjhctIwp0fy7jPboY0siFIGEhbw8Whb3TV3r_chzyi1JJLA_RczY-N4-1YS-2xfeKGeV_YpA605qEVQ7ZlkEqCXJbgG6G-mPasdStMg6yYTz0ol2Gs02Md1wYxTfIrK-kJ6qLxyPMwpPNcGzkzdrmUzA'},
 
         body: JSON.stringify(
           Object.keys(toUpload).map(function(keyName, keyIndex) {
@@ -88,7 +78,7 @@ export default class CompanyAttributes extends Component {
           fetch('http://192.168.137.43:8000/api/getAttrSubAttrsApi', {
             headers: {
               'Accept': 'application/json',
-              'Authorization': 'Bearer eyJhbGciOiJSUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJnZW9hamEiLCJpYXQiOjE1MDIwMzM1OTAsImV4cCI6MTUwMjAzNzE5MH0.A96_1uQVxkpW7gOTgDDsbbdyK3r3i2W_X_tjJtc2EkzTlkqn890QXF5cY99WHJz5TiGjTDaY5ETc7ZGCLEG_LeBVIO_q0EGzJyGqrnMGaZ-K6llqtC8WaFWYi2pmQo-yIrfh4bVHpbxDwg94QEwA33JTCd7cSGV1sHxNR3QkYenAM2RIS5fYf5cVFFT2aXZqr7ZdQ79-Qfw8aSTDtKlRHdHzhHbEx2x7-ETvSTt5KRPzTq3xpSpBCKtSsNjrXS_88lp7xWYDvqskuJuB_0ytykK4W5c0PFOYrePJA2fdfMvwVHjga7RyncdD_Mppm2-7TqVI9Yljxi_i8MugPCYbjcHyrC6KDCPUZfgkqTMr6m0kDUiJmMkPxEezQ__oR2nDtNkEgBhKh_Q057b3mcllGmiy9lWLqQNrBR6t5eSw1Ll__I0FKjgVq1XAK0Q94jFOuL6zawmYbWyn7cn2uDnDtX-HeHZms0vSHxWSi_1898eeora5cXZ1grjaLH-6JBUWqaUE4vabPV1og2OPhfPAHXTf11tDvEq0We0nmMJdc3yzTUEOUqsxLuzBcX8DP14D0scpFvAABIE5kKw6XRB63e7UiytVjOXV8Okj4Nh5z_r3iVqLhUFIoTCfpdbpF_nlcNloBzNvr6UzNX-0t0ayfJMPNH3uTrTZY2KSm04xjRA'
+              'Authorization': 'Bearer eyJhbGciOiJSUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJnZW9hamEiLCJpYXQiOjE1MDMxNjI5NDgsImV4cCI6MTUwMzE2NjU0OH0.JLuY1GDbquZRN1NIFk81mcnn3knUAOrgMZ-vF1McPfzy05n2wdwaUMd0MqrzVMZtnTOdtu6_FpWYIi27HwvxP462fSRPPXtpkdv5-mr2XPicJOWlYnCWAYBRzjkKsSSyVLZ-QXDHaWx6-2f59Rw5di4ake2xTu9-TW4kjNPP8s4VyUAcg99zahB1hPhapeqoE1vs46Q-TF86ZUrAHJqHibSUEXDV0EB4rI3ifexwBj26kHtFPBb-FvS27aDlc2hW8iwitakNH069sgdCnOuYxethV_YfFWvtuypUYrQ2gfbBJ3u2fpP8ZCz842QFNRcc3fnTD8wfmV1sApr4-nmMPydNcCfH7tqPr0uIG0z0IgiqY5S3unQnlp-ZiBUMQBmc37oZ9-_zkQ6A4gFju09V9bqlOvGYLApj0viV6T-7wO8Q6ROh7t_tsg2ChOwwFo_v9M74QpwNq78m5QUHSevrkRXXHjneMpFN62perlGhyqkr-ONoaM0nTKlF1KQUe393CpblqDdNyxhs99IBy0ofjhctIwp0fy7jPboY0siFIGEhbw8Whb3TV3r_chzyi1JJLA_RczY-N4-1YS-2xfeKGeV_YpA605qEVQ7ZlkEqCXJbgG6G-mPasdStMg6yYTz0ol2Gs02Md1wYxTfIrK-kJ6qLxyPMwpPNcGzkzdrmUzA'
             }
           })
           .then((response) => response.json())
@@ -103,14 +93,12 @@ export default class CompanyAttributes extends Component {
               var newState = {};
 
               this.state.comps.map((a,i) => {
-                newState[a.Name] = ''
+                newState[a.Name] = a.selected_sub_attr
               })
 
               newState['attrExist'] = true;
               newState['comps'] = this.state.comps;
               this.setState(newState);
-
-            ///  console.log(this.state);
 
             }
           }).catch((error) => {
@@ -145,20 +133,18 @@ export default class CompanyAttributes extends Component {
                 >
                   <Picker.Item key="0" value="0" label="Choose Value"/>
                   {a.sub_attrs.map( (s, j) => {
-                    return <Picker.Item key={j} value={s.Name} label={s.Name} />
+                    return <Picker.Item key={j} value={s.Id} label={s.Name} />
                   })}
                 </Picker>
               </View>
             });
-
             return(
-              <View style={styles.container}>
+              <ScrollView style={{flex:1}}>
                 { renderView }
-
                 <View style={styles.buttonContainer}>
                   <Button color="#841584" title="Submit" onPress={this._validateSubmitPress}></Button>
                 </View>
-              </View>
+              </ScrollView>
             );
           }
   }
@@ -178,9 +164,10 @@ const styles = StyleSheet.create({
     //  flex:1,
       flexDirection: 'row',
       alignItems: 'center',
+      alignSelf:'center'
     },
     pick:{
-        width: 100,
+        width: 150,
           },
     label: {
       fontSize: 18
@@ -188,6 +175,7 @@ const styles = StyleSheet.create({
     buttonContainer:{
       margin: 20,
       flexDirection: 'row',
-      justifyContent: 'space-between'
+      justifyContent: 'space-between',
+      alignSelf:'center'
     }
 });
