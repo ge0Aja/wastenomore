@@ -11,7 +11,7 @@ export default class CompanyAttributes extends Component {
           comps:[],
           attrExist:false
         }
-        this._validateSubmitPress = this._validateSubmitPress.bind(this);
+        //this._validateSubmitPress = this._validateSubmitPress.bind(this);
         this.componentDidMount = this.componentDidMount.bind(this);
     }
 
@@ -23,7 +23,7 @@ export default class CompanyAttributes extends Component {
       }
   }
 
-  _validateSubmitPress(){
+  _validateSubmitPress = () => {
 
     var toUpload = {};
     var Inputerror = 0;
@@ -49,14 +49,16 @@ export default class CompanyAttributes extends Component {
       headers: {
         'Content-Type': 'application/json',
         //  'Authorization': 'Bearer ' + TOKEN
-        'Authorization': 'Bearer eyJhbGciOiJSUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJnZW9hamEiLCJpYXQiOjE1MDMxNjI5NDgsImV4cCI6MTUwMzE2NjU0OH0.JLuY1GDbquZRN1NIFk81mcnn3knUAOrgMZ-vF1McPfzy05n2wdwaUMd0MqrzVMZtnTOdtu6_FpWYIi27HwvxP462fSRPPXtpkdv5-mr2XPicJOWlYnCWAYBRzjkKsSSyVLZ-QXDHaWx6-2f59Rw5di4ake2xTu9-TW4kjNPP8s4VyUAcg99zahB1hPhapeqoE1vs46Q-TF86ZUrAHJqHibSUEXDV0EB4rI3ifexwBj26kHtFPBb-FvS27aDlc2hW8iwitakNH069sgdCnOuYxethV_YfFWvtuypUYrQ2gfbBJ3u2fpP8ZCz842QFNRcc3fnTD8wfmV1sApr4-nmMPydNcCfH7tqPr0uIG0z0IgiqY5S3unQnlp-ZiBUMQBmc37oZ9-_zkQ6A4gFju09V9bqlOvGYLApj0viV6T-7wO8Q6ROh7t_tsg2ChOwwFo_v9M74QpwNq78m5QUHSevrkRXXHjneMpFN62perlGhyqkr-ONoaM0nTKlF1KQUe393CpblqDdNyxhs99IBy0ofjhctIwp0fy7jPboY0siFIGEhbw8Whb3TV3r_chzyi1JJLA_RczY-N4-1YS-2xfeKGeV_YpA605qEVQ7ZlkEqCXJbgG6G-mPasdStMg6yYTz0ol2Gs02Md1wYxTfIrK-kJ6qLxyPMwpPNcGzkzdrmUzA'},
+        'Authorization': 'Bearer eyJhbGciOiJSUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJnZW9hamEiLCJpYXQiOjE1MDMzMjg1NTAsImV4cCI6MTUwMzMzMjE1MH0.egekQWFbRucq5wBLd4Wo6A4D0QUZxtzcWD-x_W6tPz0uxL9dnGD2IfxOKhEk2MP1_0yb-n-GdiG_RCPPgwIy3IojTcsun0Rk32I-WGqGLJAe75vTsfRx3nLL-vfSW68eUIjMwqH_ItetLbVt1t03iWt-X1w7Rnk6jABL87BvWbJqO12K7ConXXk39pXOm-N9zTjSqrctClm5yKnhXOS5jXHNGanX_u7P4bjA6SAdme_prZoWVBQulYMuaRCuSmdgSc3yutj7gPn5d-CEfpBuaKED--jeHK1cX6sjTJVim0zHG6ts7YjDOWCsIPecYNR27kSvxs59jhsZ7FZ7CCmWLLeS6yHfePijFZdKrIXX8DbCx-GEaHC5FJCm4UDQ7SFpCv_U7K81anE_WTf2LJ55kdfVsdvR0U8O01Yc4CeLrDqR5rFe32eC8Ux_5hAsF5YIzUN8837hPvDGuyA0Oc_Wzlm7Y0J6b-pY7QM-vxd5786wLRkGVml2ojxV58ySmuAogLoA2DVajxmG-FjdlYUFM6pEhV9Xb35B_BxXeuEeUC7jw0lM9if3s2eQ02aRPXQu8IVTBbjpIaO_CtVmXwoBW3fe26x_McCVwYMpH_JjRdv-szGyNrEn93LRI3O3EQBMW61N1Io1Oo18iOchriHJY0gTWsy7Y98JhTApiN9wkJE'},
 
         body: JSON.stringify(
           Object.keys(toUpload).map(function(keyName, keyIndex) {
+            console.log(keyName+":"+toUpload[keyName]);
             return keyName+":"+toUpload[keyName]
           })
+
         )
-      })
+            })
       .then((response) =>  response.json())
       .then((responseData) => {
         console.log(responseData);
@@ -74,11 +76,11 @@ export default class CompanyAttributes extends Component {
 
   }
 
-  _getAttrs() {
+  _getAttrs = () =>  {
           fetch('http://192.168.137.43:8000/api/getAttrSubAttrsApi', {
             headers: {
               'Accept': 'application/json',
-              'Authorization': 'Bearer eyJhbGciOiJSUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJnZW9hamEiLCJpYXQiOjE1MDMxNjI5NDgsImV4cCI6MTUwMzE2NjU0OH0.JLuY1GDbquZRN1NIFk81mcnn3knUAOrgMZ-vF1McPfzy05n2wdwaUMd0MqrzVMZtnTOdtu6_FpWYIi27HwvxP462fSRPPXtpkdv5-mr2XPicJOWlYnCWAYBRzjkKsSSyVLZ-QXDHaWx6-2f59Rw5di4ake2xTu9-TW4kjNPP8s4VyUAcg99zahB1hPhapeqoE1vs46Q-TF86ZUrAHJqHibSUEXDV0EB4rI3ifexwBj26kHtFPBb-FvS27aDlc2hW8iwitakNH069sgdCnOuYxethV_YfFWvtuypUYrQ2gfbBJ3u2fpP8ZCz842QFNRcc3fnTD8wfmV1sApr4-nmMPydNcCfH7tqPr0uIG0z0IgiqY5S3unQnlp-ZiBUMQBmc37oZ9-_zkQ6A4gFju09V9bqlOvGYLApj0viV6T-7wO8Q6ROh7t_tsg2ChOwwFo_v9M74QpwNq78m5QUHSevrkRXXHjneMpFN62perlGhyqkr-ONoaM0nTKlF1KQUe393CpblqDdNyxhs99IBy0ofjhctIwp0fy7jPboY0siFIGEhbw8Whb3TV3r_chzyi1JJLA_RczY-N4-1YS-2xfeKGeV_YpA605qEVQ7ZlkEqCXJbgG6G-mPasdStMg6yYTz0ol2Gs02Md1wYxTfIrK-kJ6qLxyPMwpPNcGzkzdrmUzA'
+              'Authorization': 'Bearer eyJhbGciOiJSUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJnZW9hamEiLCJpYXQiOjE1MDMzMjg1NTAsImV4cCI6MTUwMzMzMjE1MH0.egekQWFbRucq5wBLd4Wo6A4D0QUZxtzcWD-x_W6tPz0uxL9dnGD2IfxOKhEk2MP1_0yb-n-GdiG_RCPPgwIy3IojTcsun0Rk32I-WGqGLJAe75vTsfRx3nLL-vfSW68eUIjMwqH_ItetLbVt1t03iWt-X1w7Rnk6jABL87BvWbJqO12K7ConXXk39pXOm-N9zTjSqrctClm5yKnhXOS5jXHNGanX_u7P4bjA6SAdme_prZoWVBQulYMuaRCuSmdgSc3yutj7gPn5d-CEfpBuaKED--jeHK1cX6sjTJVim0zHG6ts7YjDOWCsIPecYNR27kSvxs59jhsZ7FZ7CCmWLLeS6yHfePijFZdKrIXX8DbCx-GEaHC5FJCm4UDQ7SFpCv_U7K81anE_WTf2LJ55kdfVsdvR0U8O01Yc4CeLrDqR5rFe32eC8Ux_5hAsF5YIzUN8837hPvDGuyA0Oc_Wzlm7Y0J6b-pY7QM-vxd5786wLRkGVml2ojxV58ySmuAogLoA2DVajxmG-FjdlYUFM6pEhV9Xb35B_BxXeuEeUC7jw0lM9if3s2eQ02aRPXQu8IVTBbjpIaO_CtVmXwoBW3fe26x_McCVwYMpH_JjRdv-szGyNrEn93LRI3O3EQBMW61N1Io1Oo18iOchriHJY0gTWsy7Y98JhTApiN9wkJE'
             }
           })
           .then((response) => response.json())

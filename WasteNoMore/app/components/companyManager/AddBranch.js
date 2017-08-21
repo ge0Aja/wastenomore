@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import { StyleSheet, Text, View,AppRegistry, TouchableOpacity,ActivityIndicator,Picker,Alert, Modal, Dimensions, ListView, TextInput,Keyboard,TouchableHighlight, Switch, Image} from 'react-native';
 
-import demoData from './demoBranchData.js';
+//import demoData from './demoBranchData.js';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import Moment from 'moment';
 import ModalPicker from 'react-native-modal-picker';

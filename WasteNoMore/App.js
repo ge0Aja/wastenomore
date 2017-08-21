@@ -10,6 +10,7 @@ import AddCompany from './app/components/companyManager/AddCompany';
 import CompanyAttribs from './app/components/companyManager/CompanyAttributes';
 import AddBranch from './app/components/companyManager/AddBranch';
 import ManageLicenses from './app/components/companyManager/ManageLicenses';
+import Survey from './app/components/companyManager/Survey';
 
 const WasteNoMoreNavUser = StackNavigator({
   Home: { screen: MainComponent }, //this should be the sign in page
@@ -19,7 +20,8 @@ const WasteNoMoreNavUser = StackNavigator({
   AddCompany: {screen: AddCompany},
   CompanyAttribs: {screen: CompanyAttribs},
   AddBranch: {screen: AddBranch},
-  ManageLicense: {screen: ManageLicenses}
+  ManageLicense: {screen: ManageLicenses},
+  Survey: {screen: Survey}
 },
 {
    initialRouteName: 'Home'
