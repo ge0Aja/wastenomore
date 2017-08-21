@@ -2,7 +2,7 @@ import React,{Component} from 'react';
 import { StyleSheet, Text, View,AppRegistry } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 
-import  MainComponent from './app/components/MainComponent';
+import MainComponent from './app/components/login/login';
 import Signup1 from './app/components/signup/Signup1';
 import Signup2 from './app/components/signup/Signup2';
 import ManagerHome from './app/components/companyManager/MainComponentManager';
@@ -13,7 +13,7 @@ import ManageLicenses from './app/components/companyManager/ManageLicenses';
 import Survey from './app/components/companyManager/Survey';
 
 const WasteNoMoreNavUser = StackNavigator({
-  Home: { screen: MainComponent }, //this should be the sign in page
+  Login: { screen: MainComponent },
   Signup: { screen: Signup1 },
   Signup2: { screen: Signup2 },
   ManagerMain: {screen: ManagerHome},
@@ -24,7 +24,7 @@ const WasteNoMoreNavUser = StackNavigator({
   Survey: {screen: Survey}
 },
 {
-   initialRouteName: 'Home'
+   initialRouteName: 'Login'
 });
 
 const AppNavigationUser = () => (
