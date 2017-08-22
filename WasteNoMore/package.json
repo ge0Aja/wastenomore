@@ -24,6 +24,7 @@
     "moment": "^2.18.1",
     "react": "16.0.0-alpha.12",
     "react-native": "^0.45.1",
+    "react-native-autocomplete-input": "^3.3.1",
     "react-native-highcharts": "^1.0.1",
     "react-native-modal-datetime-picker": "^4.9.0",
     "react-native-modal-picker": "0.0.16",

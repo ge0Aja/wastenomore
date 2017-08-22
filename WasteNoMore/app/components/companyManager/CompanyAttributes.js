@@ -12,12 +12,12 @@ export default class CompanyAttributes extends Component {
           attrExist:false
         }
         //this._validateSubmitPress = this._validateSubmitPress.bind(this);
-        this.componentDidMount = this.componentDidMount.bind(this);
+      //  this.componentDidMount = this.componentDidMount.bind(this);
     }
 
 
   componentDidMount() {
-    if(!this.attrExist){
+    if(!this.state.attrExist){
         console.log('called getattrs again');
         this._getAttrs();
       }
@@ -77,6 +77,9 @@ export default class CompanyAttributes extends Component {
   }
 
   _getAttrs = () =>  {
+        //var TOKEN = await AsyncStorage.getItem('token');
+        //  'Authorization': 'Bearer ' + TOKEN
+
           fetch('http://192.168.137.43:8000/api/getAttrSubAttrsApi', {
             headers: {
               'Accept': 'application/json',

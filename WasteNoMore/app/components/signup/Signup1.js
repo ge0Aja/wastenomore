@@ -31,11 +31,11 @@ export default class Signup1 extends Component{
 
     _validateButtonPress = () => {
 
-        fetch('http://192.168.1.111:9111/api/license_authentication', {
+        fetch('http://192.168.137.43:8000/api/license_authentication', {
             method: 'POST',
             headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                "license": '0920416b7ab50c5f23d7ce8d535c7ebb',//this.state.license,
+                "license": '6b3886bf5e93caea52458bb722ce9339',//this.state.license,
                 "timestamp": Date.now()
             })
         })
@@ -44,14 +44,14 @@ export default class Signup1 extends Component{
                 console.log(responseData);
                 if(responseData.status == "GRANTED"){
                     this.saveItem('license', responseData.license),
-                    this.saveItem('expiry', responseData.expiry),
+                  //  this.saveItem('expiry', responseData.expiry),
                     this.saveItem('role', responseData.role),
                         this.saveItem('challange', responseData.random),
                         this.props.navigation.navigate('Signup2');
                 }else if (responseData.status == "DENIED"){
                     Alert.alert('Access Denied');
                 }else {
-                    Alert.alert('Errorz');
+                    Alert.alert('Error');
                 }
             })
             .done();
