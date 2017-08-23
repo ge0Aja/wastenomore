@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import { StyleSheet, Text, View,AppRegistry, TouchableOpacity,ActivityIndicator,Alert, TextInput, Image, Button, Keyboard} from 'react-native';
+import { StyleSheet, Text, View,AppRegistry, TouchableOpacity,ActivityIndicator,Alert, TextInput, Image, Button, Keyboard,ScrollView} from 'react-native';
 
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import Moment from 'moment';
@@ -29,9 +29,44 @@ export default class addWaste extends Component {
       wasteDateBeauty:'Choose Date',
       selectedCompany:'',
       selectedCompanySt:'Choose Collection Company',
-      wasteCompanies:[]
+      wasteCompanies:[],
+
+      itemError:'',
+      unitError:'',
+      reasonError:'',
+      quantityError:'',
+      dateError:'',
+      companyError:'',
 
     }
+  }
+
+  resetErrorMessages = () => {
+    this.setState({itemError:'testttt',
+    unitError:'',
+    reasonError:'',
+    quantityError:'',
+    dateError:'',
+    companyError:'',});
+  }
+
+  resetInputs = () => {
+
+    this.setState({
+
+      query:'',
+      selectedItem:'',
+      selectedUnit:'',
+      quantity:'',
+      selectedUnitSt:'Choose Unit',
+      selectedReason:'',
+      selectedReasonSt:'Choose Reason',
+      isDateTimePickerVisible: false,
+      wasteDate:'',
+      wasteDateBeauty:'Choose Date',
+      selectedCompany:'',
+      selectedCompanySt:'Choose Collection Company',
+    });
   }
 
  renderSubCat(item)  {
@@ -67,7 +102,7 @@ export default class addWaste extends Component {
       fetch('http://192.168.137.43:8000/api/getBranchSubCats', {
         headers: {
           'Accept': 'application/json',
-          'Authorization': 'Bearer eyJhbGciOiJSUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJnZW9icmFuY2giLCJpYXQiOjE1MDM0MTM5OTQsImV4cCI6MTUwMzQxNzU5NH0.B9__vHBi9F5l1nE373a75iXkZrlsEmwvdc7bqdCVkgKDVT_ybrCk25DPUHwFVVnn1vI2G2FFht0g58ALaNdDVG6zZErCV9khMSr2oHbtdHetc9nf0k-ZLj_I58k75EkV04DKA2tygBgBb469lMYjtqlENc3_RPx_xNw4_2xtlsPIL0xPKMhCrX9EMRD4N9-b7B3jPVWW6T5x6_N9QldlEkq0TIJHrU6K7j4eam_JlnCSftbUGh3ajz1S0YQ0rcPXXJzUgAUZqDN5tdjz6Z1tVDdt1_LQkMvqwSgMjQ82OztGJnKKTsRDJZf1EbzED37fRCukXgxyKdBFoarM0rv3V_2HbRoj06TZdPLnbw8_n11-0SOvtFfFpJFXguwNkMo2k4rGZDtnrz2bJz7FdOY8bugzFrGsOLCfn0V0LTsaoGwbCu-yPGfnTLZS90UTDAodC1a-Tn9e-ukFztdqwFuy8Jt2FspZPK_wa2ZL7gOe7rtgKsyeWFyXWFRUQnm9eAD-Sx9dshR0HwDtyTSIkbBZz_MagQNaY26fE5u0_l1vXdOBltnRHGhtIEt6sjLb9_Zo9u_66Udmqw0-L9ntpiatD1TjDI_H2tnUBnYoNMn80xjVnxP6Qmlv54gAyaebV4XN0LVKZ5i32o3l7QNOUwP3OBr-lr1oirbivKGKn0R_Lp0'
+          'Authorization': 'Bearer eyJhbGciOiJSUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJnZW9icmFuY2giLCJpYXQiOjE1MDM0ODY1MTYsImV4cCI6MTUwMzQ5MDExNn0.PkTRv7e7KGaitQjUIGnU57KAK0KJ_evQ2OpeuTWfhpzvTfKh5FtoiBBER2Xn9Ce3WcntF9rK9Q-BqgMqThsBBHiXv8-t4zBxhZjKoG5UZCcCko3k8l4SGVhKp1-yQS4AQuddsEF0oVNfF8m8hwtSAqOu4hUGWlpcEONlYaHeKpmPWZO5GCuTvntRrvMfv268Zq95zC7e98vpLsQPrft9iPo_PztxJFfR1DY8RJCcecuY8XLJdmKVNj_vleJLSDZEej7B0f6tyg_4DODrVJyB2qUtetZofHviYzKebtjXKpRIfKdEu7stgnYXQBh9anvd-6uyLjHPRL1Nzhq7D6Qqw-7fMWofLVDeN1f4Vg7i1mBqTC_BEAIjVPffrG4EInovjXDDlt8Pg7O99UTZLxePmP1C6KkTHpQSwVGvxkrXuBeNKW5MmoCFpYJRY2ZGDHST-IxEGXtJvsLx2QaYnW2Kxh6aJyT4CCwihtwbHoN_SQXvjyDT3CxLySFnlIF0Zhy-bjSvLrTLtX9ONa4tsp5-3-jp6kcnnP94juTzo4jpFcDWk-JWy0ObckjAP9UwfYCytfqRfir9kWHVvvvYzk0a6of_5Aorn8sCz_ggXWWIYx9zM888dwBSWPMS6JlBF5yvslK7tyTDqD0LaJ4UTmNada1NKYNDXk_8dXUhnyIiyEw'
         }
       })
       .then((response) => response.json())
@@ -89,6 +124,81 @@ export default class addWaste extends Component {
 
   _validateSubmitPress = () => {
 
+    this.resetErrorMessages();
+
+    var inputError = false ;
+
+    if(this.state.selectedItem == '' || this.state.selectedItem == '0'){
+      return alert('Choose Waste Type');
+    }
+
+    if(this.state.quantity == '' || this.state.quantity == '0'){
+      this.setState({quantityError: 'Set Waste Quantity'})
+      inputError = true;
+    }
+
+
+    if(this.state.selectedUnit == '' || this.state.selectedUnit == '0'){
+      this.setState({unitError: 'Choose Unit'})
+      inputError = true;
+    }
+
+    if(this.state.selectedReason == '' || this.state.selectedReason == '0'){
+      this.setState({reasonError: 'Choose Waste Reason'})
+      inputError = true;
+    }
+
+    if(this.state.selectedCompany == '' || this.state.selectedCompany == '0'){
+      this.setState({companyError: 'Choose Waste Collection Company'})
+      inputError = true;
+    }
+
+    if(this.state.wasteDate == ''){
+      this.setState({dateError: 'Choose Waste Date'})
+      inputError = true;
+    }
+
+    if(inputError)
+      return;
+
+      fetch('http://192.168.137.43:8000/api/addBranchWaste',{
+        method: 'POST',
+        headers: {
+          //  'Authorization': 'Bearer ' + TOKEN
+          'Authorization': 'Bearer eyJhbGciOiJSUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJnZW9icmFuY2giLCJpYXQiOjE1MDM0ODY1MTYsImV4cCI6MTUwMzQ5MDExNn0.PkTRv7e7KGaitQjUIGnU57KAK0KJ_evQ2OpeuTWfhpzvTfKh5FtoiBBER2Xn9Ce3WcntF9rK9Q-BqgMqThsBBHiXv8-t4zBxhZjKoG5UZCcCko3k8l4SGVhKp1-yQS4AQuddsEF0oVNfF8m8hwtSAqOu4hUGWlpcEONlYaHeKpmPWZO5GCuTvntRrvMfv268Zq95zC7e98vpLsQPrft9iPo_PztxJFfR1DY8RJCcecuY8XLJdmKVNj_vleJLSDZEej7B0f6tyg_4DODrVJyB2qUtetZofHviYzKebtjXKpRIfKdEu7stgnYXQBh9anvd-6uyLjHPRL1Nzhq7D6Qqw-7fMWofLVDeN1f4Vg7i1mBqTC_BEAIjVPffrG4EInovjXDDlt8Pg7O99UTZLxePmP1C6KkTHpQSwVGvxkrXuBeNKW5MmoCFpYJRY2ZGDHST-IxEGXtJvsLx2QaYnW2Kxh6aJyT4CCwihtwbHoN_SQXvjyDT3CxLySFnlIF0Zhy-bjSvLrTLtX9ONa4tsp5-3-jp6kcnnP94juTzo4jpFcDWk-JWy0ObckjAP9UwfYCytfqRfir9kWHVvvvYzk0a6of_5Aorn8sCz_ggXWWIYx9zM888dwBSWPMS6JlBF5yvslK7tyTDqD0LaJ4UTmNada1NKYNDXk_8dXUhnyIiyEw'},
+
+          body: JSON.stringify({
+            "item": this.state.selectedItem,
+            "unit": this.state.selectedUnit,
+            "quantity": this.state.quantity,
+            "reason": this.state.selectedReason,
+            "company": this.state.selectedCompany,
+            "date":this.state.wasteDate
+            })
+        })
+        .then((response) => response.json())
+        .then((responseData) => {
+            console.log(responseData);
+          if("message" in responseData){
+                console.log(responseData.message);
+          }
+          if(responseData.status == "error"){
+              console.log("error, reason:", responseData.reason);
+              Alert.alert(
+              'Error',
+              responseData.reason,
+              [
+                {text: 'OK', onPress: () => console.log('OK Pressed')},
+              ],
+              { cancelable: false }
+            )
+          }else if(responseData.status == "success"){
+            alert("waste record added !");
+              this.resetInputs();
+          }
+        })
+        .done();
+
   }
 
 
@@ -98,13 +208,9 @@ export default class addWaste extends Component {
     if(!query){
       return [];
     }
-
     const items = this.state.items;
     const regex = new RegExp(`${query.trim()}`, 'i');
-
-   return items.filter(item => item.name.search(regex) >= 0);
-
-
+    return items.filter(item => item.name.search(regex) >= 0);
   }
 
   render(){
@@ -127,7 +233,8 @@ export default class addWaste extends Component {
         const comp = (a, b) => a.toLowerCase().trim() === b.toLowerCase().trim();
 
         return(
-          <View style={styles.container}>
+          <ScrollView style={{flex:1,backgroundColor:'white'}}>
+
             <Autocomplete
               autoCapitalize="none"
               autoCorrect={false}
@@ -144,17 +251,25 @@ export default class addWaste extends Component {
                 </TouchableOpacity>
               )}
             />
-            <View style={styles.descriptionContainer}>
+
+
+            <View style={[styles.descriptionContainer,{marginTop:85}]}>
               <TextInput
                 style={styles.tinput}
                 placeholder={"Quantity"}
                 onChangeText={(text) => this.setState({quantity: text})}
                 value = {this.state.quantity}
-                keyboardType={'numeric'}
+                keyboardType="numeric"
+
               >
               </TextInput>
+
+              <Text style={styles.errorMessage}>
+                {this.state.quantityError}
+              </Text>
+
             </View>
-            <View style={[styles.descriptionContainer,{marginTop:-10}]}>
+            <View style={styles.descriptionContainer}>
               <ModalPicker
                 data={this.state.itemUnits}
                 initValue={"Choose Unit"}
@@ -168,9 +283,13 @@ export default class addWaste extends Component {
                   value={this.state.selectedUnitSt} />
               </ModalPicker>
 
+              <Text style={styles.errorMessage}>
+                {this.state.unitError}
+              </Text>
+
             </View>
 
-            <View style={[styles.descriptionContainer,{marginTop:-10}]}>
+            <View style={styles.descriptionContainer}>
               <ModalPicker
                 data={this.state.wasteReasons}
                 initValue={"Choose Reason"}
@@ -184,9 +303,13 @@ export default class addWaste extends Component {
                   value={this.state.selectedReasonSt} />
               </ModalPicker>
 
+              <Text style={styles.errorMessage}>
+                {this.state.reasonError}
+              </Text>
+
             </View>
 
-            <View style={[styles.descriptionContainer,{marginTop:-10}]}>
+            <View style={styles.descriptionContainer}>
               <ModalPicker
                 data={this.state.wasteCompanies}
                 initValue={"Choose Collection Company"}
@@ -199,18 +322,24 @@ export default class addWaste extends Component {
                   editable={false}
                   value={this.state.selectedCompanySt} />
               </ModalPicker>
-              
+
+              <Text style={styles.errorMessage}>
+                {this.state.companyError}
+              </Text>
+
             </View>
 
-
-            <View>
+            <View style={styles.descriptionContainer}>
 
               <TextInput style={styles.tinput}
                 onFocus={() => {Keyboard.dismiss();this._showDateTimePicker();}}
                 value = {this.state.wasteDateBeauty}
               >
-
               </TextInput>
+
+              <Text style={styles.errorMessage}>
+                {this.state.dateError}
+              </Text>
 
               <DateTimePicker
                 isVisible={this.state.isDateTimePickerVisible}
@@ -222,7 +351,7 @@ export default class addWaste extends Component {
             <View style={styles.buttonContainer}>
               <Button color="#841584" title="Submit" onPress={this._validateSubmitPress}></Button>
             </View>
-          </View>
+          </ScrollView>
         );
       }
 
@@ -237,15 +366,15 @@ const styles = StyleSheet.create({
     alignItems:'center'
   },
   autocompleteContainer: {
-  //  flex: 1,
-    left: 105,
+   flex: 1,
+    left: 0,
     position: 'absolute',
     right: 0,
     top: 0,
     zIndex: 1,
     marginTop:25,
-    width:200,
-    height:50,
+
+    //alignItems:'center'
   },
   itemText: {
     fontSize: 15,
@@ -255,11 +384,9 @@ const styles = StyleSheet.create({
     // `backgroundColor` needs to be set otherwise the
     // autocomplete input will disappear on text input.
     backgroundColor: 'white',
-    marginTop: 50
-  },
-  infoText: {
-    textAlign: 'center',
-    marginTop:75
+    alignItems: 'center',
+    alignSelf:'center'
+  //  marginTop: 20
   },
   titleText: {
     fontSize: 18,
@@ -283,8 +410,7 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     borderWidth: 1,
     borderRadius: 5,
-    margin:15,
-    marginTop:25,
+    margin:10,
     width: 200,
   },
   pick:{
@@ -295,5 +421,10 @@ const styles = StyleSheet.create({
     // flexDirection: 'row',
     // justifyContent: 'space-between',
     alignSelf:'center'
+  },
+  errorMessage:{
+      alignSelf:'center',
+      fontSize: 10,
+      color: 'red',
   }
 });
