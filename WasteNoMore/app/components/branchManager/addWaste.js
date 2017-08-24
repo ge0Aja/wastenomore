@@ -42,7 +42,7 @@ export default class addWaste extends Component {
   }
 
   resetErrorMessages = () => {
-    this.setState({itemError:'testttt',
+    this.setState({itemError:'',
     unitError:'',
     reasonError:'',
     quantityError:'',
@@ -69,14 +69,14 @@ export default class addWaste extends Component {
     });
   }
 
- renderSubCat(item)  {
-   const { name } = item;
-   return (
-     <View>
-       <Text style={styles.titleText}> {name}</Text>
-     </View>
-   );
- }
+ // renderSubCat(item)  {
+ //   const { name } = item;
+ //   return (
+ //     <View>
+ //       <Text style={styles.titleText}> {name}</Text>
+ //     </View>
+ //   );
+ // }
 
   componentDidMount(){
     this.getSubCats();
@@ -99,7 +99,7 @@ export default class addWaste extends Component {
     //var TOKEN = await AsyncStorage.getItem('token');
     //  'Authorization': 'Bearer ' + TOKEN
 
-      fetch('http://192.168.137.43:8000/api/getBranchSubCats', {
+      fetch('http://192.168.137.43:8000/api/getBranchWasteSubCats', {
         headers: {
           'Accept': 'application/json',
           'Authorization': 'Bearer eyJhbGciOiJSUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJnZW9icmFuY2giLCJpYXQiOjE1MDM0ODY1MTYsImV4cCI6MTUwMzQ5MDExNn0.PkTRv7e7KGaitQjUIGnU57KAK0KJ_evQ2OpeuTWfhpzvTfKh5FtoiBBER2Xn9Ce3WcntF9rK9Q-BqgMqThsBBHiXv8-t4zBxhZjKoG5UZCcCko3k8l4SGVhKp1-yQS4AQuddsEF0oVNfF8m8hwtSAqOu4hUGWlpcEONlYaHeKpmPWZO5GCuTvntRrvMfv268Zq95zC7e98vpLsQPrft9iPo_PztxJFfR1DY8RJCcecuY8XLJdmKVNj_vleJLSDZEej7B0f6tyg_4DODrVJyB2qUtetZofHviYzKebtjXKpRIfKdEu7stgnYXQBh9anvd-6uyLjHPRL1Nzhq7D6Qqw-7fMWofLVDeN1f4Vg7i1mBqTC_BEAIjVPffrG4EInovjXDDlt8Pg7O99UTZLxePmP1C6KkTHpQSwVGvxkrXuBeNKW5MmoCFpYJRY2ZGDHST-IxEGXtJvsLx2QaYnW2Kxh6aJyT4CCwihtwbHoN_SQXvjyDT3CxLySFnlIF0Zhy-bjSvLrTLtX9ONa4tsp5-3-jp6kcnnP94juTzo4jpFcDWk-JWy0ObckjAP9UwfYCytfqRfir9kWHVvvvYzk0a6of_5Aorn8sCz_ggXWWIYx9zM888dwBSWPMS6JlBF5yvslK7tyTDqD0LaJ4UTmNada1NKYNDXk_8dXUhnyIiyEw'
@@ -201,7 +201,6 @@ export default class addWaste extends Component {
 
   }
 
-
   findSubCat(query){
 
     console.log(query);
@@ -218,7 +217,7 @@ export default class addWaste extends Component {
         return(
           <View style={styles.container}>
             <ActivityIndicator
-              animating={!this.state.attrExist}
+              animating={!this.state.gotItems}
               size={"large"}
               hidesWhenStopped={true}
             >
@@ -333,6 +332,7 @@ export default class addWaste extends Component {
 
               <TextInput style={styles.tinput}
                 onFocus={() => {Keyboard.dismiss();this._showDateTimePicker();}}
+                placeholder={"Waste Date"}
                 value = {this.state.wasteDateBeauty}
               >
               </TextInput>
@@ -377,8 +377,11 @@ const styles = StyleSheet.create({
     //alignItems:'center'
   },
   itemText: {
-    fontSize: 15,
-    margin: 2
+    fontSize: 20,
+    fontWeight: '500',
+    margin: 2,
+    marginBottom: 5,
+    marginTop: 5,
   },
   descriptionContainer: {
     // `backgroundColor` needs to be set otherwise the

@@ -12,7 +12,8 @@ import CompanyAttribs from './app/components/companyManager/CompanyAttributes';
 import AddBranch from './app/components/companyManager/AddBranch';
 import ManageLicenses from './app/components/companyManager/ManageLicenses';
 import Survey from './app/components/companyManager/Survey';
-import AddWaste from './app/components/branchManager/addWaste'
+import AddWaste from './app/components/branchManager/addWaste';
+import AddPurchase from './app/components/branchManager/addPurchase';
 
 const WasteNoMoreNavUser = StackNavigator({
   Login: { screen: MainComponent },
@@ -24,7 +25,8 @@ const WasteNoMoreNavUser = StackNavigator({
   AddBranch: {screen: AddBranch},
   ManageLicense: {screen: ManageLicenses},
   Survey: {screen: Survey},
-  AddWaste : {screen: AddWaste}
+  AddWaste : {screen: AddWaste},
+  AddPurchase: {screen: AddPurchase}
 },
 {
    initialRouteName: 'Login'
