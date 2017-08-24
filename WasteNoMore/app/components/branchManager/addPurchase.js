@@ -9,6 +9,16 @@ import ModalPicker from 'react-native-modal-picker';
 
 export default class addPurchase extends Component {
 
+  static navigationOptions = {
+     drawerLabel: 'Add Purchase',
+     drawerIcon: ({ tintColor }) => (
+       <Image
+         source={require('WasteNoMore/resources/icons/add-icon.png')}
+         style={[styles.icon, {tintColor: tintColor}]}
+       />
+     ),
+   };
+
   constructor(){
     super();
 
@@ -386,5 +396,9 @@ const styles = StyleSheet.create({
       alignSelf:'center',
       fontSize: 10,
       color: 'red',
+  },
+  icon: {
+    width: 24,
+    height: 24,
   }
 });

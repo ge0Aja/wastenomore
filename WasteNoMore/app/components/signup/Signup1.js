@@ -43,8 +43,7 @@ export default class Signup1 extends Component{
             .then((responseData) => {
                 console.log(responseData);
                 if(responseData.status == "GRANTED"){
-                    this.saveItem('license', responseData.license),
-                  //  this.saveItem('expiry', responseData.expiry),
+                  //  this.saveItem('license', responseData.license),
                     this.saveItem('role', responseData.role),
                         this.saveItem('challange', responseData.random),
                         this.props.navigation.navigate('Signup2');
@@ -55,14 +54,6 @@ export default class Signup1 extends Component{
                 }
             })
             .done();
-
-
-        // console.log('validatePressed');
-        // if(!this.state.license) return;
-        // console.log(JSON.stringify({
-        //         "license": '0920416b7ab50c5f23d7ce8d535c7ebb',//this.state.license,
-        //         "timestamp": Date.now()
-        //     }));
     };
 
     render(){

@@ -6,7 +6,7 @@ import { StackNavigator } from 'react-navigation';
 import MainComponent from './app/components/MainComponent'
 import Signup1 from './app/components/signup/Signup1';
 import Signup2 from './app/components/signup/Signup2';
-import ManagerHome from './app/components/companyManager/MainComponentManager';
+import ManagerHome from './app/components/companyManager/MainComponentManager'; //MainComponentManager
 import AddCompany from './app/components/companyManager/AddCompany';
 import CompanyAttribs from './app/components/companyManager/CompanyAttributes';
 import AddBranch from './app/components/companyManager/AddBranch';
@@ -14,32 +14,39 @@ import ManageLicenses from './app/components/companyManager/ManageLicenses';
 import Survey from './app/components/companyManager/Survey';
 import AddWaste from './app/components/branchManager/addWaste';
 import AddPurchase from './app/components/branchManager/addPurchase';
+import BranchHome from './app/components/branchManager/mainComponentBranchManager'
 
-const WasteNoMoreNavUser = StackNavigator({
-  Login: { screen: MainComponent },
-  Signup: { screen: Signup1 },
-  Signup2: { screen: Signup2 },
-  ManagerMain: {screen: ManagerHome},
-  AddCompany: {screen: AddCompany},
-  CompanyAttribs: {screen: CompanyAttribs},
-  AddBranch: {screen: AddBranch},
-  ManageLicense: {screen: ManageLicenses},
-  Survey: {screen: Survey},
-  AddWaste : {screen: AddWaste},
-  AddPurchase: {screen: AddPurchase}
-},
-{
-   initialRouteName: 'Login'
-});
 
-const AppNavigationUser = () => (
-  <WasteNoMoreNavUser  />
-);
+ // TODO: we should never add all screens into a single stack navigator
+ // TODO: the navigators should be separated by user type
+
+// const WasteNoMoreNavUser = StackNavigator({
+//   Login: { screen: MainComponent },
+//   Signup: { screen: Signup1 },
+//   Signup2: { screen: Signup2 },
+//   ManagerMain: {screen: ManagerHome},
+//   AddCompany: {screen: AddCompany},
+//   CompanyAttribs: {screen: CompanyAttribs},
+//   AddBranch: {screen: AddBranch},
+//   ManageLicense: {screen: ManageLicenses},
+//   Survey: {screen: Survey},
+//   AddWaste : {screen: AddWaste},
+//   AddPurchase: {screen: AddPurchase},
+//   BranchHome : {screen: BranchHome}
+// },
+// {
+//    initialRouteName: 'ManagerMain'
+// });
+//
+// const AppNavigationUser = () => (
+//   <WasteNoMoreNavUser  />
+// );
 
 export default class app extends Component {
   render() {
     return (
-        <AppNavigationUser />
+        // <AppNavigationUser />
+        <BranchHome />
     );
   }
 }

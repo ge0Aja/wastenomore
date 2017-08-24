@@ -1,17 +1,16 @@
 import React,{Component} from 'react';
-import { StyleSheet, Text, View,AppRegistry,Alert, Button,Platform } from 'react-native';
+import { StyleSheet, Text, View,AppRegistry,Alert, Button } from 'react-native';
 import { DrawerNavigator } from "react-navigation";
 import { StackNavigator } from 'react-navigation';
-import ManagerHome from './CompanyManagerHome';
-import AddBranch from './AddBranch';
-import EditCompany from './CompanyAttributes';
-import ManageLicense from './ManageLicenses';
+import ManagerHome from './branchManagerHome';
+import addWaste from './addWaste';
+import addPurchase from './addPurchase';
 
 
-export default class MainComponentManager extends Component {
-
+export default class mainComponentBranchManager extends Component {
+  //
   // static navigationOptions = ({ navigation }) => ({
-  //    title: 'Company Manager',
+  //    title: 'Branch Manager',
   //    headerRight: (
   //     <Button
   //       title={'info'}
@@ -37,16 +36,17 @@ const ManagerDrawer = DrawerNavigator({
   ManagerHome: {
     screen: ManagerHome,
   },
-  EditCompany: {
-    screen: EditCompany,
+  addWaste: {
+    screen: addWaste,
   },
-  AddBranch: {
-    screen: AddBranch,
+  addPurchase: {
+    screen: addPurchase,
   },
-  ManageLicense : {
-    screen: ManageLicense
-  }
+},
+{
+   initialRouteName: 'ManagerHome'
 });
+
 
 
 const DrawerIcon = ({ navigation }) => {
@@ -56,9 +56,7 @@ const DrawerIcon = ({ navigation }) => {
   return (
     <Button
       title={'  ≡  '}
-      style={{marginLeft:5,marginRight:50,paddingLeft:15,paddingRight:15}}
-
-
+      style={{marginLeft:5,marginRight:10,paddingLeft:15}}
       onPress={() => navigation.navigate("DrawerOpen")}
     />
   );
@@ -68,8 +66,7 @@ const AppNavigationManagerDrawer = StackNavigator({
   Home: {
     screen: ManagerDrawer,
     navigationOptions: props => ({
-      title: "Company Manager",
-
+      title: "Branch Manager",
       headerLeft: (<DrawerIcon {...props}/>)
     })
   }

@@ -1,9 +1,19 @@
 import React,{Component} from 'react';
-import { StyleSheet, Text, View,AppRegistry, Button,ActivityIndicator,Picker,Alert,ScrollView} from 'react-native';
+import { StyleSheet, Text, View,AppRegistry, Button,ActivityIndicator,Picker,Alert,ScrollView, Image} from 'react-native';
 //import Row from './Row';
 
 
 export default class CompanyAttributes extends Component {
+
+  static navigationOptions = {
+     drawerLabel: 'Company',
+     drawerIcon: ({ tintColor }) => (
+       <Image
+         source={require('WasteNoMore/resources/icons/company-icon.png')}
+         style={[styles.icon, {tintColor: tintColor}]}
+       />
+     ),
+   };
 
   constructor(){
     super();
@@ -182,5 +192,9 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignSelf:'center'
+    },
+    icon: {
+      width: 24,
+      height: 24,
     }
 });

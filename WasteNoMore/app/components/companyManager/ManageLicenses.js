@@ -1,8 +1,18 @@
 import React,{Component} from 'react';
-import { StyleSheet, Text, View,AppRegistry, TouchableOpacity,ActivityIndicator,Picker,Alert, Modal, Dimensions, ListView, TextInput,Keyboard,TouchableHighlight, Switch} from 'react-native';
+import { StyleSheet, Text, View,AppRegistry, TouchableOpacity,ActivityIndicator,Picker,Alert, Modal, Dimensions, ListView, TextInput,Keyboard,TouchableHighlight, Switch, Image} from 'react-native';
 import ModalPicker from 'react-native-modal-picker';
 
 export default class ManageLicenses extends Component{
+
+  static navigationOptions = {
+     drawerLabel: 'Manage Licences',
+     drawerIcon: ({ tintColor }) => (
+       <Image
+         source={require('WasteNoMore/resources/icons/company-icon.png')}
+         style={[styles.icon, {tintColor: tintColor}]}
+       />
+     ),
+   };
 
 constructor(){
   super();

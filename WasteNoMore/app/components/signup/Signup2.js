@@ -6,6 +6,8 @@ const background = require("../../../resources/icons/login1_bg.png");
 const lockIcon = require("../../../resources/icons/login1_lock.png");
 const personIcon = require("../../../resources/icons/login1_person.png");
 const emailIcon = require("../../../resources/icons/signup_email.png");
+
+
 export default class Signup2 extends Component{
 
     constructor(){
@@ -80,7 +82,8 @@ export default class Signup2 extends Component{
                             //this.saveItem('license', responseData.license),
                             //this.saveItem('expiry', responseData.expiry),
                             this.saveItem('token', responseData.token),
-                                this.saveItem('username',this.state.username),
+                            this.saveItem('refresh_token',responseData.refresh_token),
+                              //  this.saveItem('username',this.state.username),
 
                                 AsyncStorage.getItem('role').then((role) => {
                                     if(role === "COMPANY_MANAGER"){
@@ -88,7 +91,7 @@ export default class Signup2 extends Component{
                                             {
                                                 index: 0,
                                                 actions: [
-                                                    NavigationActions.navigate({ routeName: 'ManagerMain'})
+                                                    NavigationActions.navigate({ routeName: 'AddCompany'})
                                                 ]
                                             }));
                                     }else{
