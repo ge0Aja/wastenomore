@@ -1,10 +1,22 @@
-import React,{Component} from 'react';
-import { StyleSheet, Text, View, TextInput,Picker, KeyboardAvoidingView, Button,ActivityIndicator } from 'react-native';
+wimport React,{Component} from 'react';
+import { StyleSheet, Text, View, TextInput,Picker, KeyboardAvoidingView, Button,ActivityIndicator,Image } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import Moment from 'moment';
 import ModalPicker from 'react-native-modal-picker';
 
 export default class AddCompany extends Component{
+
+
+    static navigationOptions = {
+       drawerLabel: 'Company',
+       drawerIcon: ({ tintColor }) => (
+         <Image
+           source={require('WasteNoMore/resources/icons/company-icon.png')}
+           style={[styles.icon, {tintColor: tintColor}]}
+         />
+       ),
+     };
+
 
     constructor(){
       super();
@@ -299,5 +311,9 @@ const styles = StyleSheet.create({
   rowContainer:{
     flex:1,
     flexDirection:"row"
+  },
+  icon:{
+    width: 24,
+    height: 24,
   }
 });

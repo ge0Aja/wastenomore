@@ -9,6 +9,7 @@ export default class Survey extends Component {
     super();
         this.state = {
           comps:[],
+          surveyVersion:'',
           qExist:false
         }
         //this._validateSubmitPress = this._validateSubmitPress.bind(this);
@@ -47,7 +48,7 @@ export default class Survey extends Component {
         }
       });
 
-      console.log(toUpload);
+      //console.log(toUpload);
 
       if(Inputerror ==1)
         return;
@@ -105,7 +106,7 @@ export default class Survey extends Component {
         if(responseData.status == "error"){
           console.log("error");
         }else if(responseData.status == "success"){
-          this.setState({comps:responseData.questions,qExist:true});
+          this.setState({comps:responseData.questions,surveyVersion:responseData.version,qExist:true});
           var newState = {};
 
           this.state.comps.map((a,i) => {

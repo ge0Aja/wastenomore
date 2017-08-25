@@ -5,6 +5,7 @@ import { StackNavigator } from 'react-navigation';
 import ManagerHome from './CompanyManagerHome';
 import AddBranch from './AddBranch';
 import EditCompany from './CompanyAttributes';
+import CompanyDetails from './AddCompany';
 import ManageLicense from './ManageLicenses';
 
 
@@ -37,6 +38,9 @@ const ManagerDrawer = DrawerNavigator({
   ManagerHome: {
     screen: ManagerHome,
   },
+  CompanyDetails : {
+    screen:CompanyDetails,
+  }
   EditCompany: {
     screen: EditCompany,
   },
