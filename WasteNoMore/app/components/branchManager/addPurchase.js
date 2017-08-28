@@ -10,14 +10,14 @@ import ModalPicker from 'react-native-modal-picker';
 export default class addPurchase extends Component {
 
   static navigationOptions = {
-     drawerLabel: 'Add Purchase',
-     drawerIcon: ({ tintColor }) => (
-       <Image
-         source={require('WasteNoMore/resources/icons/add-icon.png')}
-         style={[styles.icon, {tintColor: tintColor}]}
-       />
-     ),
-   };
+    drawerLabel: 'Add Purchase',
+    drawerIcon: ({ tintColor }) => (
+      <Image
+        source={require('WasteNoMore/resources/icons/add-icon.png')}
+        style={[styles.icon, {tintColor: tintColor}]}
+      />
+    ),
+  };
 
   constructor(){
     super();
@@ -96,128 +96,145 @@ export default class addPurchase extends Component {
     this._hideDateTimePicker();
   };
 
-    getSubCats = () => {
-      //var TOKEN = await AsyncStorage.getItem('token');
+  getSubCats = async () => {
+    try {
+      var TOKEN = await AsyncStorage.getItem('token');
       //  'Authorization': 'Bearer ' + TOKEN
 
-        fetch('http://192.168.137.43:8000/api/getPurchSubCats', {
-          headers: {
-            'Accept': 'application/json',
-            'Authorization': 'Bearer eyJhbGciOiJSUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJnZW9icmFuY2giLCJpYXQiOjE1MDM1NzExMDQsImV4cCI6MTUwMzU3NDcwNH0.eNBfPAGzurTwsCiSlUH4Yfwog-SBbF1Yj6NVc_QJFBjSK2oak0FBUyYJkC3B3zKA7yRhgrQt4cFbTqegopE5KU2o08JcsCYNUp1T_MBvsJ96exh2mM3cr-imuOfZFtrWUU3bBtz7ucIOK46zknBoZR2IJUL1NEjEUmMRIgZuJmrAICLi61NfV_s8zfrfpNitVwZWoW5szcOCDd36vzRTQ17ZVO8TUvGeW-8fCspum8pC2aMWdTRoa6jbUmhqTtmTUsX-dRT2au8srgiiRPmPaGN_EjfF0qzJ3a2EGK2m2ExSE9fU9vkKYz4T0n2RghxDEe7oGGsEA6CtyS61UFOIpo-xfDmyVtuaejL0Bdb9Rus9IXZqxUTxltAGLG1VhCO4BS5Xd-7noJHewDxk3dFyOXN-GaWVWyOHj_V6W_lM8vbRy8gxJ9UqkvAztM7U-8UoWvUDpOlpDcXZtXu8Z0FEoWFDFZvFYZ5YqzlDpefQRDZaYS_gByOyP20pvOdCmzySzzpgVmg9PxbrNzeisvT37CkiCmdsIWDTtXORWhn1ZQu7s_lSeoWPBG8xGGoexaoA8Jta4InwlBitEJBUpjwwmAc-Gtadv_mfhMcJIZipKMt8OofQGrRBn8yzKtSgpAfLjeZAGLWXbw7rmp1KEJpaAobgTtRerPE2ugyGiBf66dQ'
-          }
-        })
-        .then((response) => response.json())
-        .then((responseData) => {
-          if("message" in responseData){
-            console.log(responseData.message);
-          }
-          if(responseData.status == "error"){
-            console.log("error");
-          }else if(responseData.status == "success"){
-            this.setState({gotItems:true,items:responseData.items});
-          }
-        }).catch((error) => {
-                  console.error(error);
-              })
-        .done();
+      fetch('http://192.168.137.43:8000/api/getPurchSubCats', {
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ' + TOKEN
+        }
+      })
+      .then((response) => response.json())
+      .then((responseData) => {
+        if("message" in responseData){
+          console.log(responseData.message);
+        }
+        if(responseData.status == "error"){
+          console.log("error");
+        }else if(responseData.status == "success"){
+          this.setState({gotItems:true,items:responseData.items});
+        }
+      }).catch((error) => {
+        console.error(error);
+      })
+      .done();
+
+    } catch (e) {
+      console.log("Token Error");
+    } finally {
+
     }
 
-
-  _validateSubmitPress = () => {
-
-      this.resetErrorMessages();
-
-      var inputError = false ;
-
-      if(this.state.selectedItem == '' || this.state.selectedItem == '0'){
-        return alert('Choose Purchase Type');
-      }
-
-      if(this.state.quantity == '' || this.state.quantity == '0'){
-        this.setState({quantityError: 'Set Purchase Quantity'})
-        inputError = true;
-      }
-
-      if(this.state.cost == '' || this.state.cost == '0'){
-        this.setState({costError: 'Set Purchase Cost'})
-        inputError = true;
-      }
-
-
-      if(this.state.selectedUnit == '' || this.state.selectedUnit == '0'){
-        this.setState({unitError: 'Choose Unit'})
-        inputError = true;
-      }
-
-      if(this.state.purchaseDate == ''){
-        this.setState({dateError: 'Choose Waste Date'})
-        inputError = true;
-      }
-
-      if(inputError)
-        return;
-
-        fetch('http://192.168.137.43:8000/api/addBranchPurchase',{
-          method: 'POST',
-          headers: {
-            //  'Authorization': 'Bearer ' + TOKEN
-            'Authorization': 'Bearer eyJhbGciOiJSUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJnZW9icmFuY2giLCJpYXQiOjE1MDM1NzExMDQsImV4cCI6MTUwMzU3NDcwNH0.eNBfPAGzurTwsCiSlUH4Yfwog-SBbF1Yj6NVc_QJFBjSK2oak0FBUyYJkC3B3zKA7yRhgrQt4cFbTqegopE5KU2o08JcsCYNUp1T_MBvsJ96exh2mM3cr-imuOfZFtrWUU3bBtz7ucIOK46zknBoZR2IJUL1NEjEUmMRIgZuJmrAICLi61NfV_s8zfrfpNitVwZWoW5szcOCDd36vzRTQ17ZVO8TUvGeW-8fCspum8pC2aMWdTRoa6jbUmhqTtmTUsX-dRT2au8srgiiRPmPaGN_EjfF0qzJ3a2EGK2m2ExSE9fU9vkKYz4T0n2RghxDEe7oGGsEA6CtyS61UFOIpo-xfDmyVtuaejL0Bdb9Rus9IXZqxUTxltAGLG1VhCO4BS5Xd-7noJHewDxk3dFyOXN-GaWVWyOHj_V6W_lM8vbRy8gxJ9UqkvAztM7U-8UoWvUDpOlpDcXZtXu8Z0FEoWFDFZvFYZ5YqzlDpefQRDZaYS_gByOyP20pvOdCmzySzzpgVmg9PxbrNzeisvT37CkiCmdsIWDTtXORWhn1ZQu7s_lSeoWPBG8xGGoexaoA8Jta4InwlBitEJBUpjwwmAc-Gtadv_mfhMcJIZipKMt8OofQGrRBn8yzKtSgpAfLjeZAGLWXbw7rmp1KEJpaAobgTtRerPE2ugyGiBf66dQ'},
-
-            body: JSON.stringify({
-              "item": this.state.selectedItem,
-              "unit": this.state.selectedUnit,
-              "quantity": this.state.quantity,
-              "cost": this.state.cost,
-              "date":this.state.purchaseDate
-              })
-          })
-          .then((response) => response.json())
-          .then((responseData) => {
-              console.log(responseData);
-            if("message" in responseData){
-                  console.log(responseData.message);
-            }
-            if(responseData.status == "error"){
-                console.log("error, reason:", responseData.reason);
-                Alert.alert(
-                'Error',
-                responseData.reason,
-                [
-                  {text: 'OK', onPress: () => console.log('OK Pressed')},
-                ],
-                { cancelable: false }
-              )
-            }else if(responseData.status == "success"){
-              alert("purchase record added !");
-                this.resetInputs();
-            }
-          })
-          .done();
   }
 
-    findSubCat(query){
 
-      console.log(query);
-      if(!query){
-        return [];
-      }
-      const items = this.state.items;
-      const regex = new RegExp(`${query.trim()}`, 'i');
-      return items.filter(item => item.name.search(regex) >= 0);
+  _validateSubmitPress = async () => {
+
+    this.resetErrorMessages();
+
+    var inputError = false ;
+
+    if(this.state.selectedItem == '' || this.state.selectedItem == '0'){
+      return alert('Choose Purchase Type');
     }
 
-    render(){
-      if(!this.state.gotItems){
-        return(
-          <View style={styles.container}>
-            <ActivityIndicator
-              animating={!this.state.gotItems}
-              size={"large"}
-              hidesWhenStopped={true}
-            >
-            </ActivityIndicator>
+    if(this.state.quantity == '' || this.state.quantity == '0'){
+      this.setState({quantityError: 'Set Purchase Quantity'})
+      inputError = true;
+    }
 
-          </View>
+    if(this.state.cost == '' || this.state.cost == '0'){
+      this.setState({costError: 'Set Purchase Cost'})
+      inputError = true;
+    }
+
+
+    if(this.state.selectedUnit == '' || this.state.selectedUnit == '0'){
+      this.setState({unitError: 'Choose Unit'})
+      inputError = true;
+    }
+
+    if(this.state.purchaseDate == ''){
+      this.setState({dateError: 'Choose Waste Date'})
+      inputError = true;
+    }
+
+    if(inputError)
+    return;
+
+    try {
+      var TOKEN = await AsyncStorage.getItem('token');
+      fetch('http://192.168.137.43:8000/api/addBranchPurchase',{
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + TOKEN
+        },
+
+        body: JSON.stringify({
+          "item": this.state.selectedItem,
+          "unit": this.state.selectedUnit,
+          "quantity": this.state.quantity,
+          "cost": this.state.cost,
+          "date":this.state.purchaseDate
+        })
+      })
+      .then((response) => response.json())
+      .then((responseData) => {
+        console.log(responseData);
+        if("message" in responseData){
+          console.log(responseData.message);
+        }
+        if(responseData.status == "error"){
+          console.log("error, reason:", responseData.reason);
+          Alert.alert(
+            'Error',
+            responseData.reason,
+            [
+              {text: 'OK', onPress: () => console.log('OK Pressed')},
+            ],
+            { cancelable: false }
+          )
+        }else if(responseData.status == "success"){
+          alert("purchase record added !");
+          this.resetInputs();
+        }
+      })
+      .done();
+    } catch (e) {
+      console.log("Token Error");
+    } finally {
+
+    }
+
+
+  }
+
+  findSubCat(query){
+
+    console.log(query);
+    if(!query){
+      return [];
+    }
+    const items = this.state.items;
+    const regex = new RegExp(`${query.trim()}`, 'i');
+    return items.filter(item => item.name.search(regex) >= 0);
+  }
+
+  render(){
+    if(!this.state.gotItems){
+      return(
+        <View style={styles.container}>
+          <ActivityIndicator
+            animating={!this.state.gotItems}
+            size={"large"}
+            hidesWhenStopped={true}
+          >
+          </ActivityIndicator>
+
+        </View>
         );
       }else{
 
@@ -320,85 +337,85 @@ export default class addPurchase extends Component {
               <Button color="#841584" title="Submit" onPress={this._validateSubmitPress}></Button>
             </View>
           </ScrollView>
-        );
-      }
-    }
-}
+                );
+              }
+            }
+          }
 
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: 'white',
-    flex: 1,
-    paddingTop: 25,
-    alignItems:'center'
-  },
-  autocompleteContainer: {
-   flex: 1,
-    left: 0,
-    position: 'absolute',
-    right: 0,
-    top: 0,
-    zIndex: 1,
-    marginTop:25,
-    //alignItems:'center'
-  },
-  itemText: {
-    fontSize: 20,
-    fontWeight: '500',
-    margin: 2,
-    marginBottom: 5,
-    marginTop: 5,
-  },
-  descriptionContainer: {
-    // `backgroundColor` needs to be set otherwise the
-    // autocomplete input will disappear on text input.
-    backgroundColor: 'white',
-    alignItems: 'center',
-    alignSelf:'center'
-  //  marginTop: 20
-  },
-  titleText: {
-    fontSize: 18,
-    fontWeight: '500',
-    marginBottom: 10,
-    marginTop: 10,
-    textAlign: 'center'
-  },
-  directorText: {
-    color: 'grey',
-    fontSize: 12,
-    marginBottom: 10,
-    textAlign: 'center'
-  },
-  openingText: {
-    textAlign: 'center'
-  },
-  tinput: {
-    padding: 4,
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    borderRadius: 5,
-    margin:10,
-    width: 200,
-  },
-  pick:{
-      width: 150,
-  },
-  buttonContainer:{
-    margin: 20,
-    // flexDirection: 'row',
-    // justifyContent: 'space-between',
-    alignSelf:'center'
-  },
-  errorMessage:{
-      alignSelf:'center',
-      fontSize: 10,
-      color: 'red',
-  },
-  icon: {
-    width: 24,
-    height: 24,
-  }
-});
+          const styles = StyleSheet.create({
+            container: {
+              backgroundColor: 'white',
+              flex: 1,
+              paddingTop: 25,
+              alignItems:'center'
+            },
+            autocompleteContainer: {
+              flex: 1,
+              left: 0,
+              position: 'absolute',
+              right: 0,
+              top: 0,
+              zIndex: 1,
+              marginTop:25,
+              //alignItems:'center'
+            },
+            itemText: {
+              fontSize: 20,
+              fontWeight: '500',
+              margin: 2,
+              marginBottom: 5,
+              marginTop: 5,
+            },
+            descriptionContainer: {
+              // `backgroundColor` needs to be set otherwise the
+              // autocomplete input will disappear on text input.
+              backgroundColor: 'white',
+              alignItems: 'center',
+              alignSelf:'center'
+              //  marginTop: 20
+            },
+            titleText: {
+              fontSize: 18,
+              fontWeight: '500',
+              marginBottom: 10,
+              marginTop: 10,
+              textAlign: 'center'
+            },
+            directorText: {
+              color: 'grey',
+              fontSize: 12,
+              marginBottom: 10,
+              textAlign: 'center'
+            },
+            openingText: {
+              textAlign: 'center'
+            },
+            tinput: {
+              padding: 4,
+              height: 40,
+              borderColor: 'gray',
+              borderWidth: 1,
+              borderRadius: 5,
+              margin:10,
+              width: 200,
+            },
+            pick:{
+              width: 150,
+            },
+            buttonContainer:{
+              margin: 20,
+              // flexDirection: 'row',
+              // justifyContent: 'space-between',
+              alignSelf:'center'
+            },
+            errorMessage:{
+              alignSelf:'center',
+              fontSize: 10,
+              color: 'red',
+            },
+            icon: {
+              width: 24,
+              height: 24,
+            }
+          });

@@ -10,14 +10,14 @@ import ModalPicker from 'react-native-modal-picker';
 export default class addWaste extends Component {
 
   static navigationOptions = {
-     drawerLabel: 'Add Waste',
-     drawerIcon: ({ tintColor }) => (
-       <Image
-         source={require('WasteNoMore/resources/icons/add-icon.png')}
-         style={[styles.icon, {tintColor: tintColor}]}
-       />
-     ),
-   };
+    drawerLabel: 'Add Waste',
+    drawerIcon: ({ tintColor }) => (
+      <Image
+        source={require('WasteNoMore/resources/icons/add-icon.png')}
+        style={[styles.icon, {tintColor: tintColor}]}
+      />
+    ),
+  };
 
   constructor(){
     super();
@@ -79,14 +79,14 @@ export default class addWaste extends Component {
     });
   }
 
- // renderSubCat(item)  {
- //   const { name } = item;
- //   return (
- //     <View>
- //       <Text style={styles.titleText}> {name}</Text>
- //     </View>
- //   );
- // }
+  // renderSubCat(item)  {
+  //   const { name } = item;
+  //   return (
+  //     <View>
+  //       <Text style={styles.titleText}> {name}</Text>
+  //     </View>
+  //   );
+  // }
 
   componentDidMount(){
     this.getSubCats();
@@ -104,15 +104,16 @@ export default class addWaste extends Component {
     this._hideDateTimePicker();
   };
 
-  getSubCats = () => {
+  getSubCats = async () => {
 
-    //var TOKEN = await AsyncStorage.getItem('token');
-    //  'Authorization': 'Bearer ' + TOKEN
+    try {
+      var TOKEN = await AsyncStorage.getItem('token');
+      //  'Authorization': 'Bearer ' + TOKEN
 
       fetch('http://192.168.137.43:8000/api/getBranchWasteSubCats', {
         headers: {
           'Accept': 'application/json',
-          'Authorization': 'Bearer eyJhbGciOiJSUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJnZW9icmFuY2giLCJpYXQiOjE1MDM0ODY1MTYsImV4cCI6MTUwMzQ5MDExNn0.PkTRv7e7KGaitQjUIGnU57KAK0KJ_evQ2OpeuTWfhpzvTfKh5FtoiBBER2Xn9Ce3WcntF9rK9Q-BqgMqThsBBHiXv8-t4zBxhZjKoG5UZCcCko3k8l4SGVhKp1-yQS4AQuddsEF0oVNfF8m8hwtSAqOu4hUGWlpcEONlYaHeKpmPWZO5GCuTvntRrvMfv268Zq95zC7e98vpLsQPrft9iPo_PztxJFfR1DY8RJCcecuY8XLJdmKVNj_vleJLSDZEej7B0f6tyg_4DODrVJyB2qUtetZofHviYzKebtjXKpRIfKdEu7stgnYXQBh9anvd-6uyLjHPRL1Nzhq7D6Qqw-7fMWofLVDeN1f4Vg7i1mBqTC_BEAIjVPffrG4EInovjXDDlt8Pg7O99UTZLxePmP1C6KkTHpQSwVGvxkrXuBeNKW5MmoCFpYJRY2ZGDHST-IxEGXtJvsLx2QaYnW2Kxh6aJyT4CCwihtwbHoN_SQXvjyDT3CxLySFnlIF0Zhy-bjSvLrTLtX9ONa4tsp5-3-jp6kcnnP94juTzo4jpFcDWk-JWy0ObckjAP9UwfYCytfqRfir9kWHVvvvYzk0a6of_5Aorn8sCz_ggXWWIYx9zM888dwBSWPMS6JlBF5yvslK7tyTDqD0LaJ4UTmNada1NKYNDXk_8dXUhnyIiyEw'
+          'Authorization': 'Bearer ' + TOKEN
         }
       })
       .then((response) => response.json())
@@ -126,13 +127,20 @@ export default class addWaste extends Component {
           this.setState({gotItems:true,items:responseData.items,wasteReasons:responseData.reasons,wasteCompanies:responseData.companies});
         }
       }).catch((error) => {
-                console.error(error);
-            })
+        console.error(error);
+      })
       .done();
 
+    } catch (e) {
+
+      console.log("Token Error");
+
+    } finally {
+
+    }
   }
 
-  _validateSubmitPress = () => {
+  _validateSubmitPress = async () => {
 
     this.resetErrorMessages();
 
@@ -169,46 +177,58 @@ export default class addWaste extends Component {
     }
 
     if(inputError)
-      return;
+    return;
+
+
+    try {
+
+      var TOKEN = await AsyncStorage.getItem('token');
 
       fetch('http://192.168.137.43:8000/api/addBranchWaste',{
         method: 'POST',
         headers: {
-          //  'Authorization': 'Bearer ' + TOKEN
-          'Authorization': 'Bearer eyJhbGciOiJSUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJnZW9icmFuY2giLCJpYXQiOjE1MDM0ODY1MTYsImV4cCI6MTUwMzQ5MDExNn0.PkTRv7e7KGaitQjUIGnU57KAK0KJ_evQ2OpeuTWfhpzvTfKh5FtoiBBER2Xn9Ce3WcntF9rK9Q-BqgMqThsBBHiXv8-t4zBxhZjKoG5UZCcCko3k8l4SGVhKp1-yQS4AQuddsEF0oVNfF8m8hwtSAqOu4hUGWlpcEONlYaHeKpmPWZO5GCuTvntRrvMfv268Zq95zC7e98vpLsQPrft9iPo_PztxJFfR1DY8RJCcecuY8XLJdmKVNj_vleJLSDZEej7B0f6tyg_4DODrVJyB2qUtetZofHviYzKebtjXKpRIfKdEu7stgnYXQBh9anvd-6uyLjHPRL1Nzhq7D6Qqw-7fMWofLVDeN1f4Vg7i1mBqTC_BEAIjVPffrG4EInovjXDDlt8Pg7O99UTZLxePmP1C6KkTHpQSwVGvxkrXuBeNKW5MmoCFpYJRY2ZGDHST-IxEGXtJvsLx2QaYnW2Kxh6aJyT4CCwihtwbHoN_SQXvjyDT3CxLySFnlIF0Zhy-bjSvLrTLtX9ONa4tsp5-3-jp6kcnnP94juTzo4jpFcDWk-JWy0ObckjAP9UwfYCytfqRfir9kWHVvvvYzk0a6of_5Aorn8sCz_ggXWWIYx9zM888dwBSWPMS6JlBF5yvslK7tyTDqD0LaJ4UTmNada1NKYNDXk_8dXUhnyIiyEw'},
+          'Authorization': 'Bearer ' + TOKEN
+        },
 
-          body: JSON.stringify({
-            "item": this.state.selectedItem,
-            "unit": this.state.selectedUnit,
-            "quantity": this.state.quantity,
-            "reason": this.state.selectedReason,
-            "company": this.state.selectedCompany,
-            "date":this.state.wasteDate
-            })
+        body: JSON.stringify({
+          "item": this.state.selectedItem,
+          "unit": this.state.selectedUnit,
+          "quantity": this.state.quantity,
+          "reason": this.state.selectedReason,
+          "company": this.state.selectedCompany,
+          "date":this.state.wasteDate
         })
-        .then((response) => response.json())
-        .then((responseData) => {
-            console.log(responseData);
-          if("message" in responseData){
-                console.log(responseData.message);
-          }
-          if(responseData.status == "error"){
-              console.log("error, reason:", responseData.reason);
-              Alert.alert(
-              'Error',
-              responseData.reason,
-              [
-                {text: 'OK', onPress: () => console.log('OK Pressed')},
-              ],
-              { cancelable: false }
-            )
-          }else if(responseData.status == "success"){
-            alert("waste record added !");
-              this.resetInputs();
-          }
-        })
-        .done();
+      })
+      .then((response) => response.json())
+      .then((responseData) => {
+        console.log(responseData);
+        if("message" in responseData){
+          console.log(responseData.message);
+        }
+        if(responseData.status == "error"){
+          console.log("error, reason:", responseData.reason);
+          Alert.alert(
+            'Error',
+            responseData.reason,
+            [
+              {text: 'OK', onPress: () => console.log('OK Pressed')},
+            ],
+            { cancelable: false }
+          )
+        }else if(responseData.status == "success"){
+          alert("waste record added !");
+          this.resetInputs();
+        }
+      })
+      .done();
 
+    } catch (e) {
+
+      console.log("Token Error");
+
+    } finally {
+
+    }
   }
 
   findSubCat(query){
@@ -223,17 +243,17 @@ export default class addWaste extends Component {
   }
 
   render(){
-      if(!this.state.gotItems){
-        return(
-          <View style={styles.container}>
-            <ActivityIndicator
-              animating={!this.state.gotItems}
-              size={"large"}
-              hidesWhenStopped={true}
-            >
-            </ActivityIndicator>
+    if(!this.state.gotItems){
+      return(
+        <View style={styles.container}>
+          <ActivityIndicator
+            animating={!this.state.gotItems}
+            size={"large"}
+            hidesWhenStopped={true}
+          >
+          </ActivityIndicator>
 
-          </View>
+        </View>
         );
       }else{
 
@@ -362,86 +382,86 @@ export default class addWaste extends Component {
               <Button color="#841584" title="Submit" onPress={this._validateSubmitPress}></Button>
             </View>
           </ScrollView>
-        );
-      }
+                  );
+                }
 
-  }
-}
+              }
+            }
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: 'white',
-    flex: 1,
-    paddingTop: 25,
-    alignItems:'center'
-  },
-  autocompleteContainer: {
-   flex: 1,
-    left: 0,
-    position: 'absolute',
-    right: 0,
-    top: 0,
-    zIndex: 1,
-    marginTop:25,
+            const styles = StyleSheet.create({
+              container: {
+                backgroundColor: 'white',
+                flex: 1,
+                paddingTop: 25,
+                alignItems:'center'
+              },
+              autocompleteContainer: {
+                flex: 1,
+                left: 0,
+                position: 'absolute',
+                right: 0,
+                top: 0,
+                zIndex: 1,
+                marginTop:25,
 
-    //alignItems:'center'
-  },
-  itemText: {
-    fontSize: 20,
-    fontWeight: '500',
-    margin: 2,
-    marginBottom: 5,
-    marginTop: 5,
-  },
-  descriptionContainer: {
-    // `backgroundColor` needs to be set otherwise the
-    // autocomplete input will disappear on text input.
-    backgroundColor: 'white',
-    alignItems: 'center',
-    alignSelf:'center'
-  //  marginTop: 20
-  },
-  titleText: {
-    fontSize: 18,
-    fontWeight: '500',
-    marginBottom: 10,
-    marginTop: 10,
-    textAlign: 'center'
-  },
-  directorText: {
-    color: 'grey',
-    fontSize: 12,
-    marginBottom: 10,
-    textAlign: 'center'
-  },
-  openingText: {
-    textAlign: 'center'
-  },
-  tinput: {
-    padding: 4,
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    borderRadius: 5,
-    margin:10,
-    width: 200,
-  },
-  pick:{
-      width: 150,
-  },
-  buttonContainer:{
-    margin: 20,
-    // flexDirection: 'row',
-    // justifyContent: 'space-between',
-    alignSelf:'center'
-  },
-  errorMessage:{
-      alignSelf:'center',
-      fontSize: 10,
-      color: 'red',
-  },
-  icon: {
-    width: 24,
-    height: 24,
-  }
-});
+                //alignItems:'center'
+              },
+              itemText: {
+                fontSize: 20,
+                fontWeight: '500',
+                margin: 2,
+                marginBottom: 5,
+                marginTop: 5,
+              },
+              descriptionContainer: {
+                // `backgroundColor` needs to be set otherwise the
+                // autocomplete input will disappear on text input.
+                backgroundColor: 'white',
+                alignItems: 'center',
+                alignSelf:'center'
+                //  marginTop: 20
+              },
+              titleText: {
+                fontSize: 18,
+                fontWeight: '500',
+                marginBottom: 10,
+                marginTop: 10,
+                textAlign: 'center'
+              },
+              directorText: {
+                color: 'grey',
+                fontSize: 12,
+                marginBottom: 10,
+                textAlign: 'center'
+              },
+              openingText: {
+                textAlign: 'center'
+              },
+              tinput: {
+                padding: 4,
+                height: 40,
+                borderColor: 'gray',
+                borderWidth: 1,
+                borderRadius: 5,
+                margin:10,
+                width: 200,
+              },
+              pick:{
+                width: 150,
+              },
+              buttonContainer:{
+                margin: 20,
+                // flexDirection: 'row',
+                // justifyContent: 'space-between',
+                alignSelf:'center'
+              },
+              errorMessage:{
+                alignSelf:'center',
+                fontSize: 10,
+                color: 'red',
+              },
+              icon: {
+                width: 24,
+                height: 24,
+              }
+            });

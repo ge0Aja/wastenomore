@@ -4,18 +4,7 @@ import DateTimePicker from 'react-native-modal-datetime-picker';
 import Moment from 'moment';
 import ModalPicker from 'react-native-modal-picker';
 
-export default class AddCompany extends Component{
-
-
-  static navigationOptions = {
-    drawerLabel: 'Company',
-    drawerIcon: ({ tintColor }) => (
-      <Image
-        source={require('WasteNoMore/resources/icons/company-icon.png')}
-        style={[styles.icon, {tintColor: tintColor}]}
-      />
-    ),
-  };
+export default class AddCompanyWelcome extends Component{
 
 
   constructor(){
@@ -175,7 +164,7 @@ export default class AddCompany extends Component{
 
 
     try {
-      
+
       var TOKEN = await AsyncStorage.getItem('token');
       fetch('http://192.168.137.43:8000/api/newCompanyRecord',{
         method: 'POST',
@@ -200,6 +189,7 @@ export default class AddCompany extends Component{
           console.log("error, reason:", responseData.reason);
         }else if(responseData.status == "success"){
           alert("Company is added Successfully");
+          this.props.navigation.navigate('CompanyAttribs');
 
         }
       })

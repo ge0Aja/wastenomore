@@ -3,18 +3,7 @@ import { StyleSheet, Text, View,AppRegistry, Button,ActivityIndicator,Picker,Ale
 //import Row from './Row';
 
 
-export default class CompanyAttributes extends Component {
-
-  static navigationOptions = {
-    drawerLabel: 'Company Info',
-    drawerIcon: ({ tintColor }) => (
-      <Image
-        source={require('WasteNoMore/resources/icons/company-icon.png')}
-        style={[styles.icon, {tintColor: tintColor}]}
-      />
-    ),
-  };
-
+export default class AddAttribsWelcome extends Component {
 
 
   constructor(){
@@ -83,6 +72,15 @@ export default class CompanyAttributes extends Component {
           console.log("error, reason:", responseData.reason);
         }else if(responseData.status == "success"){
           alert("Company Info added Successfully");
+
+          this.props.navigation.dispatch(NavigationActions.reset(
+            {
+              index: 0,
+              actions: [
+                NavigationActions.navigate({ routeName: 'ManagerMain'})
+              ],
+              key: null
+            }));
           }
         })
         .done();

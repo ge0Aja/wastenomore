@@ -40,7 +40,7 @@ const ManagerDrawer = DrawerNavigator({
   },
   CompanyDetails : {
     screen:CompanyDetails,
-  }
+  },
   EditCompany: {
     screen: EditCompany,
   },
