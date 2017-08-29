@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import { StyleSheet, Text, View,AppRegistry, Image, ActivityIndicator, Picker, TextInput, Keyboard,Alert,TouchableOpacity } from 'react-native';
+import { StyleSheet, AsyncStorage, Text, View,AppRegistry, Image, ActivityIndicator, Picker, TextInput, Keyboard,Alert,TouchableOpacity } from 'react-native';
 import { TabNavigator } from "react-navigation";
 import ChartView from 'react-native-highcharts';
 

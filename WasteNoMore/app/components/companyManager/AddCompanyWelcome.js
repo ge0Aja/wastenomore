@@ -1,11 +1,12 @@
 import React,{Component} from 'react';
-import { StyleSheet, Text, View, TextInput,Picker, KeyboardAvoidingView, Button,ActivityIndicator,Image } from 'react-native';
+import { StyleSheet,AsyncStorage, Text, View, TextInput,Picker, KeyboardAvoidingView, Button,ActivityIndicator,Image } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import Moment from 'moment';
 import ModalPicker from 'react-native-modal-picker';
 
-export default class AddCompanyWelcome extends Component{
+import { NavigationActions } from 'react-navigation';
 
+export default class AddCompanyWelcome extends Component{
 
   constructor(){
     super();

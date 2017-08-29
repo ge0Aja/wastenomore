@@ -37,6 +37,7 @@ export default class LoginScreen extends Component {
       password:''
     }
   }
+
   async saveItem(item, selectedValue) {
     try {
       await AsyncStorage.setItem(item, selectedValue);
@@ -46,44 +47,28 @@ export default class LoginScreen extends Component {
   }
   handleSignUpPress = () => {
     console.log('SignUp Pressed');
-    // navigate('SignUp')
     this.props.navigation.navigate('Signup');
   };
-  /*    handleSignInPress = () => {
-  console.log('SignInPressed');
-
-  //TODO: change reset routeName
-  this.props.navigation.dispatch(NavigationActions.reset(
-  {
-  index: 0,
-  actions: [
-  NavigationActions.navigate({ routeName: 'ManagerMain'})
-],
-key: null
-}));
-console.log('Dispatched Reset');
-
-};*/
 
 handleSignInPress = async () => {
-  console.log('user: '+this.state.username);
-  console.log('pass: '+this.state.password);
+  //  console.log('user: '+this.state.username);
+  //  console.log('pass: '+this.state.password);
   //remove logs after testing
 
   // if(! this.state.license) return;
-  fetch('http://192.168.1.111:9111/api/token_authentication', {
+  fetch('http://192.168.137.43:8000/api/token_authentication', {
     method: 'POST',
     headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      "username": this.state.username,//this.state.license,
-      "password": this.state.password,//,
+      "username": this.state.username,
+      "password": this.state.password,
       "timestamp": Date.now()
     })
   })
   .then((response) => response.json())
   .then((responseData) => {
-    console.log(responseData.role);
-    console.log('random'+responseData.random);
+    console.log(responseData);
+  //  console.log('random'+responseData.random);
     if(responseData.status == "GRANTED"){
       this.saveItem('role', responseData.role);
       this.saveItem('token',responseData.token);
@@ -96,17 +81,11 @@ handleSignInPress = async () => {
           headers: {
             'Authorization': 'Bearer ' + responseData.token
           },
-
-          //  body: JSON.stringify({
-          //    "staff_count": this.state.branchStaffCount,
-          //    "opening_date": this.state.branchOpeningDate,
-          //    "location": this.state.branchLocation,
-          //    "address": this.state.branchAddress,
-          //    "main_branch": this.state.mainBranchAdd,
-          //    })
         })
         .then((response) => response.json())
         .then((responseData) => {
+          console.log("Second Response Data");
+          console.log(responseData);
           if(responseData.status == "error"){
             console.log("error, reason:", responseData.reason);
           }else {
@@ -181,8 +160,6 @@ handleSignInPress = async () => {
                       key: null
                     }));
                   }
-
-                  console.log('Dispatched Reset');
                 }else if (responseData.status == "DENIED"){
                   Alert.alert('Access Denied');
                 }else {
@@ -208,6 +185,7 @@ handleSignInPress = async () => {
                           placeholder="Username"
                           placeholderTextColor="#FFF"
                           style={styles.input}
+                          autoCorrect={false}
                           onChangeText={(text) => this.setState({username: text})}
                           value = {this.state.license}
                         />
@@ -221,9 +199,10 @@ handleSignInPress = async () => {
                           placeholder="Password"
                           style={styles.input}
                           secureTextEntry
+                          autoCorrect={false}
                           onChangeText={(text) => this.setState({password: text})}
                           value = {this.state.license}
-                          onSubmitEditing = { ()  =>this.handleSignInPress()  }
+                          onSubmitEditing = { ()  =>this.handleSignInPress  }
 
                         />
                       </View>

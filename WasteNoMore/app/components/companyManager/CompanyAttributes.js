@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import { StyleSheet, Text, View,AppRegistry, Button,ActivityIndicator,Picker,Alert,ScrollView, Image} from 'react-native';
+import { StyleSheet,AsyncStorage, Text, View,AppRegistry, Button,ActivityIndicator,Picker,Alert,ScrollView, Image} from 'react-native';
 //import Row from './Row';
 
 

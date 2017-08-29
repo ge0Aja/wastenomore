@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import { StyleSheet, Text, View, TextInput,Picker, KeyboardAvoidingView, Button,ActivityIndicator,Image } from 'react-native';
+import { StyleSheet, AsyncStorage, Text, View, TextInput,Picker, KeyboardAvoidingView, Button,ActivityIndicator,Image } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import Moment from 'moment';
 import ModalPicker from 'react-native-modal-picker';
@@ -175,7 +175,7 @@ export default class AddCompany extends Component{
 
 
     try {
-      
+
       var TOKEN = await AsyncStorage.getItem('token');
       fetch('http://192.168.137.43:8000/api/newCompanyRecord',{
         method: 'POST',

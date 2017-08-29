@@ -13,15 +13,15 @@ export default class MainComponent extends Component {
     //const { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
-        <View style={styles.btn}><Button  title="Sign Up!" color="#841584" onPress={() => this.props.navigation.navigate('Signup')}></Button></View>
-        <View style={styles.btn}><Button  title="Add Company" color="#841584" onPress={() => this.props.navigation.navigate('AddCompany')}></Button></View>
-        <View style={styles.btn}><Button  title="Company Attribs" color="#841584" onPress={() => this.props.navigation.navigate('CompanyAttribs')}></Button></View>
-        <View style={styles.btn}><Button  title="Add Branch" color="#841584" onPress={() => this.props.navigation.navigate('AddBranch')}></Button></View>
-        <View style={styles.btn}><Button  title="License Manage" color="#841584" onPress={() => this.props.navigation.navigate('ManageLicense')}></Button></View>
-        <View style={styles.btn}><Button  title="Manager Main" color="#841584" onPress={() => this.props.navigation.navigate('ManagerMain')}></Button></View>
-        <View style={styles.btn}><Button  title="Survey" color="#841584" onPress={() => this.props.navigation.navigate('Survey')}></Button></View>
-        <View style={styles.btn}><Button  title="Add Waste" color="#841584" onPress={() => this.props.navigation.navigate('AddWaste')}></Button></View>
-        <View style={styles.btn}><Button  title="Add Purchase" color="#841584" onPress={() => this.props.navigation.navigate('AddPurchase')}></Button></View>
+        {/* <View style={styles.btn}><Button  title="Sign Up!" color="#841584" onPress={() => this.props.navigation.navigate('Signup')}></Button></View>
+          <View style={styles.btn}><Button  title="Add Company" color="#841584" onPress={() => this.props.navigation.navigate('AddCompany')}></Button></View>
+          <View style={styles.btn}><Button  title="Company Attribs" color="#841584" onPress={() => this.props.navigation.navigate('CompanyAttribs')}></Button></View>
+          <View style={styles.btn}><Button  title="Add Branch" color="#841584" onPress={() => this.props.navigation.navigate('AddBranch')}></Button></View>
+          <View style={styles.btn}><Button  title="License Manage" color="#841584" onPress={() => this.props.navigation.navigate('ManageLicense')}></Button></View>
+          <View style={styles.btn}><Button  title="Manager Main" color="#841584" onPress={() => this.props.navigation.navigate('ManagerMain')}></Button></View>
+          <View style={styles.btn}><Button  title="Survey" color="#841584" onPress={() => this.props.navigation.navigate('Survey')}></Button></View>
+          <View style={styles.btn}><Button  title="Add Waste" color="#841584" onPress={() => this.props.navigation.navigate('AddWaste')}></Button></View>
+        <View style={styles.btn}><Button  title="Add Purchase" color="#841584" onPress={() => this.props.navigation.navigate('AddPurchase')}></Button></View> */}
       </View>
     );
   }

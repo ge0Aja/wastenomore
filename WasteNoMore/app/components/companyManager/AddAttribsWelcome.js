@@ -1,7 +1,8 @@
 import React,{Component} from 'react';
-import { StyleSheet, Text, View,AppRegistry, Button,ActivityIndicator,Picker,Alert,ScrollView, Image} from 'react-native';
+import { StyleSheet, Text, View,AppRegistry, Button,ActivityIndicator,Picker,Alert,ScrollView, AsyncStorage,Image} from 'react-native';
 //import Row from './Row';
 
+import { NavigationActions } from 'react-navigation';
 
 export default class AddAttribsWelcome extends Component {
 

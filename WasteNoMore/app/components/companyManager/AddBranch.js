@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import { StyleSheet, Text, View,AppRegistry, TouchableOpacity,ActivityIndicator,Picker,Alert, Modal, Dimensions, ListView, TextInput,Keyboard,TouchableHighlight, Switch, Image} from 'react-native';
+import { StyleSheet, AsyncStorage, Text, View,AppRegistry, TouchableOpacity,ActivityIndicator,Picker,Alert, Modal, Dimensions, ListView, TextInput,Keyboard,TouchableHighlight, Switch, Image} from 'react-native';
 
 //import demoData from './demoBranchData.js';
 import DateTimePicker from 'react-native-modal-datetime-picker';
@@ -330,11 +330,12 @@ export default class AddBranch extends Component {
     try {
 
       var TOKEN = await AsyncStorage.getItem('token');
+
+    //  console.log("The Token is:"+ TOKEN);
       fetch('http://192.168.137.43:8000/api/getCompanyBranches', {
         headers: {
           'Accept': 'application/json',
-          //  'Authorization': 'Bearer ' + TOKEN
-          'Authorization': 'Bearer eyJhbGciOiJSUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJnZW9hamEiLCJpYXQiOjE1MDMxNTgxNjMsImV4cCI6MTUwMzE2MTc2M30.Akx8WKjRWb72s9K6WU1t-LcniLBjh7cUj1VUBjBfRnAh3uPxB2HsAqIsCHbgO6ueTsSHMzDF6_CCw79633q_FvDCLI3G5LS0XPMaPYXRgEKDSW_YvOdMc5V6OvE3zDbTHnMdQf5CoIU_MeGCESAxmJe8KFOw-GYtg95Ic_0PE1yZS2oMsnyPtRFguxrB1pJc56JPGXF1yzbPM1WhqkfSszUTisGfPJOucwQMVep_ultvhnQVlATqGfF21CwjvTSTD8mz2jHqx95ZOcsIktJQha3j-vz_3d7jQuL89QkDPtG_jjjQd9SSWoi_A28ozWY3Al6mQworWYuiIyEQnbQiWURLMpMusVYbgzUopkfsiTRB0mdZ2HABII_2ubfEPApZsLxH2n6h8kJ85Y11lh7OyVZf2E85mUhM6Zdyn4ziOmo0B1_ZzjYzJ8Y1Ig_pJ9VjyUc1x8DOo9KOgfnA4dg-qqTzsXaykotXVgnxVT780N82PH0kp4TJOr7N40PPXY-ucpUN5vm8hSCnjDS-7u6liafqLqcmgncMnOLzb0IbIjPrWf6FldtuPWs30mE2eINvKBs1XadwRuqTKsrXVMltQKoRtYqwQ57CBBJa4BxYspPe03oO7pah5DTF8zQk10118UjPN-V1CsEVd9lWnZumG-Cnh_tvCwSTpe9cAtssvHs'
+          'Authorization': 'Bearer ' + TOKEN
         }
       })
       .then((response) => response.json())
@@ -361,13 +362,13 @@ export default class AddBranch extends Component {
 
   }
 
-  getLocations = () => {
-    //var TOKEN = await AsyncStorage.getItem('token');
+  getLocations = async () => {
+    var TOKEN = await AsyncStorage.getItem('token');
     fetch('http://192.168.137.43:8000/api/getLocations', {
       headers: {
         'Accept': 'application/json',
-        //  'Authorization': 'Bearer ' + TOKEN
-        'Authorization': 'Bearer eyJhbGciOiJSUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJnZW9hamEiLCJpYXQiOjE1MDMxNTgxNjMsImV4cCI6MTUwMzE2MTc2M30.Akx8WKjRWb72s9K6WU1t-LcniLBjh7cUj1VUBjBfRnAh3uPxB2HsAqIsCHbgO6ueTsSHMzDF6_CCw79633q_FvDCLI3G5LS0XPMaPYXRgEKDSW_YvOdMc5V6OvE3zDbTHnMdQf5CoIU_MeGCESAxmJe8KFOw-GYtg95Ic_0PE1yZS2oMsnyPtRFguxrB1pJc56JPGXF1yzbPM1WhqkfSszUTisGfPJOucwQMVep_ultvhnQVlATqGfF21CwjvTSTD8mz2jHqx95ZOcsIktJQha3j-vz_3d7jQuL89QkDPtG_jjjQd9SSWoi_A28ozWY3Al6mQworWYuiIyEQnbQiWURLMpMusVYbgzUopkfsiTRB0mdZ2HABII_2ubfEPApZsLxH2n6h8kJ85Y11lh7OyVZf2E85mUhM6Zdyn4ziOmo0B1_ZzjYzJ8Y1Ig_pJ9VjyUc1x8DOo9KOgfnA4dg-qqTzsXaykotXVgnxVT780N82PH0kp4TJOr7N40PPXY-ucpUN5vm8hSCnjDS-7u6liafqLqcmgncMnOLzb0IbIjPrWf6FldtuPWs30mE2eINvKBs1XadwRuqTKsrXVMltQKoRtYqwQ57CBBJa4BxYspPe03oO7pah5DTF8zQk10118UjPN-V1CsEVd9lWnZumG-Cnh_tvCwSTpe9cAtssvHs'
+        'Authorization': 'Bearer ' + TOKEN
+
       }
     })
     .then((response) => response.json())
