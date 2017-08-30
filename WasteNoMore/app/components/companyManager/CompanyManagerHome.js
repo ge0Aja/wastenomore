@@ -343,11 +343,14 @@ class Graph1 extends Component{
                     </View>
                   );
                 }else{
-                  <View>
-                    <Text style={styles.label}>
-                      No Data To Display
-                    </Text>
-                  </View>
+                  return(
+                    <View>
+                      <Text style={styles.label}>
+                        No Data To Display
+                      </Text>
+                    </View>
+                  );
+
                 }
               }
             }else{
@@ -472,14 +475,14 @@ class Graph1 extends Component{
                       type: 'bar',
                     },
                     title: {
-                      text: 'Waste Percentage By Category'
+                      text: 'Waste/Purchase By Category'
                     },
                     xAxis: {
                       categories:this.state.graph1Category
                     },
                     yAxis: {
                       title: {
-                        text: 'Waste %'
+                        text: 'Waste/Purchase %'
                       },
                     },
                     legend: {
@@ -682,11 +685,14 @@ class Graph1 extends Component{
                               </View>
                             );
                           }else{
-                            <View>
-                              <Text style={styles.label}>
-                                No Data To Display
-                              </Text>
-                            </View>
+                            return(
+                              <View>
+                                <Text style={styles.label}>
+                                  No Data To Display
+                                </Text>
+                              </View>
+                            );
+
                           }
                         }
                       }else{
@@ -787,6 +793,9 @@ class Graph1 extends Component{
                               valueDecimals: 2,
                               split: true
                             },
+                            exporting: {
+                              enabled: false
+                            },
 
                             series:this.state.grpah1Data
                           };
@@ -820,11 +829,14 @@ class Graph1 extends Component{
                                 </View>
                               );
                             }else{
-                              <View>
-                                <Text style={styles.label}>
-                                  No Data To Display
-                                </Text>
-                              </View>
+                              return(
+                                <View>
+                                  <Text style={styles.label}>
+                                    No Data To Display
+                                  </Text>
+                                </View>
+                              );
+
                             }
 
                           }
@@ -917,13 +929,16 @@ class Graph1 extends Component{
                                 },
                               },
                               title: {
-                                text: 'Waste TimeSeries'
+                                text: 'Purchase TimeSeries'
                               },
 
                               tooltip: {
                                 pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b><br/>',
                                 valueDecimals: 2,
                                 split: true
+                              },
+                              exporting: {
+                                enabled: false
                               },
 
                               series:this.state.grpah1Data
@@ -958,11 +973,14 @@ class Graph1 extends Component{
                                   </View>
                                 );
                               }else{
-                                <View>
-                                  <Text style={styles.label}>
-                                    No Data To Display
-                                  </Text>
-                                </View>
+                                return(
+                                  <View>
+                                    <Text style={styles.label}>
+                                      No Data To Display
+                                    </Text>
+                                  </View>
+                                );
+
                               }
 
                             }
@@ -980,87 +998,87 @@ class Graph1 extends Component{
                               );
                             }
                           }
-                      }
-
-                      const ManagerHomeScreenNavigator = TabNavigator({
-                        Graph1 : {screen: Graph1},
-                        Graph2 : {screen: Graph2},
-                        Graph3 : {screen: Graph3},
-                        Graph4 : {screen: Graph4}
-                      },
-                      {
-                        initialRouteName: 'Graph1'
-                      });
-
-
-                      const AppNavigationManager = () => (
-                        <ManagerHomeScreenNavigator />
-                      );
-
-                      const styles = StyleSheet.create({
-                        container: {
-                          flex: 1,
-                          //  backgroundColor: '#fff',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                        },
-                        modalLines:{
-                          marginTop:15,
-                          marginLeft:5,
-                          flex:1,
-                          //  justifyContent: 'center',
-                          flexDirection:'row',
-                          alignItems: 'center'
-                        },
-                        singlePicker:{
-                          marginTop:20,
-                          alignItems: 'center',
-                          alignSelf:'center',
-                          height:40
-                        },
-                        label:{
-                          fontSize: 16,
-                          marginTop:10
-                        },
-                        tinput: {
-                          padding: 4,
-                          height: 40,
-                          borderColor: 'gray',
-                          borderWidth: 1,
-                          borderRadius: 5,
-                          margin: 5,
-                          width: 100,
-                          //  alignSelf: 'center'
-                        },
-                        pick:{
-                          width:150,
-                          padding: 4,
-                          height: 40,
-                          borderColor: 'gray',
-                          borderWidth: StyleSheet.hairlineWidth,
-                          borderRadius: 5,
-                        },
-                        resetDate:{
-                          marginLeft:50,
-                          borderColor: 'black',
-                          borderWidth: StyleSheet.hairlineWidth,
-                          height: 30,
-                          width: 100,
-                          borderRadius: 20,
-                          alignItems: 'center',
-                          justifyContent: 'center'
-                        },
-                        getData:{
-                          borderColor: 'black',
-                          borderWidth: StyleSheet.hairlineWidth,
-                          height: 30,
-                          width: 100,
-                          borderRadius: 20,
-                          alignItems: 'center',
-                          justifyContent: 'center'
-                        },
-                        icon: {
-                          width: 24,
-                          height: 24,
                         }
-                      });
+
+                        const ManagerHomeScreenNavigator = TabNavigator({
+                          Graph1 : {screen: Graph1},
+                          Graph2 : {screen: Graph2},
+                          Graph3 : {screen: Graph3},
+                          Graph4 : {screen: Graph4}
+                        },
+                        {
+                          initialRouteName: 'Graph1'
+                        });
+
+
+                        const AppNavigationManager = () => (
+                          <ManagerHomeScreenNavigator />
+                        );
+
+                        const styles = StyleSheet.create({
+                          container: {
+                            flex: 1,
+                            //  backgroundColor: '#fff',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                          },
+                          modalLines:{
+                            marginTop:15,
+                            marginLeft:5,
+                            flex:1,
+                            //  justifyContent: 'center',
+                            flexDirection:'row',
+                            alignItems: 'center'
+                          },
+                          singlePicker:{
+                            marginTop:20,
+                            alignItems: 'center',
+                            alignSelf:'center',
+                            height:40
+                          },
+                          label:{
+                            fontSize: 16,
+                            marginTop:10
+                          },
+                          tinput: {
+                            padding: 4,
+                            height: 40,
+                            borderColor: 'gray',
+                            borderWidth: 1,
+                            borderRadius: 5,
+                            margin: 5,
+                            width: 100,
+                            //  alignSelf: 'center'
+                          },
+                          pick:{
+                            width:150,
+                            padding: 4,
+                            height: 40,
+                            borderColor: 'gray',
+                            borderWidth: StyleSheet.hairlineWidth,
+                            borderRadius: 5,
+                          },
+                          resetDate:{
+                            marginLeft:50,
+                            borderColor: 'black',
+                            borderWidth: StyleSheet.hairlineWidth,
+                            height: 30,
+                            width: 100,
+                            borderRadius: 20,
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                          },
+                          getData:{
+                            borderColor: 'black',
+                            borderWidth: StyleSheet.hairlineWidth,
+                            height: 30,
+                            width: 100,
+                            borderRadius: 20,
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                          },
+                          icon: {
+                            width: 24,
+                            height: 24,
+                          }
+                        });

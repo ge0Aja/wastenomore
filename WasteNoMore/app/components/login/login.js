@@ -38,6 +38,7 @@ export default class LoginScreen extends Component {
     }
   }
 
+
   async saveItem(item, selectedValue) {
     try {
       await AsyncStorage.setItem(item, selectedValue);
@@ -206,11 +207,11 @@ handleSignInPress = async () => {
 
                         />
                       </View>
-                      <TouchableOpacity activeOpacity={.5}>
+                      {/* <TouchableOpacity activeOpacity={.5}>
                         <View>
                           <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
                         </View>
-                      </TouchableOpacity>
+                      </TouchableOpacity> */}
                       <TouchableOpacity activeOpacity={.5} onPress={this.handleSignInPress}>
                         <View style={styles.button}>
                           <Text style={styles.buttonText}>Sign In</Text>
