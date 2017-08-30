@@ -454,6 +454,7 @@ class Graph1 extends Component{
                 .done();
 
               } catch (e) {
+                console.log("Token Error");
 
               } finally {
 
@@ -706,95 +707,360 @@ class Graph1 extends Component{
 
                     class Graph3 extends Component{
 
+                      constructor(){
+                        super();
+
+                        this.state = {
+                          grpah1Data:[],
+                          graph1gotData:false,
+                          branchId:'',
+                          isPremium:false,
+                          branches:[],
+                          selectedBranch:'Choose Branch'
+                        }
+                      }
+
+                      getGraphData = async () => {
+                        try {
+
+                          var TOKEN = await AsyncStorage.getItem('token');
+                          fetch('http://192.168.137.43:8000/api/getPurchaseTimeSeries', {
+                            method: 'POST',
+                            headers: {
+                              'Accept': 'application/json',
+                              'Authorization': 'Bearer ' + TOKEN
+
+                            },
+
+                            body: JSON.stringify({
+                              "branch":this.state.branchId,
+                            })
+                          })
+                          .then((response) => response.json())
+                          .then((responseData) => {
+
+                            if("message" in responseData){
+                              console.log(responseData.message);
+                            }
+                            if(responseData.status == "error"){
+                              console.log("error");
+                            }else if(responseData.status == "success"){
+                              console.log(responseData.data);
+                              this.setState({ grpah1Data: responseData.data, graph1gotData:true,branches:responseData.branches , isPremium:responseData.premium}); //isLoading: false,
+                            }
+                          })
+                          .done();
+
+                        } catch (e) {
+                          console.log("Token Error");
+
+                        } finally {
+
+                        }
+
+                      }
+
+                      componentDidMount() {
+                        this.getGraphData();
+                      }
+
                       render(){
-                        return(
-                          <Text>This is Graph 3</Text>
-                        );
+                        if(this.state.graph1gotData){
+                          var Highcharts='Highcharts';
+                          var conf={
+
+                            rangeSelector: {
+                              selected: 1
+                            },
+
+                            yAxis: {
+                              title: {
+                                text: 'KG'
+                              },
+                            },
+                            title: {
+                              text: 'Waste TimeSeries'
+                            },
+
+                            tooltip: {
+                              pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b><br/>',
+                              valueDecimals: 2,
+                              split: true
+                            },
+
+                            series:this.state.grpah1Data
+                          };
+
+                          if(this.state.isPremium){
+                            return(
+                              <View>
+                                <ChartView style={{height:320}} stock={true} config={conf}></ChartView>
+
+
+                                <View style={styles.singlePicker}>
+
+                                  <ModalPicker
+                                    data={this.state.branches}
+                                    initValue={"Choose Branch"}
+                                    onChange={(option) => {
+                                      this.setState({branchId: option.key, selectedBranch:option.label},this.getGraphData)
+                                    }}>
+
+                                  </ModalPicker>
+                                </View>
+                              </View>
+                            );
+
+                          }else{
+
+                            if(this.state.grpah1Data.length > 0){
+                              return(
+                                <View>
+                                  <ChartView style={{height:320}} stock={true} config={conf}></ChartView>
+                                </View>
+                              );
+                            }else{
+                              <View>
+                                <Text style={styles.label}>
+                                  No Data To Display
+                                </Text>
+                              </View>
+                            }
+
+                          }
+                        }else{
+                          return(
+                            <View style={styles.container}>
+                              <ActivityIndicator
+                                animating={!this.state.attrExist}
+                                size={"large"}
+                                hidesWhenStopped={true}
+                              >
+                              </ActivityIndicator>
+
+                            </View>
+                            );
+                          }
+                        }
                       }
-                    }
 
-                    class Graph4 extends Component{
+                      class Graph4 extends Component{
+                        constructor(){
+                          super();
 
-                      render(){
-                        return(
-                          <Text>This is Graph 4</Text>
-                        );
+                          this.state = {
+                            grpah1Data:[],
+                            graph1gotData:false,
+                            branchId:'',
+                            isPremium:false,
+                            branches:[],
+                            selectedBranch:'Choose Branch'
+                          }
+                        }
+
+                        getGraphData = async () => {
+                          try {
+
+                            var TOKEN = await AsyncStorage.getItem('token');
+                            fetch('http://192.168.137.43:8000/api/getWasteTimeSeries', {
+                              method: 'POST',
+                              headers: {
+                                'Accept': 'application/json',
+                                'Authorization': 'Bearer ' + TOKEN
+
+                              },
+
+                              body: JSON.stringify({
+                                "branch":this.state.branchId,
+                              })
+                            })
+                            .then((response) => response.json())
+                            .then((responseData) => {
+
+                              if("message" in responseData){
+                                console.log(responseData.message);
+                              }
+                              if(responseData.status == "error"){
+                                console.log("error");
+                              }else if(responseData.status == "success"){
+                                console.log(responseData.data);
+                                this.setState({ grpah1Data: responseData.data, graph1gotData:true,branches:responseData.branches , isPremium:responseData.premium}); //isLoading: false,
+                              }
+                            })
+                            .done();
+
+                          } catch (e) {
+                            console.log("Token Error");
+
+                          } finally {
+
+                          }
+
+                        }
+
+                        componentDidMount() {
+                          this.getGraphData();
+                        }
+
+                        render(){
+                          if(this.state.graph1gotData){
+                            var Highcharts='Highcharts';
+                            var conf={
+
+                              rangeSelector: {
+                                selected: 1
+                              },
+
+                              yAxis: {
+                                title: {
+                                  text: 'KG'
+                                },
+                              },
+                              title: {
+                                text: 'Waste TimeSeries'
+                              },
+
+                              tooltip: {
+                                pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b><br/>',
+                                valueDecimals: 2,
+                                split: true
+                              },
+
+                              series:this.state.grpah1Data
+                            };
+
+                            if(this.state.isPremium){
+                              return(
+                                <View>
+                                  <ChartView style={{height:320}} stock={true} config={conf}></ChartView>
+
+
+                                  <View style={styles.singlePicker}>
+
+                                    <ModalPicker
+                                      data={this.state.branches}
+                                      initValue={"Choose Branch"}
+                                      onChange={(option) => {
+                                        this.setState({branchId: option.key, selectedBranch:option.label},this.getGraphData)
+                                      }}>
+
+                                    </ModalPicker>
+                                  </View>
+                                </View>
+                              );
+
+                            }else{
+
+                              if(this.state.grpah1Data.length > 0){
+                                return(
+                                  <View>
+                                    <ChartView style={{height:320}} stock={true} config={conf}></ChartView>
+                                  </View>
+                                );
+                              }else{
+                                <View>
+                                  <Text style={styles.label}>
+                                    No Data To Display
+                                  </Text>
+                                </View>
+                              }
+
+                            }
+                          }else{
+                            return(
+                              <View style={styles.container}>
+                                <ActivityIndicator
+                                  animating={!this.state.attrExist}
+                                  size={"large"}
+                                  hidesWhenStopped={true}
+                                >
+                                </ActivityIndicator>
+
+                              </View>
+                              );
+                            }
+                          }
                       }
-                    }
 
-                    const ManagerHomeScreenNavigator = TabNavigator({
-                      Graph1 : {screen: Graph1},
-                      Graph2 : {screen: Graph2},
-                      Graph3 : {screen: Graph3},
-                      Graph4 : {screen: Graph4}
-                    },
-                    {
-                      initialRouteName: 'Graph1'
-                    });
+                      const ManagerHomeScreenNavigator = TabNavigator({
+                        Graph1 : {screen: Graph1},
+                        Graph2 : {screen: Graph2},
+                        Graph3 : {screen: Graph3},
+                        Graph4 : {screen: Graph4}
+                      },
+                      {
+                        initialRouteName: 'Graph1'
+                      });
 
 
-                    const AppNavigationManager = () => (
-                      <ManagerHomeScreenNavigator />
-                    );
+                      const AppNavigationManager = () => (
+                        <ManagerHomeScreenNavigator />
+                      );
 
-                    const styles = StyleSheet.create({
-                      container: {
-                        flex: 1,
-                        //  backgroundColor: '#fff',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                      },
-                      modalLines:{
-                        marginTop:15,
-                        marginLeft:5,
-                        flex:1,
-                        //  justifyContent: 'center',
-                        flexDirection:'row',
-                        alignItems: 'center'
-                      },
-                      label:{
-                        fontSize: 16,
-                        marginTop:10
-                      },
-                      tinput: {
-                        padding: 4,
-                        height: 40,
-                        borderColor: 'gray',
-                        borderWidth: 1,
-                        borderRadius: 5,
-                        margin: 5,
-                        width: 100,
-                        //  alignSelf: 'center'
-                      },
-                      pick:{
-                        width:150,
-                        padding: 4,
-                        height: 40,
-                        borderColor: 'gray',
-                        borderWidth: StyleSheet.hairlineWidth,
-                        borderRadius: 5,
-                      },
-                      resetDate:{
-                        marginLeft:50,
-                        borderColor: 'black',
-                        borderWidth: StyleSheet.hairlineWidth,
-                        height: 30,
-                        width: 100,
-                        borderRadius: 20,
-                        alignItems: 'center',
-                        justifyContent: 'center'
-                      },
-                      getData:{
-                        borderColor: 'black',
-                        borderWidth: StyleSheet.hairlineWidth,
-                        height: 30,
-                        width: 100,
-                        borderRadius: 20,
-                        alignItems: 'center',
-                        justifyContent: 'center'
-                      },
-                      icon: {
-                        width: 24,
-                        height: 24,
-                      }
-                    });
+                      const styles = StyleSheet.create({
+                        container: {
+                          flex: 1,
+                          //  backgroundColor: '#fff',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        },
+                        modalLines:{
+                          marginTop:15,
+                          marginLeft:5,
+                          flex:1,
+                          //  justifyContent: 'center',
+                          flexDirection:'row',
+                          alignItems: 'center'
+                        },
+                        singlePicker:{
+                          marginTop:20,
+                          alignItems: 'center',
+                          alignSelf:'center',
+                          height:40
+                        },
+                        label:{
+                          fontSize: 16,
+                          marginTop:10
+                        },
+                        tinput: {
+                          padding: 4,
+                          height: 40,
+                          borderColor: 'gray',
+                          borderWidth: 1,
+                          borderRadius: 5,
+                          margin: 5,
+                          width: 100,
+                          //  alignSelf: 'center'
+                        },
+                        pick:{
+                          width:150,
+                          padding: 4,
+                          height: 40,
+                          borderColor: 'gray',
+                          borderWidth: StyleSheet.hairlineWidth,
+                          borderRadius: 5,
+                        },
+                        resetDate:{
+                          marginLeft:50,
+                          borderColor: 'black',
+                          borderWidth: StyleSheet.hairlineWidth,
+                          height: 30,
+                          width: 100,
+                          borderRadius: 20,
+                          alignItems: 'center',
+                          justifyContent: 'center'
+                        },
+                        getData:{
+                          borderColor: 'black',
+                          borderWidth: StyleSheet.hairlineWidth,
+                          height: 30,
+                          width: 100,
+                          borderRadius: 20,
+                          alignItems: 'center',
+                          justifyContent: 'center'
+                        },
+                        icon: {
+                          width: 24,
+                          height: 24,
+                        }
+                      });
