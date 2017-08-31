@@ -11,7 +11,8 @@ export default class AddAttribsWelcome extends Component {
     super();
     this.state = {
       comps:[],
-      attrExist:false
+      attrExist:false,
+      submitDisabled:false
     }
   }
 
@@ -45,7 +46,7 @@ export default class AddAttribsWelcome extends Component {
     return;
 
     try {
-
+      this.setState({submitDisabled:true});
       var TOKEN = await AsyncStorage.getItem('token');
 
       fetch('http://192.168.137.43:8000/api/newCompanyAttrSubAttr',{
@@ -91,6 +92,7 @@ export default class AddAttribsWelcome extends Component {
         console.log("Token Error");
 
       } finally {
+        this.setState({submitDisabled:false});
 
       }
 
@@ -177,7 +179,7 @@ export default class AddAttribsWelcome extends Component {
               <ScrollView style={{flex:1}}>
                 { renderView }
                 <View style={styles.buttonContainer}>
-                  <Button color="#841584" title="Submit" onPress={this._validateSubmitPress}></Button>
+                  <Button color="#841584" title="Submit" disabled={this.state.submitDisabled} onPress={this._validateSubmitPress}></Button>
                 </View>
               </ScrollView>
             );

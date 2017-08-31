@@ -11,7 +11,8 @@ export default class Survey extends Component {
     this.state = {
       comps:[],
       surveyVersion:'',
-      qExist:false
+      qExist:false,
+      submitDisabled:false
     }
 
   }
@@ -53,7 +54,7 @@ export default class Survey extends Component {
 
     try {
 
-
+      this.setState({submitDisabled:true});
       var TOKEN = await AsyncStorage.getItem('token');
       fetch('http://192.168.137.43:8000/api/answerSurvey',{
         method: 'POST',
@@ -97,7 +98,7 @@ export default class Survey extends Component {
       } catch (e) {
         console.error(e);
       } finally {
-
+          this.setState({submitDisabled:false});
       }
 
     }
@@ -218,7 +219,7 @@ export default class Survey extends Component {
               <ScrollView style={{flex:1}}>
                 { renderView }
                 <View style={styles.buttonContainer}>
-                  <Button color="#841584" title="Submit" onPress={this._validateSubmitPress}></Button>
+                  <Button color="#841584" title="Submit" disabled={this.state.submitDisabled} onPress={this._validateSubmitPress}></Button>
                 </View>
               </ScrollView>
             );

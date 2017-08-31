@@ -41,7 +41,8 @@ export default class AddBranch extends Component {
       branchIdEdit:'',
       listCurrentRowIndex:'',
       branchAddressEdit:'',
-      branchAddress:''
+      branchAddress:'',
+      submitDisabled:false
     }
   }
 
@@ -123,6 +124,7 @@ export default class AddBranch extends Component {
     if(this.state.branchAddress == '') return alert('Please Insert Address');
 
     try {
+      this.setState({submitDisabled:true});
       var TOKEN = await AsyncStorage.getItem('token');
       fetch('http://192.168.137.43:8000/api/newCompanyBranch',{
         method: 'POST',
@@ -159,10 +161,10 @@ export default class AddBranch extends Component {
       .done();
     } catch (e) {
 
-      console.log("Token Error");
+      console.error(e);
 
     } finally {
-
+        this.setState({submitDisabled:false});
     }
 
 
@@ -179,7 +181,7 @@ export default class AddBranch extends Component {
     if(this.state.branchOpeningDateEdit == '') return alert('Please Choose An Opening Date');
 
     try {
-
+      this.setState({submitDisabled:true});
       var TOKEN = await AsyncStorage.getItem('token');
       fetch('http://192.168.137.43:8000/api/editBranchBasicInfo',{
         method: 'POST',
@@ -217,10 +219,10 @@ export default class AddBranch extends Component {
       .done();
 
     } catch (e) {
-      console.log("Token Error");
+      console.error(e);
 
     } finally {
-
+        this.setState({submitDisabled:false});
     }
 
   }
@@ -230,7 +232,7 @@ export default class AddBranch extends Component {
     //console.log(this.state.branchIdEdit);
 
     try {
-
+      this.setState({submitDisabled:true});
       var TOKEN = await AsyncStorage.getItem('token');
       fetch('http://192.168.137.43:8000/api/deleteBranchApi',{
         method: 'POST',
@@ -262,10 +264,10 @@ export default class AddBranch extends Component {
       .done();
 
     } catch (e) {
-      console.log("Token Error");
+      console.error(e);
 
     } finally {
-
+      this.setState({submitDisabled:false});
     }
 
   }
@@ -495,7 +497,7 @@ export default class AddBranch extends Component {
                       Cancel
                     </Text>
                   </TouchableOpacity>
-                  <TouchableOpacity style={styles.addBranchInner} onPress={this.handelBranchAdd}>
+                  <TouchableOpacity style={styles.addBranchInner} disabled={this.state.submitDisabled} onPress={this.handelBranchAdd}>
                     <Text style={{color:'darkviolet'}}>
                       Add Branch
                     </Text>
@@ -598,7 +600,7 @@ export default class AddBranch extends Component {
                     </Text>
                   </TouchableOpacity>
 
-                  <TouchableOpacity style={styles.addBranchInner} onPress={this.handelBranchEdit}>
+                  <TouchableOpacity style={styles.addBranchInner} disabled={this.state.submitDisabled} onPress={this.handelBranchEdit}>
                     <Text style={{color:'darkviolet'}}>
                       Apply
                     </Text>
@@ -606,7 +608,7 @@ export default class AddBranch extends Component {
 
                 </View>
                 <View style={{marginTop:20}}>
-                  <TouchableOpacity style={styles.delBranchInner} onPress={this.handelBranchDelete}>
+                  <TouchableOpacity style={styles.delBranchInner} disabled={this.state.submitDisabled} onPress={this.handelBranchDelete}>
                     <Text style={{color:'red'}}>
                       Delete Branch
                     </Text>

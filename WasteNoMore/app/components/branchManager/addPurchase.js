@@ -41,6 +41,7 @@ export default class addPurchase extends Component {
       costError:'',
       quantityError:'',
       dateError:'',
+      submitDisabled:false
     };
   }
 
@@ -69,16 +70,6 @@ export default class addPurchase extends Component {
 
     });
   }
-
-  // renderSubCat(item)  {
-  //   const { name } = item;
-  //   return (
-  //     <View>
-  //       <Text style={styles.titleText}> {name}</Text>
-  //     </View>
-  //   );
-  // }
-
 
   componentDidMount(){
     this.getSubCats();
@@ -166,6 +157,7 @@ export default class addPurchase extends Component {
     return;
 
     try {
+      this.setState({submitDisabled:true});
       var TOKEN = await AsyncStorage.getItem('token');
       fetch('http://192.168.137.43:8000/api/addBranchPurchase',{
         method: 'POST',
@@ -183,7 +175,8 @@ export default class addPurchase extends Component {
       })
       .then((response) => response.json())
       .then((responseData) => {
-        console.log(responseData);
+        //console.log(responseData);
+
         if("message" in responseData){
           console.log(responseData.message);
         }
@@ -208,6 +201,9 @@ export default class addPurchase extends Component {
     } catch (e) {
       console.log("Token Error");
     } finally {
+
+      this.setState({submitDisabled:false});
+
 
     }
 
@@ -336,7 +332,7 @@ export default class addPurchase extends Component {
               />
             </View>
             <View style={styles.buttonContainer}>
-              <Button color="#841584" title="Submit" onPress={this._validateSubmitPress}></Button>
+              <Button color="#841584" title="Submit" disabled={this.state.submitDisabled} onPress={this._validateSubmitPress}></Button>
             </View>
           </ScrollView>
                 );

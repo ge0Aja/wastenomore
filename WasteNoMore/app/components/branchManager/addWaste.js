@@ -40,6 +40,7 @@ export default class addWaste extends Component {
       selectedCompany:'',
       selectedCompanySt:'Choose Collection Company',
       wasteCompanies:[],
+      submitDisabled:false,
 
       itemError:'',
       unitError:'',
@@ -179,6 +180,7 @@ export default class addWaste extends Component {
 
 
     try {
+      this.setState({  submitDisabled:true});
 
       var TOKEN = await AsyncStorage.getItem('token');
 
@@ -199,7 +201,8 @@ export default class addWaste extends Component {
       })
       .then((response) => response.json())
       .then((responseData) => {
-        console.log(responseData);
+      //  console.log(responseData);
+      //  this.setState({  submitDisabled:false});
         if("message" in responseData){
           console.log(responseData.message);
         }
@@ -225,7 +228,8 @@ export default class addWaste extends Component {
     } catch (e) {
       console.log("Token Error");
     } finally {
-
+      this.setState({submitDisabled:false});
+    
     }
   }
 
@@ -377,7 +381,7 @@ export default class addWaste extends Component {
               />
             </View>
             <View style={styles.buttonContainer}>
-              <Button color="#841584" title="Submit" onPress={this._validateSubmitPress}></Button>
+              <Button color="#841584" title="Submit" disabled={this.state.submitDisabled} onPress={this._validateSubmitPress}></Button>
             </View>
           </ScrollView>
                   );

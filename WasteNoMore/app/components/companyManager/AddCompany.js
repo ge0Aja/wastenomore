@@ -33,7 +33,8 @@ export default class AddCompany extends Component{
       gotCompanyInfo:false,
       gotAnnualSalesList:false,
       gotCompanyTypesList:false,
-      isDateTimePickerVisible: false
+      isDateTimePickerVisible: false,
+      submitDisabled:false
     }
   }
 
@@ -87,7 +88,7 @@ export default class AddCompany extends Component{
 
     } catch (e) {
 
-      console.log("Token Error");
+      console.error(e);
 
     } finally {
 
@@ -124,7 +125,7 @@ export default class AddCompany extends Component{
 
     } catch (e) {
 
-      console.log("Token Error");
+      console.error(e);
 
     } finally {
 
@@ -161,7 +162,7 @@ export default class AddCompany extends Component{
 
     } catch (e) {
 
-      console.log("Token Error");
+      console.error(e);
 
     } finally {
 
@@ -181,7 +182,7 @@ export default class AddCompany extends Component{
 
 
     try {
-
+      this.setState({submitDisabled:true});
       var TOKEN = await AsyncStorage.getItem('token');
       fetch('http://192.168.137.43:8000/api/newCompanyRecord',{
         method: 'POST',
@@ -214,9 +215,9 @@ export default class AddCompany extends Component{
       .done();
 
     } catch (e) {
-      console.log("Token Error");
+      console.error(e);
     } finally {
-
+      this.setState({submitDisabled:false});
     }
 
   }
@@ -304,7 +305,7 @@ export default class AddCompany extends Component{
           </ModalPicker>
 
           <View style={styles.buttonContainer}>
-            <Button color="#841584" title="Submit" onPress={this._validateSubmitPress}></Button>
+            <Button color="#841584" title="Submit" disabled={this.state.submitDisabled} onPress={this._validateSubmitPress}></Button>
           </View>
 
         </View>

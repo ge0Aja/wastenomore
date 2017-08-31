@@ -28,7 +28,8 @@ export default class ManageLicenses extends Component{
       licenseList:[],
       pickedLicenseString:'',
       dataSource:[],
-      branchesList:[]
+      branchesList:[],
+      submitDisabled:false
     }
   }
 
@@ -170,7 +171,7 @@ export default class ManageLicenses extends Component{
     if(this.state.licenseBranch == '' || this.state.licenseBranch == '0') return alert("Please Choose a Branch");
 
     try {
-
+      this.setState({  submitDisabled:true});
       var TOKEN = await AsyncStorage.getItem('token');
       fetch('http://192.168.137.43:8000/api/setCompanyBranchLicense',{
         method: 'POST',
@@ -203,7 +204,7 @@ export default class ManageLicenses extends Component{
     } catch (e) {
       console.error(e);
     } finally {
-
+      this.setState({  submitDisabled:false});
     }
 
   }
@@ -255,7 +256,7 @@ export default class ManageLicenses extends Component{
                       Cancel
                     </Text>
                   </TouchableOpacity>
-                  <TouchableOpacity style={styles.applyInner} onPress={this.handelLicenseEdit}>
+                  <TouchableOpacity style={styles.applyInner} disabled={this.state.submitDisabled} onPress={this.handelLicenseEdit}>
                     <Text style={{color:'darkviolet'}}>
                       Apply
                     </Text>
