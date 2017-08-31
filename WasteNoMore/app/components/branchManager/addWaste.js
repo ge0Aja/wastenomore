@@ -132,9 +132,7 @@ export default class addWaste extends Component {
       .done();
 
     } catch (e) {
-
       console.log("Token Error");
-
     } finally {
 
     }
@@ -219,13 +217,13 @@ export default class addWaste extends Component {
           alert("waste record added !");
           this.resetInputs();
         }
+      }).catch((error) => {
+        console.error(error);
       })
       .done();
 
     } catch (e) {
-
       console.log("Token Error");
-
     } finally {
 
     }

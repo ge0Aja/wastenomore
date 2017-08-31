@@ -153,6 +153,8 @@ export default class AddBranch extends Component {
           this._resetModal();
           this.getBranches();
         }
+      }).catch((error) => {
+        console.error(error);
       })
       .done();
     } catch (e) {
@@ -209,6 +211,8 @@ export default class AddBranch extends Component {
           this.getBranches();
           //  update the list of branches to indicate the main branch
         }
+      }).catch((error) => {
+        console.error(error);
       })
       .done();
 
@@ -252,6 +256,8 @@ export default class AddBranch extends Component {
           this._resetModal2();
           this.getBranches();
         }
+      }).catch((error) => {
+        console.error(error);
       })
       .done();
 
@@ -331,7 +337,7 @@ export default class AddBranch extends Component {
 
       var TOKEN = await AsyncStorage.getItem('token');
 
-    //  console.log("The Token is:"+ TOKEN);
+      //  console.log("The Token is:"+ TOKEN);
       fetch('http://192.168.137.43:8000/api/getCompanyBranches', {
         headers: {
           'Accept': 'application/json',
@@ -349,12 +355,13 @@ export default class AddBranch extends Component {
         }else if(responseData.status == "success"){
           this.setState({ branchData:responseData.branches,dataSource: ds.cloneWithRows(responseData.branches), gotBranches:true}); //isLoading: false,
         }
+      }).catch((error) => {
+        console.error(error);
       })
       .done();
 
     } catch (e) {
       console.log("Token Error");
-
     } finally {
 
     }
@@ -382,6 +389,8 @@ export default class AddBranch extends Component {
       }else if(responseData.status == "success"){
         this.setState({ locationList:responseData.location, gotLocations:true}); //isLoading: false,
       }
+    }).catch((error) => {
+      console.error(error);
     })
     .done();
   }

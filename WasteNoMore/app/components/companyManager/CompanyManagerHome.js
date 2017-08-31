@@ -112,11 +112,13 @@ class Graph1 extends Component{
         }else if(responseData.status == "success"){
           this.setState({ graph1Category:responseData.categories,grpah1Data: responseData.data, graph1gotData:true,branches:responseData.branches , isPremium:responseData.premium},console.log(this.state.grpah1Data)); //isLoading: false,
         }
+      }).catch((error) => {
+        console.error(error);
       })
       .done();
 
     } catch (e) {
-      console.log("Token Error");
+      console.error(e);
 
     } finally {
 
@@ -453,17 +455,16 @@ class Graph1 extends Component{
                   }else if(responseData.status == "success"){
                     this.setState({ graph1Category:responseData.categories,grpah1Data: responseData.data, graph1gotData:true,branches:responseData.branches , isPremium:responseData.premium},console.log(this.state.grpah1Data)); //isLoading: false,
                   }
+                }).catch((error) => {
+                  console.error(error);
                 })
                 .done();
 
               } catch (e) {
-                console.log("Token Error");
-
+                console.error(e);
               } finally {
 
               }
-
-
             }
 
             render(){
@@ -754,11 +755,13 @@ class Graph1 extends Component{
                               console.log(responseData.data);
                               this.setState({ grpah1Data: responseData.data, graph1gotData:true,branches:responseData.branches , isPremium:responseData.premium}); //isLoading: false,
                             }
+                          }).catch((error) => {
+                            console.error(error);
                           })
                           .done();
 
                         } catch (e) {
-                          console.log("Token Error");
+                          console.error(e);
 
                         } finally {
 
@@ -801,24 +804,50 @@ class Graph1 extends Component{
                           };
 
                           if(this.state.isPremium){
-                            return(
-                              <View>
-                                <ChartView style={{height:320}} stock={true} config={conf}></ChartView>
+                            if(this.state.grpah1Data.length >0){
+
+                              return(
+                                <View>
+                                  <ChartView style={{height:320}} stock={true} config={conf}></ChartView>
 
 
-                                <View style={styles.singlePicker}>
+                                  <View style={styles.singlePicker}>
 
-                                  <ModalPicker
-                                    data={this.state.branches}
-                                    initValue={"Choose Branch"}
-                                    onChange={(option) => {
-                                      this.setState({branchId: option.key, selectedBranch:option.label},this.getGraphData)
-                                    }}>
+                                    <ModalPicker
+                                      data={this.state.branches}
+                                      initValue={"Choose Branch"}
+                                      onChange={(option) => {
+                                        this.setState({branchId: option.key, selectedBranch:option.label},this.getGraphData)
+                                      }}>
 
-                                  </ModalPicker>
+                                    </ModalPicker>
+                                  </View>
                                 </View>
-                              </View>
-                            );
+                              );
+                            }else{
+                              return(
+                                <View >
+
+                                  <View>
+                                    <Text style={styles.label}>
+                                      No Data to Display
+                                    </Text>
+                                  </View>
+                                  <View style={[styles.singlePicker,{position:'absolute',top:350}]}>
+
+                                    <ModalPicker
+                                      data={this.state.branches}
+                                      initValue={"Choose Branch"}
+                                      onChange={(option) => {
+                                        this.setState({branchId: option.key, selectedBranch:option.label},this.getGraphData)
+                                      }}>
+
+                                    </ModalPicker>
+                                  </View>
+                                </View>
+                              );
+                            }
+
 
                           }else{
 
@@ -898,11 +927,13 @@ class Graph1 extends Component{
                                 console.log(responseData.data);
                                 this.setState({ grpah1Data: responseData.data, graph1gotData:true,branches:responseData.branches , isPremium:responseData.premium}); //isLoading: false,
                               }
+                            }).catch((error) => {
+                              console.error(error);
                             })
                             .done();
 
                           } catch (e) {
-                            console.log("Token Error");
+                            console.error(e);
 
                           } finally {
 
@@ -945,24 +976,53 @@ class Graph1 extends Component{
                             };
 
                             if(this.state.isPremium){
-                              return(
-                                <View>
-                                  <ChartView style={{height:320}} stock={true} config={conf}></ChartView>
+
+                              if(this.state.grpah1Data.length >0){
+
+                                return(
+                                  <View>
+                                    <ChartView style={{height:320}} stock={true} config={conf}></ChartView>
 
 
-                                  <View style={styles.singlePicker}>
+                                    <View style={styles.singlePicker}>
 
-                                    <ModalPicker
-                                      data={this.state.branches}
-                                      initValue={"Choose Branch"}
-                                      onChange={(option) => {
-                                        this.setState({branchId: option.key, selectedBranch:option.label},this.getGraphData)
-                                      }}>
+                                      <ModalPicker
+                                        data={this.state.branches}
+                                        initValue={"Choose Branch"}
+                                        onChange={(option) => {
+                                          this.setState({branchId: option.key, selectedBranch:option.label},this.getGraphData)
+                                        }}>
 
-                                    </ModalPicker>
+                                      </ModalPicker>
+                                    </View>
                                   </View>
-                                </View>
-                              );
+                                );
+
+                              }else{
+                                return(
+                                  <View >
+
+                                    <View>
+                                      <Text style={styles.label}>
+                                        No Data to Display
+                                      </Text>
+                                    </View>
+                                    <View style={[styles.singlePicker,{position:'absolute',top:350}]}>
+
+                                      <ModalPicker
+                                        data={this.state.branches}
+                                        initValue={"Choose Branch"}
+                                        onChange={(option) => {
+                                          this.setState({branchId: option.key, selectedBranch:option.label},this.getGraphData)
+                                        }}>
+
+                                      </ModalPicker>
+                                    </View>
+                                  </View>
+                                );
+
+                              }
+
 
                             }else{
 

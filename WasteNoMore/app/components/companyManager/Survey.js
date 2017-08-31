@@ -51,92 +51,108 @@ export default class Survey extends Component {
     if(Inputerror ==1)
     return;
 
-
-    var TOKEN = await AsyncStorage.getItem('token');
-    fetch('http://192.168.137.43:8000/api/answerSurvey',{
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + TOKEN
-      },
-
-      body: JSON.stringify(
-        Object.keys(toUpload).map(function(keyName, keyIndex) {
-          console.log(keyName+":"+toUpload[keyName]);
-          return keyName+":"+toUpload[keyName]
-        })
-
-      )
-    })
-    .then((response) =>  response.json())
-    .then((responseData) => {
-      console.log(responseData);
-      if("message" in responseData){
-        console.log(responseData.message);
-      }
-      if(responseData.status == "error"){
-        console.log("error, reason:", responseData.reason);
-      }else if(responseData.status == "success"){
-        this.props.navigation.dispatch(NavigationActions.reset(
-          {
-            index: 0,
-            actions: [
-              NavigationActions.navigate({ routeName: 'ManagerMain'})
-            ],
-            key: null
-          }));
+    try {
 
 
-        }
+      var TOKEN = await AsyncStorage.getItem('token');
+      fetch('http://192.168.137.43:8000/api/answerSurvey',{
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + TOKEN
+        },
+
+        body: JSON.stringify(
+          Object.keys(toUpload).map(function(keyName, keyIndex) {
+            console.log(keyName+":"+toUpload[keyName]);
+            return keyName+":"+toUpload[keyName]
+          })
+
+        )
       })
-      .done();
+      .then((response) =>  response.json())
+      .then((responseData) => {
+        console.log(responseData);
+        if("message" in responseData){
+          console.log(responseData.message);
+        }
+        if(responseData.status == "error"){
+          console.log("error, reason:", responseData.reason);
+        }else if(responseData.status == "success"){
+          this.props.navigation.dispatch(NavigationActions.reset(
+            {
+              index: 0,
+              actions: [
+                NavigationActions.navigate({ routeName: 'ManagerMain'})
+              ],
+              key: null
+            }));
 
+
+          }
+        }).catch((error) => {
+          console.error(error);
+        })
+        .done();
+      } catch (e) {
+        console.error(e);
+      } finally {
+
+      }
 
     }
 
 
     _getQuestions = async () => {
+      try {
 
-      var TOKEN = await AsyncStorage.getItem('token');
+        var TOKEN = await AsyncStorage.getItem('token');
 
-    //  console.log("The Token IS ::::::"+TOKEN);
+        fetch('http://192.168.137.43:8000/api/generateQs', {
+          headers: {
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + TOKEN
+          }
+        })
+        .then((response) => response.json())
+        .then((responseData) => {
+          //  console.log(responseData);
+          if("message" in responseData){
+            console.log(responseData.message);
+          }
+          if(responseData.status == "error"){
+            console.log("error");
+          }else if(responseData.status == "success"){
+            this.setState({comps:responseData.questions,surveyVersion:responseData.version,qExist:true});
+            var newState = {};
 
-      fetch('http://192.168.137.43:8000/api/generateQs', {
-        headers: {
-          'Accept': 'application/json',
-          'Authorization': 'Bearer ' + TOKEN
-        }
-      })
-      .then((response) => response.json())
-      .then((responseData) => {
-        //  console.log(responseData);
-        if("message" in responseData){
-          console.log(responseData.message);
-        }
-        if(responseData.status == "error"){
-          console.log("error");
-        }else if(responseData.status == "success"){
-          this.setState({comps:responseData.questions,surveyVersion:responseData.version,qExist:true});
-          var newState = {};
+            this.state.comps.map((a,i) => {
+              if(a.detail)
+              newState[`D${a.qid}`] = ''
 
-          this.state.comps.map((a,i) => {
-            if(a.detail)
-            newState[`D${a.qid}`] = ''
+              if(a.ddl){
+                newState[`P${a.qid}`] ='0';
+                newState[`T${a.qid}`] ='Choose Option';
+              }
+            })
+            newState['qExist'] = true;
+            newState['comps'] = this.state.comps;
+            this.setState(newState);
 
-            if(a.ddl){
-              newState[`P${a.qid}`] ='0';
-              newState[`T${a.qid}`] ='Choose Option';
-            }
-          })
-          newState['qExist'] = true;
-          newState['comps'] = this.state.comps;
-          this.setState(newState);
+          }
+        }).catch((error) => {
+          console.error(error);
+        })
+        .done();
 
-        }
-      }).catch((error) => {
-        console.error(error);
-      })
-      .done();
+      } catch (e) {
+
+        console.error(e);
+
+      } finally {
+
+      }
+
     }
 
 

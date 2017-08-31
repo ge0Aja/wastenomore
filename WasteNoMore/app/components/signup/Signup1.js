@@ -31,29 +31,38 @@ export default class Signup1 extends Component{
 
   _validateButtonPress = () => {
 
-    fetch('http://192.168.137.43:8000/api/license_authentication', {
-      method: 'POST',
-      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        "license": this.state.license,//this.state.license
-        "timestamp": Date.now()
+    try {
+      fetch('http://192.168.137.43:8000/api/license_authentication', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          "license": this.state.license,//this.state.license
+          "timestamp": Date.now()
+        })
       })
-    })
-    .then((response) => response.json())
-    .then((responseData) => {
-      console.log(responseData);
-      if(responseData.status == "GRANTED"){
-        //  this.saveItem('license', responseData.license),
-        this.saveItem('role', responseData.role),
-        this.saveItem('challange', responseData.random),
-        this.props.navigation.navigate('Signup2');
-      }else if (responseData.status == "DENIED"){
-        Alert.alert('Access Denied');
-      }else {
-        Alert.alert('Error');
-      }
-    })
-    .done();
+      .then((response) => response.json())
+      .then((responseData) => {
+        console.log(responseData);
+        if(responseData.status == "GRANTED"){
+          //  this.saveItem('license', responseData.license),
+          this.saveItem('role', responseData.role),
+          this.saveItem('challange', responseData.random),
+          this.props.navigation.navigate('Signup2');
+        }else if (responseData.status == "DENIED"){
+          Alert.alert('Access Denied');
+        }else {
+          Alert.alert('Error');
+        }
+      }).catch((error) => {
+        console.error(error);
+      })
+      .done();
+
+    } catch (e) {
+      console.error(e);
+    } finally {
+
+    }
   };
 
   render(){

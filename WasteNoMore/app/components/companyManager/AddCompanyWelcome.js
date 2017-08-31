@@ -69,6 +69,8 @@ export default class AddCompanyWelcome extends Component{
             establishmentDateBeauty:Moment(responseData.establishment_date.date).format('MMM-DD-YYYY')
           })
         }
+      }).catch((error) => {
+        console.error(error);
       })
       .done();
 
@@ -105,6 +107,8 @@ export default class AddCompanyWelcome extends Component{
           //  console.log(responseData.types);
           this.setState({companyTypeList:responseData.types,gotCompanyTypesList:true});
         }
+      }).catch((error) => {
+        console.error(error);
       })
       .done();
 
@@ -140,6 +144,8 @@ export default class AddCompanyWelcome extends Component{
           //  console.log(responseData.ranges);
           this.setState({ annualSalesList:responseData.ranges,gotAnnualSalesList:true}); //isLoading: false,
         }
+      }).catch((error) => {
+        console.error(error);
       })
       .done();
 

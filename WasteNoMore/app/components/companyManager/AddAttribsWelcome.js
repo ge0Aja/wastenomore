@@ -60,7 +60,6 @@ export default class AddAttribsWelcome extends Component {
             console.log(keyName+":"+toUpload[keyName]);
             return keyName+":"+toUpload[keyName]
           })
-
         )
       })
       .then((response) =>  response.json())
@@ -83,6 +82,8 @@ export default class AddAttribsWelcome extends Component {
               key: null
             }));
           }
+        }).catch((error) => {
+          console.error(error);
         })
         .done();
 
@@ -135,7 +136,6 @@ export default class AddAttribsWelcome extends Component {
 
       } catch (e) {
         console.log("Token Error");
-
       } finally {
 
       }

@@ -201,6 +201,8 @@ export default class addPurchase extends Component {
           alert("purchase record added !");
           this.resetInputs();
         }
+      }).catch((error) => {
+        console.error(error);
       })
       .done();
     } catch (e) {

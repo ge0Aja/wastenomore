@@ -63,6 +63,8 @@ class Graph1 extends Component{
         }else if(responseData.status == "success"){
           this.setState({ graphCategory11:responseData.categories,grpahData11: responseData.data, graphgotData11:true});
         }
+      }).catch((error) => {
+        console.error(error);
       })
       .done();
 
@@ -183,6 +185,8 @@ class Graph2 extends Component{
         }else if(responseData.status == "success"){
           this.setState({ graphCategory2:responseData.categories,grpahData2: responseData.data, graphgotData2:true});
         }
+      }).catch((error) => {
+        console.error(error);
       })
       .done();
 
@@ -296,6 +300,8 @@ class Graph2 extends Component{
           }else if(responseData.status == "success"){
             this.setState({ grpahData3: responseData.data, graphgotData3:true}); //isLoading: false,
           }
+        }).catch((error) => {
+          console.error(error);
         })
         .done();
 
@@ -406,6 +412,8 @@ class Graph2 extends Component{
             }else if(responseData.status == "success"){
               this.setState({ grpahData4: responseData.data, graphgotData4:true}); //isLoading: false,
             }
+          }).catch((error) => {
+            console.error(error);
           })
           .done();
 

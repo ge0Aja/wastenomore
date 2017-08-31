@@ -57,54 +57,73 @@ export default class ManageLicenses extends Component{
     this.setState({gotLicenses:false});
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
-    var TOKEN = await AsyncStorage.getItem('token');
-    fetch('http://192.168.137.43:8000/api/getCompanyLicenses', {
-      headers: {
-        'Accept': 'application/json',
-        'Authorization': 'Bearer ' + TOKEN
+    try {
+      var TOKEN = await AsyncStorage.getItem('token');
+      fetch('http://192.168.137.43:8000/api/getCompanyLicenses', {
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ' + TOKEN
 
-      }
-    })
-    .then((response) => response.json())
-    .then((responseData) => {
-      //  console.log(responseData);
-      if("message" in responseData){
-        console.log(responseData.message);
-      }
-      if(responseData.status == "error"){
-        console.log("error");
-      }else if(responseData.status == "success"){
-        this.setState({ licenseList:responseData.licenses,dataSource: ds.cloneWithRows(responseData.licenses), gotLicenses:true}); //isLoading: false,
-      }
-    })
-    .done();
+        }
+      })
+      .then((response) => response.json())
+      .then((responseData) => {
+        //  console.log(responseData);
+        if("message" in responseData){
+          console.log(responseData.message);
+        }
+        if(responseData.status == "error"){
+          console.log("error");
+        }else if(responseData.status == "success"){
+          this.setState({ licenseList:responseData.licenses,dataSource: ds.cloneWithRows(responseData.licenses), gotLicenses:true}); //isLoading: false,
+        }
+      }).catch((error) => {
+        console.error(error);
+      })
+      .done();
+    } catch (e) {
+      console.error(e);
+    } finally {
+
+    }
   }
 
   getBranches = async () => {
 
     this.setState({gotBranches:false});
 
-    var TOKEN = await AsyncStorage.getItem('token');
-    fetch('http://192.168.137.43:8000/api/getCompanyBranchesDDl', {
-      headers: {
-        'Accept': 'application/json',
-        'Authorization': 'Bearer ' + TOKEN
+    try {
 
-      }
-    })
-    .then((response) => response.json())
-    .then((responseData) => {
-      //  console.log(responseData);
-      if("message" in responseData){
-        console.log(responseData.message);
-      }
-      if(responseData.status == "error"){
-        console.log("error");
-      }else if(responseData.status == "success"){
-        this.setState({ branchesList:responseData.branches, gotBranches:true}); //isLoading: false,
-      }
-    })
-    .done();
+      var TOKEN = await AsyncStorage.getItem('token');
+      fetch('http://192.168.137.43:8000/api/getCompanyBranchesDDl', {
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ' + TOKEN
+
+        }
+      })
+      .then((response) => response.json())
+      .then((responseData) => {
+        //  console.log(responseData);
+        if("message" in responseData){
+          console.log(responseData.message);
+        }
+        if(responseData.status == "error"){
+          console.log("error");
+        }else if(responseData.status == "success"){
+          this.setState({ branchesList:responseData.branches, gotBranches:true}); //isLoading: false,
+        }
+      }).catch((error) => {
+        console.error(error);
+      })
+      .done();
+
+    } catch (e) {
+      console.error(e);
+    } finally {
+
+    }
+
   }
 
 
@@ -150,32 +169,43 @@ export default class ManageLicenses extends Component{
   handelLicenseEdit = async () => {
     if(this.state.licenseBranch == '' || this.state.licenseBranch == '0') return alert("Please Choose a Branch");
 
-    var TOKEN = await AsyncStorage.getItem('token');
-    fetch('http://192.168.137.43:8000/api/setCompanyBranchLicense',{
-      method: 'POST',
-      headers: {
-        'Authorization': 'Bearer ' + TOKEN
-      },
+    try {
 
-      body: JSON.stringify({
-        "sub_license":this.state.licensePicked,
-        "branch":this.state.licenseBranch
+      var TOKEN = await AsyncStorage.getItem('token');
+      fetch('http://192.168.137.43:8000/api/setCompanyBranchLicense',{
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + TOKEN
+        },
+
+        body: JSON.stringify({
+          "sub_license":this.state.licensePicked,
+          "branch":this.state.licenseBranch
+        })
       })
-    })
-    .then((response) => response.json())
-    .then((responseData) => {
-      if("message" in responseData){
-        console.log(responseData.message);
-      }
-      if(responseData.status == "error"){
-        console.log("error, reason:", responseData.reason);
-      }else if(responseData.status == "success"){
+      .then((response) => response.json())
+      .then((responseData) => {
+        if("message" in responseData){
+          console.log(responseData.message);
+        }
+        if(responseData.status == "error"){
+          console.log("error, reason:", responseData.reason);
+        }else if(responseData.status == "success"){
 
-        this._resetModal();
-        this.getLicenses();
-      }
-    })
-    .done();
+          this._resetModal();
+          this.getLicenses();
+        }
+      }).catch((error) => {
+        console.error(error);
+      })
+      .done();
+
+    } catch (e) {
+      console.error(e);
+    } finally {
+
+    }
+
   }
 
 

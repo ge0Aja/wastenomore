@@ -104,6 +104,8 @@ export default class MainComponent extends Component {
 
                           }
                         }
+                      }).catch((error) => {
+                        console.error(error);
                       })
                       .done();
                     }else{
@@ -117,10 +119,13 @@ export default class MainComponent extends Component {
                         }));
                       }
                     }
+                  }).catch((error) => {
+                    console.error(error);
                   })
                   .done();
 
                 } catch (e) {
+                  console.error(e);
                   console.log("the tokens caused an error");
                 } finally {
                   console.log("set the current view state to the login page");
@@ -133,21 +138,21 @@ export default class MainComponent extends Component {
                       ],
                       key: null
                     }));
+                  }
+                }
+
+                componentWillMount(){
+                  console.log(this.props);
+                  this._checkToken();
+                }
+
+                static navigationOptions = ({ navigation }) => ({
+                  title: 'Welcome',
+                  header: null
+                });
+
+                render() {
+                  return(<View></View>);
+
                 }
               }
-
-              componentWillMount(){
-                console.log(this.props);
-                this._checkToken();
-              }
-
-  static navigationOptions = ({ navigation }) => ({
-     title: 'Welcome',
-     header: null
-   });
-
-  render() {
-    return(<View></View>);
-
-  }
-}

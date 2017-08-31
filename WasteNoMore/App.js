@@ -98,7 +98,7 @@ const WasteNoMoreNavUser = StackNavigator({
   Login: { screen: MainComponent },
   Signup: { screen: Signup1 },
   Signup2: { screen: Signup2 },
-//  ManagerMain: {screen: ManagerHome},
+  //  ManagerMain: {screen: ManagerHome},
   ManagerMain:{
     screen: CompanyManagerDrawer,
     navigationOptions: props =>({
@@ -129,9 +129,9 @@ const AppNavigationUser = () => (
 );
 export default class app extends Component {
 
-              render() {
-                return (
-                  <AppNavigationUser />
-                );
-              }
-            }
+  render() {
+    return (
+      <AppNavigationUser />
+    );
+  }
+}
