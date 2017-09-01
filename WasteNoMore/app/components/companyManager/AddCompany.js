@@ -268,6 +268,7 @@ export default class AddCompany extends Component{
             isVisible={this.state.isDateTimePickerVisible}
             onConfirm={this._handleDatePicked}
             onCancel={this._hideDateTimePicker}
+            date ={new Date()}
             mode="date"
           />
 

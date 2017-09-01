@@ -229,7 +229,7 @@ export default class addWaste extends Component {
       console.log("Token Error");
     } finally {
       this.setState({submitDisabled:false});
-    
+
     }
   }
 
@@ -377,6 +377,7 @@ export default class addWaste extends Component {
                 isVisible={this.state.isDateTimePickerVisible}
                 onConfirm={this._handleDatePicked}
                 onCancel={this._hideDateTimePicker}
+                date ={new Date()}
                 mode="date"
               />
             </View>

@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import { StyleSheet, Text, View, AppRegistry, Button } from 'react-native';
+import { StyleSheet, Text, View, AppRegistry, Button, AsyncStorage } from 'react-native';
 
 import { NavigationActions } from 'react-navigation';
 
@@ -81,7 +81,6 @@ export default class MainComponent extends Component {
                         break;
 
                         case "home":
-
                         this.props.navigation.dispatch(NavigationActions.reset(
                           {
                             index: 0,
@@ -90,7 +89,6 @@ export default class MainComponent extends Component {
                             ],
                             key: null
                           }));
-
                           break;
                           default:
                           this.props.navigation.dispatch(NavigationActions.reset(
@@ -142,7 +140,7 @@ export default class MainComponent extends Component {
                 }
 
                 componentWillMount(){
-                  console.log(this.props);
+                  //console.log(this.props);
                   this._checkToken();
                 }
 

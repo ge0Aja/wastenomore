@@ -2,10 +2,10 @@ import React,{Component} from 'react';
 import {Alert, StyleSheet,TouchableOpacity, Text, Image,View, TextInput, AppRegistry,Dimensions, Button, KeyboardAvoidingView,AsyncStorage  } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 const { width, height } = Dimensions.get("window");
-const background = require("../../../resources/icons/login1_bg.png");
-const lockIcon = require("../../../resources/icons/login1_lock.png");
-const personIcon = require("../../../resources/icons/login1_person.png");
-const emailIcon = require("../../../resources/icons/signup_email.png");
+const background = require("../../../resources/icons/signup_bgc.png");
+//const lockIcon = require("../../../resources/icons/login1_lock.png");
+//const personIcon = require("../../../resources/icons/login1_person.png");
+//const emailIcon = require("../../../resources/icons/signup_email.png");
 
 
 export default class Signup2 extends Component{
@@ -88,13 +88,13 @@ export default class Signup2 extends Component{
 
               AsyncStorage.getItem('role').then((role) => {
                 if(role === "COMPANY_MANAGER"){
-                  this.props.navigation.dispatch(NavigationActions.reset(
-                    {
-                      index: 0,
-                      actions: [
-                        NavigationActions.navigate({ routeName: 'AddCompany'})
-                      ]
-                    }));
+                    this.props.navigation.dispatch(NavigationActions.reset(
+                      {
+                        index: 0,
+                        actions: [
+                          NavigationActions.navigate({ routeName: 'AddCompany'})
+                        ]
+                      }));
                   }else{
                     this.props.navigation.dispatch(NavigationActions.reset(
                       {
@@ -128,22 +128,26 @@ export default class Signup2 extends Component{
       };
 
       static navigationOptions = ({ navigation }) => ({
-        title: 'Back'
+        title: 'Sign Up'
       });
 
       render(){
         return(
-          <View behavior="padding" style={styles.container}>
+          // <View behavior="padding" style={styles.container}>
             <Image source={background} style={styles.background} resizeMode="cover">
               <View style={styles.wrapper}>
 
                 <View style={styles.inputWrap}>
-                  <View style={styles.iconWrap}>
+                  {/* <View style={styles.iconWrap}>
                     <Image source={personIcon} style={styles.icon} resizeMode="contain" />
-                  </View>
-                  <TextInput style={styles.input} placeholder="Username"
+                  </View> */}
+                  <TextInput style={styles.input}
+                    placeholder="Username"
+                    placeholderTextColor="#CCC"
                     ref='FirstInput'
                     returnKeyType = {"next"}
+                    autoCorrect={false}
+                    autoCapitalize={'none'}
                     onSubmitEditing={(event) => {
                       this.refs.SecondInput.focus();
                     }}
@@ -153,13 +157,17 @@ export default class Signup2 extends Component{
                   <Text style={styles.errorLabel}>{this.state.errorMessageUsername}</Text>
                 </View>
                 <View style={styles.inputWrap}>
-                  <View style={styles.iconWrap}>
+                  {/* <View style={styles.iconWrap}>
                     <Image source={emailIcon} style={styles.icon} resizeMode="contain" />
-                  </View>
+                  </View> */}
                   <TextInput style={styles.input} placeholder="Email"
                     ref='SecondInput'
+
+                    placeholderTextColor="#CCC"
                     keyboardType="email-address"
                     returnKeyType = {"next"}
+                    autoCorrect={false}
+                    autoCapitalize={'none'}
                     onChangeText={(text) => this.setState({email: text})}
                     value = {this.state.email}
                     onSubmitEditing={(event) => {
@@ -169,12 +177,14 @@ export default class Signup2 extends Component{
                   <Text style={styles.errorLabel}>{this.state.errorMessageEmail}</Text>
                 </View>
                 <View style={styles.inputWrap}>
-                  <View style={styles.iconWrap}>
+                  {/* <View style={styles.iconWrap}>
                     <Image source={lockIcon} style={styles.icon} resizeMode="contain" />
-                  </View>
-                  <TextInput style={styles.input} placeholder="Password" secureTextEntry={true}
+                  </View> */}
+                  <TextInput style={styles.input} placeholder="Password"   placeholderTextColor="#CCC" secureTextEntry={true}
                     ref='ThirdInput'
                     returnKeyType = {"next"}
+                    autoCorrect={false}
+                    autoCapitalize={'none'}
                     onSubmitEditing={(event) => {
                       this.refs.ForthInput.focus();
                     }}
@@ -183,12 +193,14 @@ export default class Signup2 extends Component{
                   </TextInput>
                 </View>
                 <View style={styles.inputWrap}>
-                  <View style={styles.iconWrap}>
+                  {/* <View style={styles.iconWrap}>
                     <Image source={lockIcon} style={styles.icon} resizeMode="contain" />
-                  </View>
-                  <TextInput style={styles.input} placeholder="Repeat Password" secureTextEntry={true}
+                  </View> */}
+                  <TextInput style={styles.input}  placeholderTextColor="#CCC" placeholder="Repeat Password" secureTextEntry={true}
                     ref='ForthInput'
                     value = {this.state.passwordConfirmation}
+                    autoCorrect={false}
+                    autoCapitalize={'none'}
                     onChangeText={(text) => this.setState({passwordConfirmation: text})}>
                   </TextInput>
                   <Text style={styles.errorLabel}>{this.state.errorMessage}</Text>
@@ -200,7 +212,7 @@ export default class Signup2 extends Component{
                 </TouchableOpacity>
               </View>
             </Image>
-          </View>
+            /* </View> */
         )
       }
     }
@@ -248,7 +260,7 @@ export default class Signup2 extends Component{
         paddingHorizontal: 10
       },
       button: {
-        backgroundColor: "#FF3366",
+        backgroundColor: "#7eb641",
         paddingVertical: 20,
         alignItems: "center",
         justifyContent: "center",
@@ -281,7 +293,6 @@ export default class Signup2 extends Component{
         color: "#FFF",
         marginLeft: 5
       },
-
       errorLabel:{
         fontSize: 12,
         color: 'red'

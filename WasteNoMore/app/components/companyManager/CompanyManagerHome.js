@@ -110,6 +110,7 @@ class Graph1 extends Component{
         if(responseData.status == "error"){
           console.log("error");
         }else if(responseData.status == "success"){
+          console.log(responseData.data);
           this.setState({ graph1Category:responseData.categories,grpah1Data: responseData.data, graph1gotData:true,branches:responseData.branches , isPremium:responseData.premium},console.log(this.state.grpah1Data)); //isLoading: false,
         }
       }).catch((error) => {
@@ -248,6 +249,7 @@ class Graph1 extends Component{
                   isVisible={this.state.isDateTimePickerVisible1}
                   onConfirm={this._handleDatePicked1}
                   onCancel={this._hideDateTimePicker1}
+                  date ={new Date()}
                   mode="date"
                 />
 
@@ -255,6 +257,7 @@ class Graph1 extends Component{
                   isVisible={this.state.isDateTimePickerVisible2}
                   onConfirm={this._handleDatePicked2}
                   onCancel={this._hideDateTimePicker2}
+                  date ={new Date()}
                   mode="date"
                 />
 
@@ -322,6 +325,7 @@ class Graph1 extends Component{
                       isVisible={this.state.isDateTimePickerVisible1}
                       onConfirm={this._handleDatePicked1}
                       onCancel={this._hideDateTimePicker1}
+                      date ={new Date()}
                       mode="date"
                     />
 
@@ -329,6 +333,7 @@ class Graph1 extends Component{
                       isVisible={this.state.isDateTimePickerVisible2}
                       onConfirm={this._handleDatePicked2}
                       onCancel={this._hideDateTimePicker2}
+                      date ={new Date()}
                       mode="date"
                     />
 
@@ -589,6 +594,7 @@ class Graph1 extends Component{
                             isVisible={this.state.isDateTimePickerVisible1}
                             onConfirm={this._handleDatePicked1}
                             onCancel={this._hideDateTimePicker1}
+                            date ={new Date()}
                             mode="date"
                           />
 
@@ -596,6 +602,7 @@ class Graph1 extends Component{
                             isVisible={this.state.isDateTimePickerVisible2}
                             onConfirm={this._handleDatePicked2}
                             onCancel={this._hideDateTimePicker2}
+                            date ={new Date()}
                             mode="date"
                           />
 
@@ -663,6 +670,7 @@ class Graph1 extends Component{
                                 isVisible={this.state.isDateTimePickerVisible1}
                                 onConfirm={this._handleDatePicked1}
                                 onCancel={this._hideDateTimePicker1}
+                                date ={new Date()}
                                 mode="date"
                               />
 
@@ -670,6 +678,7 @@ class Graph1 extends Component{
                                 isVisible={this.state.isDateTimePickerVisible2}
                                 onConfirm={this._handleDatePicked2}
                                 onCancel={this._hideDateTimePicker2}
+                                date ={new Date()}
                                 mode="date"
                               />
 

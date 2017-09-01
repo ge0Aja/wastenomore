@@ -1,8 +1,9 @@
 import React,{Component} from 'react';
 import {Alert,TouchableOpacity, Image,StyleSheet, Text, View, TextInput, AppRegistry, Button, KeyboardAvoidingView,AsyncStorage,Dimensions } from 'react-native';
 
-const background = require("../../../resources/icons/login1_bg.png");
-const licenseIcon = require("../../../resources/icons/license_bg.png");
+const background = require("../../../resources/icons/signup_bgc.png");
+
+//const licenseIcon = require("../../../resources/icons/license_bg.png");
 const { width, height } = Dimensions.get("window");
 
 export default class Signup1 extends Component{
@@ -26,7 +27,7 @@ export default class Signup1 extends Component{
   }
 
   static navigationOptions = ({ navigation }) => ({
-    title: 'Back'
+    title: 'Sign Up'
   });
 
   _validateButtonPress = () => {
@@ -36,7 +37,7 @@ export default class Signup1 extends Component{
         method: 'POST',
         headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          "license": this.state.license,//this.state.license
+          "license": "ed22aa69ef81649cf87c7b3d37f1337e",//this.state.license
           "timestamp": Date.now()
         })
       })
@@ -70,12 +71,14 @@ export default class Signup1 extends Component{
       <Image source={background} style={styles.background} resizeMode="cover">
         <View style={styles.wrapper}>
           <View style={styles.inputWrap}>
-            <View style={styles.iconWrap}>
+            {/* <View style={styles.iconWrap}>
               <Image source={licenseIcon} style={styles.icon} resizeMode="contain" />
-            </View>
+            </View> */}
             <TextInput
               placeholder="License Key"
-              placeholderTextColor="#FFF"
+              placeholderTextColor="#CCC"
+              autoCorrect={false}
+              autoCapitalize={'none'}
               style={styles.input}
               onChangeText={(text) => this.setState({license: text})}
               value = {this.state.license}
@@ -137,7 +140,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10
   },
   button: {
-    backgroundColor: "#FF3366",
+    backgroundColor: "#7eb641",
     paddingVertical: 20,
     alignItems: "center",
     justifyContent: "center",

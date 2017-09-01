@@ -480,6 +480,7 @@ export default class AddBranch extends Component {
                   isVisible={this.state.isDateTimePickerVisible}
                   onConfirm={this._handleDatePicked}
                   onCancel={this._hideDateTimePicker}
+                  date ={new Date()}
                   mode="date"
                 />
                 <View style={[styles.modalLines,{marginTop:25}]}>
@@ -582,6 +583,7 @@ export default class AddBranch extends Component {
                   isVisible={this.state.isDateTimePickerVisible}
                   onConfirm={this._handleDatePicked2}
                   onCancel={this._hideDateTimePicker}
+                  date ={new Date()}
                   mode="date"
                 />
 

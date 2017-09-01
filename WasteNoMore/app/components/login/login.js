@@ -18,10 +18,10 @@ import { NavigationActions } from 'react-navigation';
 
 const { width, height } = Dimensions.get("window");
 
-const background = require("../../../resources/icons/login1_bg.png");
-const mark = require("../../../resources/icons/login1_mark.png");
-const lockIcon = require("../../../resources/icons/login1_lock.png");
-const personIcon = require("../../../resources/icons/login1_person.png");
+const background = require("../../../resources/icons/signup_bgc.png");
+const mark = require("../../../resources/icons/main.png");
+//const lockIcon = require("../../../resources/icons/login1_lock.png");
+//const personIcon = require("../../../resources/icons/login1_person.png");
 
 export default class LoginScreen extends Component {
 
@@ -179,71 +179,82 @@ export default class LoginScreen extends Component {
                 }
               };
 
-              render() {
-                return (
-                  <KeyboardAvoidingView behavior="padding" style={styles.container}>
-                    <Image source={background} style={styles.background} resizeMode="cover">
-                      <View style={styles.markWrap}>
-                        <Image source={mark} style={styles.mark} resizeMode="contain" />
-                      </View>
-                      <View style={styles.wrapper}>
-                        <View style={styles.inputWrap}>
-                          <View style={styles.iconWrap}>
-                            <Image source={personIcon} style={styles.icon} resizeMode="contain" />
-                          </View>
-                          <TextInput
-                            placeholder="Username"
-                            placeholderTextColor="#FFF"
-                            style={styles.input}
-                            autoCorrect={false}
-                            onChangeText={(text) => this.setState({username: text})}
-                            value = {this.state.license}
-                          />
-                        </View>
-                        <View style={styles.inputWrap}>
-                          <View style={styles.iconWrap}>
-                            <Image source={lockIcon} style={styles.icon} resizeMode="contain" />
-                          </View>
-                          <TextInput
-                            placeholderTextColor="#FFF"
-                            placeholder="Password"
-                            style={styles.input}
-                            secureTextEntry
-                            autoCorrect={false}
-                            onChangeText={(text) => this.setState({password: text})}
-                            value = {this.state.license}
-                            onSubmitEditing = { ()  =>this.handleSignInPress  }
+    render() {
+        return (
+          <KeyboardAvoidingView behavior="padding" style={styles.container}>
+            <Image source={background} style={styles.background} resizeMode="cover">
 
-                          />
-                        </View>
-                        {/* <TouchableOpacity activeOpacity={.5}>
-                          <View>
-                          <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
-                          </View>
-                        </TouchableOpacity> */}
-                        <TouchableOpacity activeOpacity={.5} onPress={this.handleSignInPress}>
-                          <View style={styles.button}>
-                            <Text style={styles.buttonText}>Sign In</Text>
-                          </View>
-                        </TouchableOpacity>
-                      </View>
-                      <View style={styles.container}>
-                        <View style={styles.signupWrap}>
-                          <Text style={styles.accountText}>Don&#39;t have an account?</Text>
-                        </View>
-                        <TouchableOpacity activeOpacity={.5} style={styles.centeredButton} onPress={this.handleSignUpPress}>
-                          <View>
-                            <Text style={styles.signupLinkText}>
-                              Sign Up
-                            </Text>
-                          </View>
-                        </TouchableOpacity>
-                      </View>
-                    </Image>
-                  </KeyboardAvoidingView>
-            );
-          }
-        }
+              <View style={styles.markWrap}>
+                <Image source={mark} style={styles.mark} resizeMode="contain" />
+              </View>
+              <View style={styles.wrapper}>
+                <View style={styles.inputWrap}>
+                  {/* <View style={styles.iconWrap}>
+                    <Image source={personIcon} style={styles.icon} resizeMode="contain" />
+                  </View> */}
+                  <TextInput
+                    placeholder="Username"
+                    placeholderTextColor="#CCC"
+                    style={styles.input}
+                    autoCorrect={false}
+                    onChangeText={(text) => this.setState({username: text})}
+                    value = {this.state.username}
+                    autoCorrect={false}
+                    autoCapitalize={'none'}
+                    ref='FirstInput'
+                    returnKeyType = {"next"}
+                    onSubmitEditing={(event) => {
+                      this.refs.SecondInput.focus();
+                    }}
+
+                  />
+                </View>
+                <View style={styles.inputWrap}>
+                  {/* <View style={styles.iconWrap}>
+                    <Image source={lockIcon} style={styles.icon} resizeMode="contain" />
+                  </View> */}
+                  <TextInput
+                    placeholderTextColor="#CCC"
+                    placeholder="Password"
+                    style={styles.input}
+                    secureTextEntry
+                    autoCorrect={false}
+                    autoCapitalize={'none'}
+                    autoCorrect={false}
+                    onChangeText={(text) => this.setState({password: text})}
+                    value = {this.state.password}
+                    onSubmitEditing = { ()  =>this.handleSignInPress  }
+                    ref='SecondInput'
+                  />
+                </View>
+                {/* <TouchableOpacity activeOpacity={.5}>
+                  <View>
+                  <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
+                  </View>
+                </TouchableOpacity> */}
+                <TouchableOpacity activeOpacity={.5} onPress={this.handleSignInPress}>
+                  <View style={styles.button}>
+                    <Text style={styles.buttonText}>Sign In</Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.container}>
+                {/* <View style={styles.signupWrap}>
+                  <Text style={styles.accountText}>Don&#39;t have an account?</Text>
+                </View> */}
+                <TouchableOpacity activeOpacity={.5} style={styles.centeredButton} onPress={this.handleSignUpPress}>
+                  <View>
+                    <Text style={styles.signupLinkText}>
+                      Sign Up
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+            </Image>
+          </KeyboardAvoidingView>
+    );
+  }
+}
         const styles = StyleSheet.create({
           container: {
             flex: 1,
@@ -287,7 +298,7 @@ export default class LoginScreen extends Component {
             paddingHorizontal: 10
           },
           button: {
-            backgroundColor: "#FF3366",
+            backgroundColor: "#7eb641",
             paddingVertical: 20,
             alignItems: "center",
             justifyContent: "center",
@@ -314,10 +325,12 @@ export default class LoginScreen extends Component {
             justifyContent: "center"
           },
           accountText: {
-            color: "#D8D8D8"
+            color: "black"
           },
           signupLinkText: {
-            color: "#FFF",
-            marginLeft: 5
+              backgroundColor: "transparent",
+            color: "#CCCC",
+              fontSize: 14
+          //  marginLeft: 5
           }
         });
