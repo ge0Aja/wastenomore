@@ -10,6 +10,9 @@ export default class MainComponent extends Component {
       const TOKEN = await AsyncStorage.getItem('token');
       const REFRESH_TOKEN = await AsyncStorage.getItem('refresh_token');
 
+      console.log("hereeeeeeeeeeeeeeeeeeeeee");
+      console.log("refresh token"+ REFRESH_TOKEN);
+
       fetch('http://192.168.137.43:8000/api/token_refresh',{
         method: 'POST',
         headers: {
