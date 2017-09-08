@@ -154,8 +154,9 @@ export default class Signup2 extends Component{
                     value = {this.state.username}
                     onChangeText={(text) => this.setState({username: text})}>
                   </TextInput>
-                  <Text style={styles.errorLabel}>{this.state.errorMessageUsername}</Text>
+
                 </View>
+                <Text style={styles.errorLabel}>{this.state.errorMessageUsername}</Text>
                 <View style={styles.inputWrap}>
                   {/* <View style={styles.iconWrap}>
                     <Image source={emailIcon} style={styles.icon} resizeMode="contain" />
@@ -174,8 +175,9 @@ export default class Signup2 extends Component{
                       this.refs.ThirdInput.focus();
                     }}>
                   </TextInput>
-                  <Text style={styles.errorLabel}>{this.state.errorMessageEmail}</Text>
+
                 </View>
+                <Text style={styles.errorLabel}>{this.state.errorMessageEmail}</Text>
                 <View style={styles.inputWrap}>
                   {/* <View style={styles.iconWrap}>
                     <Image source={lockIcon} style={styles.icon} resizeMode="contain" />
