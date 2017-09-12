@@ -36,7 +36,7 @@ export default class Survey extends Component {
     Object.keys(currentState).map(function(keyName, keyIndex) {
       // use keyName to get current key's name
       // and a[keyName] to get its value
-      if(keyName !== "comps" && keyName !== "qExist"){
+      if(keyName !== "comps" && keyName !== "qExist"  && keyName !== "submitDisabled"){
         if( currentState[keyName] == "0"){
           Inputerror =1;
           return alert('Please Choose Required Options');

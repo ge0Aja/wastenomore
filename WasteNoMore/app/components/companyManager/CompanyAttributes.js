@@ -43,7 +43,7 @@ export default class CompanyAttributes extends Component {
     Object.keys(currentState).map(function(keyName, keyIndex) {
       // use keyName to get current key's name
       // and a[keyName] to get its value
-      if(keyName !== "comps" && keyName !== "attrExist"){
+      if(keyName !== "comps" && keyName !== "attrExist" && keyName !== "submitDisabled"){
         if(!currentState[keyName] || currentState[keyName] == "0"){
           Inputerror =1;
           return alert('Please Pick a '+ keyName);

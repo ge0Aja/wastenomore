@@ -10,7 +10,6 @@ export default class MainComponent extends Component {
       const TOKEN = await AsyncStorage.getItem('token');
       const REFRESH_TOKEN = await AsyncStorage.getItem('refresh_token');
 
-
       fetch('http://192.168.137.43:8000/api/token_refresh',{
         method: 'POST',
         headers: {
@@ -26,9 +25,25 @@ export default class MainComponent extends Component {
         if(responseData.status == "ERROR"){
           alert("Error");
           console.log("error, reason:", responseData.reason);
+          this.props.navigation.dispatch(NavigationActions.reset(
+            {
+              index: 0,
+              actions: [
+                NavigationActions.navigate({ routeName: 'Login'})
+              ],
+              key: null
+            }));
         }else if(responseData.status == "DENIED"){
           alert("Access Denied");
           console.log("denied, reason:", responseData.reason);
+          this.props.navigation.dispatch(NavigationActions.reset(
+            {
+              index: 0,
+              actions: [
+                NavigationActions.navigate({ routeName: 'Login'})
+              ],
+              key: null
+            }));
         }else if(responseData.status == "GRANTED"){
           await AsyncStorage.setItem('token', responseData.token);
           await AsyncStorage.setItem('refresh_token', responseData.refresh_token);
@@ -141,7 +156,6 @@ export default class MainComponent extends Component {
                 }
 
                 componentWillMount(){
-                  //console.log(this.props);
                   this._checkToken();
                 }
 

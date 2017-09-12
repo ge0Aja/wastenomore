@@ -10,6 +10,7 @@ import {
   TextInput,
   Alert,
   Button,
+  ActivityIndicator,
   TouchableOpacity, KeyboardAvoidingView
 } from 'react-native';
 
@@ -34,7 +35,8 @@ export default class LoginScreen extends Component {
     super();
     this.state = {
       username:'',
-      password:''
+      password:'',
+      trySignIn:false
     }
   }
 
@@ -53,7 +55,7 @@ export default class LoginScreen extends Component {
 
   handleSignInPress = async () => {
     try {
-
+      this.setState({trySignIn:true});
       fetch('http://192.168.137.43:8000/api/token_authentication', {
         method: 'POST',
         headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
@@ -249,6 +251,16 @@ export default class LoginScreen extends Component {
                     </Text>
                   </View>
                 </TouchableOpacity>
+              </View>
+              <View  style={styles.container}>
+
+                <ActivityIndicator
+                  animating={this.state.trySignIn}
+                  size={"small"}
+                  hidesWhenStopped={true}
+                >
+                </ActivityIndicator>
+
               </View>
             </Image>
           </KeyboardAvoidingView>
