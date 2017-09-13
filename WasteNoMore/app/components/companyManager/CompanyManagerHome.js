@@ -203,7 +203,7 @@ class Graph1 extends Component{
                   </Text>
                   <TextInput style={styles.tinput}
                     ref='FirstInput'
-                    editable={false}
+                    //  editable={false}
                     onFocus={() => {Keyboard.dismiss();this._showDateTimePicker1();}}
                     value = {this.state.fromDateBeauty}
                   >
@@ -214,7 +214,7 @@ class Graph1 extends Component{
                   </Text>
                   <TextInput style={styles.tinput}
                     ref='SecondInput'
-                    editable={false}
+                    //  editable={false}
                     onFocus={() => {Keyboard.dismiss();this._showDateTimePicker2();}}
                     value = {this.state.toDateBeauty}
                   >
@@ -548,7 +548,7 @@ class Graph1 extends Component{
                             </Text>
                             <TextInput style={styles.tinput}
                               ref='FirstInput'
-                              editable={false}
+                              //  editable={false}
                               onFocus={() => {Keyboard.dismiss();this._showDateTimePicker1();}}
                               value = {this.state.fromDateBeauty}
                             >
@@ -559,7 +559,7 @@ class Graph1 extends Component{
                             </Text>
                             <TextInput style={styles.tinput}
                               ref='SecondInput'
-                              editable={false}
+                              //  editable={false}
                               onFocus={() => {Keyboard.dismiss();this._showDateTimePicker2();}}
                               value = {this.state.toDateBeauty}
                             >
