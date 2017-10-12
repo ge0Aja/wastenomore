@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import { StyleSheet, AsyncStorage, Text, View,AppRegistry, Image, ActivityIndicator, Picker, TextInput, Keyboard,Alert,TouchableOpacity } from 'react-native';
+import { StyleSheet, AsyncStorage, Text, View,AppRegistry, Image, ActivityIndicator, Picker, TextInput, Keyboard,TouchableOpacity } from 'react-native';
 import { TabNavigator } from "react-navigation";
 import ChartView from 'react-native-highcharts';
 
@@ -45,7 +45,7 @@ class Graph1 extends Component{
     try {
 
       var TOKEN = await AsyncStorage.getItem('token');
-      fetch('http://192.168.137.43:8000/api/getWasteGraph1', {
+      fetch('https://murmuring-citadel-23511.herokuapp.com/api/getWasteGraph1', {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
@@ -167,7 +167,7 @@ class Graph2 extends Component{
     try {
 
       var TOKEN = await AsyncStorage.getItem('token');
-      fetch('http://192.168.137.43:8000/api/getWasteGraph2', {
+      fetch('https://murmuring-citadel-23511.herokuapp.com/api/getWasteGraph2', {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
@@ -281,7 +281,7 @@ class Graph2 extends Component{
       try {
 
         var TOKEN = await AsyncStorage.getItem('token');
-        fetch('http://192.168.137.43:8000/api/getPurchaseTimeSeries', {
+        fetch('https://murmuring-citadel-23511.herokuapp.com/api/getPurchaseTimeSeries', {
           method: 'GET',
           headers: {
             'Accept': 'application/json',
@@ -393,7 +393,7 @@ class Graph2 extends Component{
         try {
 
           var TOKEN = await AsyncStorage.getItem('token');
-          fetch('http://192.168.137.43:8000/api/getWasteTimeSeries', {
+          fetch('https://murmuring-citadel-23511.herokuapp.com/api/getWasteTimeSeries', {
             method: 'GET',
             headers: {
               'Accept': 'application/json',

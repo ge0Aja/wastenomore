@@ -24,8 +24,6 @@ export default class Signup2 extends Component{
     }
   }
 
-
-
   async saveItem(item, selectedValue) {
     try {
       await AsyncStorage.setItem(item, selectedValue);
@@ -92,7 +90,7 @@ export default class Signup2 extends Component{
         this.setState({ hasChallange: challange !== null });
         if(this.state.hasChallange){
 
-          fetch('http://192.168.137.43:8000/api/signup', {
+          fetch('https://murmuring-citadel-23511.herokuapp.com/api/signup', {
             method: 'POST',
             headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
             body: JSON.stringify({

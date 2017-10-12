@@ -10,7 +10,7 @@ export default class MainComponent extends Component {
       const TOKEN = await AsyncStorage.getItem('token');
       const REFRESH_TOKEN = await AsyncStorage.getItem('refresh_token');
 
-      fetch('http://192.168.137.43:8000/api/token_refresh',{
+      fetch('https://murmuring-citadel-23511.herokuapp.com/api/token_refresh',{
         method: 'POST',
         headers: {
           //  'Authorization': 'Bearer ' + TOKEN
@@ -23,7 +23,7 @@ export default class MainComponent extends Component {
       .then((response) => response.json())
       .then(async (responseData) => {
         if(responseData.status == "ERROR"){
-          alert("Error");
+          Alert.alert("Error");
           console.log("error, reason:", responseData.reason);
           this.props.navigation.dispatch(NavigationActions.reset(
             {
@@ -34,7 +34,7 @@ export default class MainComponent extends Component {
               key: null
             }));
         }else if(responseData.status == "DENIED"){
-          alert("Access Denied");
+          Alert.alert("Access Denied");
           console.log("denied, reason:", responseData.reason);
           this.props.navigation.dispatch(NavigationActions.reset(
             {
@@ -50,7 +50,7 @@ export default class MainComponent extends Component {
 
           if(responseData.role == "COMPANY_MANAGER"){
 
-            fetch('http://192.168.137.43:8000/api/checkCompanyManager',{
+            fetch('https://murmuring-citadel-23511.herokuapp.com/api/checkCompanyManager',{
               method: 'GET',
               headers: {
                 'Authorization': 'Bearer ' + responseData.token

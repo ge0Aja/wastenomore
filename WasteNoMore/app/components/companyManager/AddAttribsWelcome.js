@@ -36,7 +36,7 @@ export default class AddAttribsWelcome extends Component {
       if(keyName !== "comps" && keyName !== "attrExist"  && keyName !== "submitDisabled"){
         if(!currentState[keyName] || currentState[keyName] == "0"){
           Inputerror =1;
-          return alert('Please Pick a '+ keyName);
+          return Alert.alert('Please Pick a '+ keyName);
         }
         toUpload[keyName] = currentState[keyName];
       }
@@ -49,7 +49,7 @@ export default class AddAttribsWelcome extends Component {
       this.setState({submitDisabled:true});
       var TOKEN = await AsyncStorage.getItem('token');
 
-      fetch('http://192.168.137.43:8000/api/newCompanyAttrSubAttr',{
+      fetch('https://murmuring-citadel-23511.herokuapp.com/api/newCompanyAttrSubAttr',{
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -72,7 +72,7 @@ export default class AddAttribsWelcome extends Component {
         if(responseData.status == "error"){
           console.log("error, reason:", responseData.reason);
         }else if(responseData.status == "success"){
-          alert("Company Info added Successfully");
+          Alert.alert("Company Info added Successfully");
 
           this.props.navigation.dispatch(NavigationActions.reset(
             {
@@ -105,7 +105,7 @@ export default class AddAttribsWelcome extends Component {
         var TOKEN = await AsyncStorage.getItem('token');
         //  'Authorization': 'Bearer ' + TOKEN
 
-        fetch('http://192.168.137.43:8000/api/getAttrSubAttrsApi', {
+        fetch('https://murmuring-citadel-23511.herokuapp.com/api/getAttrSubAttrsApi', {
           headers: {
             'Accept': 'application/json',
             'Authorization': 'Bearer ' + TOKEN

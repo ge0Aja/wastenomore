@@ -60,7 +60,7 @@ export default class ManageLicenses extends Component{
 
     try {
       var TOKEN = await AsyncStorage.getItem('token');
-      fetch('http://192.168.137.43:8000/api/getCompanyLicenses', {
+      fetch('https://murmuring-citadel-23511.herokuapp.com/api/getCompanyLicenses', {
         headers: {
           'Accept': 'application/json',
           'Authorization': 'Bearer ' + TOKEN
@@ -96,7 +96,7 @@ export default class ManageLicenses extends Component{
     try {
 
       var TOKEN = await AsyncStorage.getItem('token');
-      fetch('http://192.168.137.43:8000/api/getCompanyBranchesDDl', {
+      fetch('https://murmuring-citadel-23511.herokuapp.com/api/getCompanyBranchesDDl', {
         headers: {
           'Accept': 'application/json',
           'Authorization': 'Bearer ' + TOKEN
@@ -168,12 +168,12 @@ export default class ManageLicenses extends Component{
   };
 
   handelLicenseEdit = async () => {
-    if(this.state.licenseBranch == '' || this.state.licenseBranch == '0') return alert("Please Choose a Branch");
+    if(this.state.licenseBranch == '' || this.state.licenseBranch == '0') return Alert.alert("Choose a Branch");
 
     try {
       this.setState({  submitDisabled:true});
       var TOKEN = await AsyncStorage.getItem('token');
-      fetch('http://192.168.137.43:8000/api/setCompanyBranchLicense',{
+      fetch('https://murmuring-citadel-23511.herokuapp.com/api/setCompanyBranchLicense',{
         method: 'POST',
         headers: {
           'Authorization': 'Bearer ' + TOKEN

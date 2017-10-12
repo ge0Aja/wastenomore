@@ -88,7 +88,7 @@ class Graph1 extends Component{
     try {
 
       var TOKEN = await AsyncStorage.getItem('token');
-      fetch('http://192.168.137.43:8000/api/getWasteGraph1', {
+      fetch('https://murmuring-citadel-23511.herokuapp.com/api/getWasteGraph1', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -228,10 +228,10 @@ class Graph1 extends Component{
                     initValue={"Choose Branch"}
                     onChange={(option) => {
                       if((this.state.toDate == '' && this.state.fromDate != '') || (this.state.toDate != '' && this.state.fromDate == ''))
-                      return alert("Please set Both Dates");
+                      return Alert.alert("Set Both Dates");
 
                       if(this.state.fromDate > this.state.toDate)
-                      return alert("Start Date should be less than End Date");
+                      return Alert.alert("Start Date should be less than End Date");
 
                       this.setState({branchId: option.key},this.getGraphData)
                     }}>
@@ -304,10 +304,10 @@ class Graph1 extends Component{
                         initValue={"Choose Branch"}
                         onChange={(option) => {
                           if((this.state.toDate == '' && this.state.fromDate != '') || (this.state.toDate != '' && this.state.fromDate == ''))
-                          return alert("Please set Both Dates");
+                          return Alert.alert("Set Both Dates");
 
                           if(this.state.fromDate > this.state.toDate)
-                          return alert("Start Date should be less than End Date");
+                          return Alert.alert("Start Date should be less than End Date");
 
                           this.setState({branchId: option.key},this.getGraphData)
                         }}>
@@ -435,7 +435,7 @@ class Graph1 extends Component{
               try {
 
                 var TOKEN = await AsyncStorage.getItem('token');
-                fetch('http://192.168.137.43:8000/api/getWasteGraph2', {
+                fetch('https://murmuring-citadel-23511.herokuapp.com/api/getWasteGraph2', {
                   method: 'POST',
                   headers: {
                     'Accept': 'application/json',
@@ -573,10 +573,10 @@ class Graph1 extends Component{
                               initValue={"Choose Branch"}
                               onChange={(option) => {
                                 if((this.state.toDate == '' && this.state.fromDate != '') || (this.state.toDate != '' && this.state.fromDate == ''))
-                                return alert("Please set Both Dates");
+                                return Alert.alert("Set Both Dates");
 
                                 if(this.state.fromDate > this.state.toDate)
-                                return alert("Start Date should be less than End Date");
+                                return Alert.alert("Start Date should be less than End Date");
 
                                 this.setState({branchId: option.key},this.getGraphData)
                               }}>
@@ -649,10 +649,10 @@ class Graph1 extends Component{
                                   initValue={"Choose Branch"}
                                   onChange={(option) => {
                                     if((this.state.toDate == '' && this.state.fromDate != '') || (this.state.toDate != '' && this.state.fromDate == ''))
-                                    return alert("Please set Both Dates");
+                                    return Alert.alert("Set Both Dates");
 
                                     if(this.state.fromDate > this.state.toDate)
-                                    return alert("Start Date should be less than End Date");
+                                    return Alert.alert("Start Date should be less than End Date");
 
                                     this.setState({branchId: option.key},this.getGraphData)
                                   }}>
@@ -740,7 +740,7 @@ class Graph1 extends Component{
                         try {
 
                           var TOKEN = await AsyncStorage.getItem('token');
-                          fetch('http://192.168.137.43:8000/api/getPurchaseTimeSeries', {
+                          fetch('https://murmuring-citadel-23511.herokuapp.com/api/getPurchaseTimeSeries', {
                             method: 'POST',
                             headers: {
                               'Accept': 'application/json',
@@ -912,7 +912,7 @@ class Graph1 extends Component{
                           try {
 
                             var TOKEN = await AsyncStorage.getItem('token');
-                            fetch('http://192.168.137.43:8000/api/getWasteTimeSeries', {
+                            fetch('https://murmuring-citadel-23511.herokuapp.com/api/getWasteTimeSeries', {
                               method: 'POST',
                               headers: {
                                 'Accept': 'application/json',

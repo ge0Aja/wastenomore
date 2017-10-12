@@ -37,7 +37,7 @@ export default class Signup1 extends Component{
 
     try {
       this.setState({trySignUp:true});
-      fetch('http://192.168.137.43:8000/api/license_authentication', {
+      fetch('https://murmuring-citadel-23511.herokuapp.com/api/license_authentication', {
         method: 'POST',
         headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
         body: JSON.stringify({

@@ -39,11 +39,11 @@ export default class Survey extends Component {
       if(keyName !== "comps" && keyName !== "qExist"  && keyName !== "submitDisabled"){
         if( currentState[keyName] == "0"){
           Inputerror =1;
-          return alert('Please Choose Required Options');
+          return Alert.alert('Choose Required Options');
         }
         if(currentState[keyName] == ''){
           Inputerror =1;
-          return alert('Please Fill Required Fields');
+          return Alert.alert('Fill Required Fields');
         }
         toUpload[keyName] = currentState[keyName];
       }
@@ -56,7 +56,7 @@ export default class Survey extends Component {
 
       this.setState({submitDisabled:true});
       var TOKEN = await AsyncStorage.getItem('token');
-      fetch('http://192.168.137.43:8000/api/answerSurvey',{
+      fetch('https://murmuring-citadel-23511.herokuapp.com/api/answerSurvey',{
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -109,7 +109,7 @@ export default class Survey extends Component {
 
         var TOKEN = await AsyncStorage.getItem('token');
 
-        fetch('http://192.168.137.43:8000/api/generateQs', {
+        fetch('https://murmuring-citadel-23511.herokuapp.com/api/generateQs', {
           headers: {
             'Accept': 'application/json',
             'Authorization': 'Bearer ' + TOKEN

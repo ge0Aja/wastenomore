@@ -115,18 +115,18 @@ export default class AddBranch extends Component {
 
   handelBranchAdd = async () => {
 
-    if(this.state.branchStaffCount == '') return alert('Please Insert Staff Count');
+    if(this.state.branchStaffCount == '') return Alert.alert('Insert Staff Count');
 
-    if(this.state.branchOpeningDate == '') return alert('Please Choose An Opening Date');
+    if(this.state.branchOpeningDate == '') return Alert.alert('Choose An Opening Date');
 
-    if(this.state.branchLocation == '' || this.state.branchLocationEdit == '0') return alert('Please Choose A Location');
+    if(this.state.branchLocation == '' || this.state.branchLocationEdit == '0') return Alert.alert('Choose A Location');
 
-    if(this.state.branchAddress == '') return alert('Please Insert Address');
+    if(this.state.branchAddress == '') return Alert.alert('Insert Address');
 
     try {
       this.setState({submitDisabled:true});
       var TOKEN = await AsyncStorage.getItem('token');
-      fetch('http://192.168.137.43:8000/api/newCompanyBranch',{
+      fetch('https://murmuring-citadel-23511.herokuapp.com/api/newCompanyBranch',{
         method: 'POST',
         headers: {
           'Authorization': 'Bearer ' + TOKEN
@@ -172,18 +172,18 @@ export default class AddBranch extends Component {
 
   handelBranchEdit = async () => {
 
-    if(this.state.branchLocationEdit == '' || this.state.branchLocationEdit == '0') return alert('Please Choose A Location');
+    if(this.state.branchLocationEdit == '' || this.state.branchLocationEdit == '0') return Alert.alert('Choose A Location');
 
-    if(this.state.branchAddressEdit == '') return alert('Please Insert Address');
+    if(this.state.branchAddressEdit == '') return Alert.alert('Insert Address');
 
-    if(this.state.branchStaffCountEdit == '') return alert('Please Insert Staff Count');
+    if(this.state.branchStaffCountEdit == '') return Alert.alert('Insert Staff Count');
 
-    if(this.state.branchOpeningDateEdit == '') return alert('Please Choose An Opening Date');
+    if(this.state.branchOpeningDateEdit == '') return Alert.alert('Choose An Opening Date');
 
     try {
       this.setState({submitDisabled:true});
       var TOKEN = await AsyncStorage.getItem('token');
-      fetch('http://192.168.137.43:8000/api/editBranchBasicInfo',{
+      fetch('https://murmuring-citadel-23511.herokuapp.com/api/editBranchBasicInfo',{
         method: 'POST',
         headers: {
           'Authorization': 'Bearer ' + TOKEN
@@ -234,7 +234,7 @@ export default class AddBranch extends Component {
     try {
       this.setState({submitDisabled:true});
       var TOKEN = await AsyncStorage.getItem('token');
-      fetch('http://192.168.137.43:8000/api/deleteBranchApi',{
+      fetch('https://murmuring-citadel-23511.herokuapp.com/api/deleteBranchApi',{
         method: 'POST',
         headers: {
           'Authorization': 'Bearer ' + TOKEN
@@ -340,7 +340,7 @@ export default class AddBranch extends Component {
       var TOKEN = await AsyncStorage.getItem('token');
 
       //  console.log("The Token is:"+ TOKEN);
-      fetch('http://192.168.137.43:8000/api/getCompanyBranches', {
+      fetch('https://murmuring-citadel-23511.herokuapp.com/api/getCompanyBranches', {
         headers: {
           'Accept': 'application/json',
           'Authorization': 'Bearer ' + TOKEN
@@ -373,7 +373,7 @@ export default class AddBranch extends Component {
 
   getLocations = async () => {
     var TOKEN = await AsyncStorage.getItem('token');
-    fetch('http://192.168.137.43:8000/api/getLocations', {
+    fetch('https://murmuring-citadel-23511.herokuapp.com/api/getLocations', {
       headers: {
         'Accept': 'application/json',
         'Authorization': 'Bearer ' + TOKEN

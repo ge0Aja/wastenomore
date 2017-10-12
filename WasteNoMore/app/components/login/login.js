@@ -59,7 +59,7 @@ export default class LoginScreen extends Component {
         return Alert.alert("Error","Invalid Credentials");
 
       this.setState({trySignIn:true});
-      fetch('http://192.168.137.43:8000/api/token_authentication', {
+      fetch('https://murmuring-citadel-23511.herokuapp.com/api/token_authentication', {
         method: 'POST',
         headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -79,7 +79,7 @@ export default class LoginScreen extends Component {
           if(responseData.role == "COMPANY_MANAGER"){
             // check company manager status
 
-            fetch('http://192.168.137.43:8000/api/checkCompanyManager',{
+            fetch('https://murmuring-citadel-23511.herokuapp.com/api/checkCompanyManager',{
               method: 'GET',
               headers: {
                 'Authorization': 'Bearer ' + responseData.token

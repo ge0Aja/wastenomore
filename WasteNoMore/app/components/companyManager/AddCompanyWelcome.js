@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import { StyleSheet,AsyncStorage, Text, View, TextInput,Picker, KeyboardAvoidingView, Button,ActivityIndicator,Image } from 'react-native';
+import { StyleSheet,AsyncStorage, Text, View, TextInput,Picker, KeyboardAvoidingView, Button,ActivityIndicator,Image,Alert } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import Moment from 'moment';
 import ModalPicker from 'react-native-modal-picker';
@@ -40,7 +40,7 @@ export default class AddCompanyWelcome extends Component{
 
       var TOKEN = await AsyncStorage.getItem('token');
 
-      fetch('http://192.168.137.43:8000/api/getCompanyInfo', {
+      fetch('https://murmuring-citadel-23511.herokuapp.com/api/getCompanyInfo', {
         headers: {
           'Accept': 'application/json',
           'Authorization': 'Bearer ' + TOKEN
@@ -91,7 +91,7 @@ export default class AddCompanyWelcome extends Component{
     try {
 
       var TOKEN = await AsyncStorage.getItem('token');
-      fetch('http://192.168.137.43:8000/api/getCompanyTypesApi', {
+      fetch('https://murmuring-citadel-23511.herokuapp.com/api/getCompanyTypesApi', {
         headers: {
           'Accept': 'application/json',
           'Authorization': 'Bearer ' + TOKEN
@@ -128,7 +128,7 @@ export default class AddCompanyWelcome extends Component{
 
       var TOKEN = await AsyncStorage.getItem('token');
 
-      fetch('http://192.168.137.43:8000/api/getAnnualSalesApi', {
+      fetch('https://murmuring-citadel-23511.herokuapp.com/api/getAnnualSalesApi', {
         headers: {
           'Accept': 'application/json',
           'Authorization': 'Bearer ' + TOKEN
@@ -162,19 +162,19 @@ export default class AddCompanyWelcome extends Component{
 
   _validateSubmitPress = async () => {
 
-    if(this.state.companyName == '') return alert('Please Insert Company Name');
+    if(this.state.companyName == '') return Alert.alert('Insert Company Name');
 
-    if(this.state.establishmentDate == '') return alert('Please Choose Establishment Date');
+    if(this.state.establishmentDate == '') return Alert.alert('Choose Establishment Date');
 
-    if(this.state.companyType == '' || this.state.companyType == '0') return alert('Please Choose Company Type');
+    if(this.state.companyType == '' || this.state.companyType == '0') return Alert.alert('Choose Company Type');
 
-    if(this.state.annualSales == '' || this.state.annualSales == '0') return alert('Please Choose Annual Sales Range');
+    if(this.state.annualSales == '' || this.state.annualSales == '0') return Alert.alert('Choose Annual Sales Range');
 
 
     try {
       this.setState({  submitDisabled:true});
       var TOKEN = await AsyncStorage.getItem('token');
-      fetch('http://192.168.137.43:8000/api/newCompanyRecord',{
+      fetch('https://murmuring-citadel-23511.herokuapp.com/api/newCompanyRecord',{
         method: 'POST',
         headers: {
           'Authorization': 'Bearer ' + TOKEN
@@ -196,7 +196,7 @@ export default class AddCompanyWelcome extends Component{
         if(responseData.status == "error"){
           console.log("error, reason:", responseData.reason);
         }else if(responseData.status == "success"){
-          alert("Company is added Successfully");
+          Alert.alert("Company is added Successfully");
           this.props.navigation.navigate('CompanyAttribs');
 
         }

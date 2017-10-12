@@ -92,7 +92,7 @@ export default class addPurchase extends Component {
       var TOKEN = await AsyncStorage.getItem('token');
       //  'Authorization': 'Bearer ' + TOKEN
 
-      fetch('http://192.168.137.43:8000/api/getPurchSubCats', { // https://murmuring-citadel-23511.herokuapp.com/
+      fetch('https://murmuring-citadel-23511.herokuapp.com/api/getPurchSubCats', { // https://murmuring-citadel-23511.herokuapp.com/ http://192.168.137.43:8000
         headers: {
           'Accept': 'application/json',
           'Authorization': 'Bearer ' + TOKEN
@@ -129,7 +129,7 @@ export default class addPurchase extends Component {
     var inputError = false ;
 
     if(this.state.selectedItem == '' || this.state.selectedItem == '0'){
-      return alert('Choose Purchase Type');
+      return Alert.alert('Choose Purchase Type');
     }
 
     if(this.state.quantity == '' || this.state.quantity == '0'){
@@ -159,7 +159,7 @@ export default class addPurchase extends Component {
     try {
       this.setState({submitDisabled:true});
       var TOKEN = await AsyncStorage.getItem('token');
-      fetch('http://192.168.137.43:8000/api/addBranchPurchase',{
+      fetch('https://murmuring-citadel-23511.herokuapp.com/api/addBranchPurchase',{
         method: 'POST',
         headers: {
           'Authorization': 'Bearer ' + TOKEN
