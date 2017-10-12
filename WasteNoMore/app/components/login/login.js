@@ -55,6 +55,9 @@ export default class LoginScreen extends Component {
 
   handleSignInPress = async () => {
     try {
+      if(! this.state.username || !this.state.password)
+        return Alert.alert("Error","Invalid Credentials");
+
       this.setState({trySignIn:true});
       fetch('http://192.168.137.43:8000/api/token_authentication', {
         method: 'POST',
@@ -162,8 +165,9 @@ export default class LoginScreen extends Component {
                           key: null
                         }));
                       }
-                    }else if (responseData.status == "DENIED"){
-                      Alert.alert('Access Denied');
+                    }else if (responseData[0].status == "DENIED"){
+                      Alert.alert("Error",'Access Denied');
+
                     }else {
                       Alert.alert('Error');
                     }
@@ -177,13 +181,13 @@ export default class LoginScreen extends Component {
                   console.error(e);
 
                 } finally {
-
+                        this.setState({trySignIn: false})
                 }
               };
 
     render() {
         return (
-          <KeyboardAvoidingView behavior="padding" style={styles.container}>
+          <View behavior="padding" style={styles.container}>
             <Image source={background} style={styles.background} resizeMode="cover">
 
               <View style={styles.markWrap}>
@@ -263,7 +267,7 @@ export default class LoginScreen extends Component {
 
               </View>
             </Image>
-          </KeyboardAvoidingView>
+          </View>
     );
   }
 }
@@ -341,8 +345,9 @@ export default class LoginScreen extends Component {
           },
           signupLinkText: {
               backgroundColor: "transparent",
-            color: "#CCCC",
-              fontSize: 14
+              color: "#CCCC",
+              fontSize: 16,
+              fontWeight: 'bold'
           //  marginLeft: 5
           }
         });

@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {Alert,TouchableOpacity, Image,StyleSheet, Text, View, TextInput, AppRegistry, Button, KeyboardAvoidingView,AsyncStorage,Dimensions } from 'react-native';
+import {Alert,TouchableOpacity, Image,StyleSheet, Text, View, TextInput, AppRegistry, Button, KeyboardAvoidingView,AsyncStorage,Dimensions,ActivityIndicator } from 'react-native';
 
 const background = require("../../../resources/icons/signup_bgc.png");
 
@@ -15,6 +15,7 @@ export default class Signup1 extends Component{
       status:'',
       role:'',
       expiry:'',
+      trySignUp:false
     }
   }
 
@@ -31,13 +32,16 @@ export default class Signup1 extends Component{
   });
 
   _validateButtonPress = () => {
+    if(!this.state.license)
+      return Alert.alert("Error","Invalid License");
 
     try {
+      this.setState({trySignUp:true});
       fetch('http://192.168.137.43:8000/api/license_authentication', {
         method: 'POST',
         headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          "license": this.state.license,//this.state.license
+          "license": "41608a90a959b1c8194f409a1050d8b8",//this.state.license
           "timestamp": Date.now()
         })
       })
@@ -50,7 +54,7 @@ export default class Signup1 extends Component{
           this.saveItem('challange', responseData.random),
           this.props.navigation.navigate('Signup2');
         }else if (responseData.status == "DENIED"){
-          Alert.alert('Access Denied');
+          Alert.alert("Error",'Invalid License');
         }else {
           Alert.alert('Error');
         }
@@ -62,7 +66,7 @@ export default class Signup1 extends Component{
     } catch (e) {
       console.error(e);
     } finally {
-
+      this.setState({trySignUp:false});
     }
   };
 
@@ -86,11 +90,24 @@ export default class Signup1 extends Component{
           </View>
         </View>
 
+
         <TouchableOpacity activeOpacity={.5} onPress={this._validateButtonPress}>
           <View style={styles.button}>
             <Text style={styles.buttonText}>Validate</Text>
           </View>
         </TouchableOpacity>
+
+        <View >
+
+          <ActivityIndicator
+            animating={this.state.trySignUp}
+            size={"small"}
+            hidesWhenStopped={true}
+          >
+          </ActivityIndicator>
+
+        </View>
+
       </Image>
     )
   }

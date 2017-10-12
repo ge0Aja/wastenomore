@@ -92,7 +92,7 @@ export default class addPurchase extends Component {
       var TOKEN = await AsyncStorage.getItem('token');
       //  'Authorization': 'Bearer ' + TOKEN
 
-      fetch('http://192.168.137.43:8000/api/getPurchSubCats', {
+      fetch('http://192.168.137.43:8000/api/getPurchSubCats', { // https://murmuring-citadel-23511.herokuapp.com/
         headers: {
           'Accept': 'application/json',
           'Authorization': 'Bearer ' + TOKEN
