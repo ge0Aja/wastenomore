@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {Alert, StyleSheet,TouchableOpacity, Text, Image,View, TextInput, AppRegistry,Dimensions, Button, KeyboardAvoidingView,AsyncStorage  } from 'react-native';
+import {Alert, StyleSheet,TouchableOpacity, Text, Image,View, TextInput, AppRegistry,Dimensions, Button, KeyboardAvoidingView,AsyncStorage,ActivityIndicator  } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 const { width, height } = Dimensions.get("window");
 const background = require("../../../resources/icons/signup_bgc.png");
@@ -20,7 +20,8 @@ export default class Signup2 extends Component{
       passwordConfirmation: '',
       errorMessage: '',
       errorMessageUsername:'',
-      errorMessageEmail:''
+      errorMessageEmail:'',
+      trySignUp:false
     }
   }
 
@@ -87,7 +88,8 @@ export default class Signup2 extends Component{
     try {
       this.clear_error_messages();
         AsyncStorage.getItem('challange').then((challange) => {
-        this.setState({ hasChallange: challange !== null });
+        this.setState({ hasChallange: challange !== null});
+        this.setState({trySignUp:true});
         if(this.state.hasChallange){
 
           fetch('https://murmuring-citadel-23511.herokuapp.com/api/signup', {
@@ -149,7 +151,7 @@ export default class Signup2 extends Component{
         } catch (e) {
           console.error(e);
         } finally {
-
+          this.setState({trySignUp:false});
         }
 
       };
@@ -237,6 +239,18 @@ export default class Signup2 extends Component{
                   <Text style={styles.buttonText}>Sign Up!</Text>
                 </View>
               </TouchableOpacity>
+
+              <View >
+
+                <ActivityIndicator
+                  animating={this.state.trySignUp}
+                  size={"small"}
+                  hidesWhenStopped={true}
+                >
+                </ActivityIndicator>
+
+              </View>
+
             </View>
           </Image>
   /* </View> */

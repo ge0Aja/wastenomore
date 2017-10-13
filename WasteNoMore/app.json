@@ -6,10 +6,10 @@
 	"version": "1",
 	"slug": "wastenomore",
 	"ios":{
-		bundleIdentifier: "lb.edu.aub",
+		bundleIdentifier: "lb.edu.aub.wastenomore",
 	},
 	"android":{
-		package: "lb.edu.aub",
+		package: "lb.edu.aub.wastenomore",
 	},
 	"loading":{
 		"icon": "./resources/icons/main.png"
