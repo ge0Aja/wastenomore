@@ -86,7 +86,7 @@ export default class Signup2 extends Component{
 
     try {
       this.clear_error_messages();
-      AsyncStorage.getItem('challange').then((challange) => {
+        AsyncStorage.getItem('challange').then((challange) => {
         this.setState({ hasChallange: challange !== null });
         if(this.state.hasChallange){
 
@@ -103,7 +103,7 @@ export default class Signup2 extends Component{
           })
           .then((response) => response.json())
           .then((responseData) => {
-            console.log(responseData.status);
+          //  console.log(responseData.status);
             //console.log("the status");
             //  console.log(responseData.status);
             if(responseData.status == "success"){
@@ -133,7 +133,7 @@ export default class Signup2 extends Component{
                     }
                   })
 
-                }else if(responseData.status == "inputerror"){
+                }else if(responseData.status == "INPUTERROR"){
                   this.state.errorMessageUsername = responseData.message.username;
                   this.state.errorMessageEmail = responseData.message.email;
                 }else {

@@ -10,7 +10,9 @@
 	},
 	"android":{
 		package: "lb.edu.aub",
+	},
+	"loading":{
+		"icon": "./resources/icons/main.png"
 	}
-	
   }
 }

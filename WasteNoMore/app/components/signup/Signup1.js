@@ -41,7 +41,7 @@ export default class Signup1 extends Component{
         method: 'POST',
         headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          "license": "41608a90a959b1c8194f409a1050d8b8",//this.state.license
+          "license": this.state.license,//this.state.license
           "timestamp": Date.now()
         })
       })

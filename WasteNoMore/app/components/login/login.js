@@ -187,7 +187,7 @@ export default class LoginScreen extends Component {
 
     render() {
         return (
-          <View behavior="padding" style={styles.container}>
+          <View behavior="padding" style={styles.containerdad}>
             <Image source={background} style={styles.background} resizeMode="cover">
 
               <View style={styles.markWrap}>
@@ -272,6 +272,12 @@ export default class LoginScreen extends Component {
   }
 }
         const styles = StyleSheet.create({
+          containerdad: {
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginTop: 10
+          },
           container: {
             flex: 1,
             alignItems: 'center',

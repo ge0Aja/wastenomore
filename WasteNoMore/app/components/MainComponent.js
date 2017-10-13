@@ -10,6 +10,9 @@ export default class MainComponent extends Component {
       const TOKEN = await AsyncStorage.getItem('token');
       const REFRESH_TOKEN = await AsyncStorage.getItem('refresh_token');
 
+      if(!REFRESH_TOKEN || !TOKEN)
+        return console.log("No Token Available");
+
       fetch('https://murmuring-citadel-23511.herokuapp.com/api/token_refresh',{
         method: 'POST',
         headers: {
