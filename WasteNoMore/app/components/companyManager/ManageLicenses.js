@@ -75,11 +75,13 @@ export default class ManageLicenses extends Component{
         }
         if(responseData.status == "error"){
           console.log("error");
+          Alert.alert("Cannot fetch licenses");
         }else if(responseData.status == "success"){
           this.setState({ licenseList:responseData.licenses,dataSource: ds.cloneWithRows(responseData.licenses), gotLicenses:true}); //isLoading: false,
         }
       }).catch((error) => {
         console.error(error);
+          Alert.alert("Error",error);
       })
       .done();
     } catch (e) {
@@ -111,11 +113,13 @@ export default class ManageLicenses extends Component{
         }
         if(responseData.status == "error"){
           console.log("error");
+          Alert.alert("Error","Cannot fetch branches");
         }else if(responseData.status == "success"){
           this.setState({ branchesList:responseData.branches, gotBranches:true}); //isLoading: false,
         }
       }).catch((error) => {
         console.error(error);
+        Alert.alert("Error",error);
       })
       .done();
 
@@ -132,7 +136,7 @@ export default class ManageLicenses extends Component{
     if(rowData.used == 1){
       return (
         <View style={{padding:5}}>
-          <TouchableHighlight underlayColor='rgba(211,211,211,0.9)' >
+          <TouchableHighlight underlayColor='rgba(211,211,211,0.9)' onPress={ () => {Alert.alert("License is in use")}}>
             <View >
               <Text style={styles.listTextLarge}>{rowData.sublicString} (In Use)</Text>
               <Text style={styles.listTextSmall}>User: {rowData.userEmail}</Text>
@@ -191,6 +195,7 @@ export default class ManageLicenses extends Component{
         }
         if(responseData.status == "error"){
           console.log("error, reason:", responseData.reason);
+          Alert.alert("Error",responseData.reason);
         }else if(responseData.status == "success"){
 
           this._resetModal();
@@ -198,6 +203,7 @@ export default class ManageLicenses extends Component{
         }
       }).catch((error) => {
         console.error(error);
+            Alert.alert("Error",error);
       })
       .done();
 

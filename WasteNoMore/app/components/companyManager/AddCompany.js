@@ -114,6 +114,7 @@ export default class AddCompany extends Component{
         }
         if(responseData.status == "error"){
           console.log("error");
+          //Alert.alert("Error","Cannot fetch company types");
         }else if(responseData.status == "success"){
           //  console.log(responseData.types);
           this.setState({companyTypeList:responseData.types,gotCompanyTypesList:true});
@@ -151,6 +152,7 @@ export default class AddCompany extends Component{
         }
         if(responseData.status == "error"){
           console.log("error");
+
         }else if(responseData.status == "success"){
           //  console.log(responseData.ranges);
           this.setState({ annualSalesList:responseData.ranges,gotAnnualSalesList:true}); //isLoading: false,
@@ -205,8 +207,9 @@ export default class AddCompany extends Component{
         }
         if(responseData.status == "error"){
           console.log("error, reason:", responseData.reason);
+          Alert.alert("Error",responseData.reason);
         }else if(responseData.status == "success"){
-          Alert.alert("Company is added Successfully");
+          Alert.alert("Success","Company is added");
 
         }
       }).catch((error) => {

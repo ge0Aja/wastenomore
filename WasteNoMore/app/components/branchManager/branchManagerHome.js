@@ -60,6 +60,7 @@ class Graph1 extends Component{
         }
         if(responseData.status == "error"){
           console.log("error");
+          //Alert.alert("Error","Cannot fetch Graph 1 Data");
         }else if(responseData.status == "success"){
           this.setState({ graphCategory11:responseData.categories,grpahData11: responseData.data, graphgotData11:true});
         }
@@ -69,7 +70,7 @@ class Graph1 extends Component{
       .done();
 
     } catch (e) {
-      console.log("Token Error");
+      console.log(e);
 
     } finally {
 
@@ -182,6 +183,7 @@ class Graph2 extends Component{
         }
         if(responseData.status == "error"){
           console.log("error");
+        //  Alert.alert("Error","Cannot fetch Graph 2 Data");
         }else if(responseData.status == "success"){
           this.setState({ graphCategory2:responseData.categories,grpahData2: responseData.data, graphgotData2:true});
         }
@@ -191,7 +193,7 @@ class Graph2 extends Component{
       .done();
 
     } catch (e) {
-      console.log("Token Error");
+      console.log(e);
 
     } finally {
 
@@ -297,6 +299,7 @@ class Graph2 extends Component{
           }
           if(responseData.status == "error"){
             console.log("error");
+          //  Alert.alert("Error","Cannot fetch Graph 3 Data");
           }else if(responseData.status == "success"){
             this.setState({ grpahData3: responseData.data, graphgotData3:true}); //isLoading: false,
           }
@@ -306,7 +309,7 @@ class Graph2 extends Component{
         .done();
 
       } catch (e) {
-        console.log("Token Error");
+        console.log(e);
 
       } finally {
 
@@ -409,6 +412,7 @@ class Graph2 extends Component{
             }
             if(responseData.status == "error"){
               console.log("error");
+            //  Alert.alert("Error","Cannot fetch Graph 4 Data");
             }else if(responseData.status == "success"){
               this.setState({ grpahData4: responseData.data, graphgotData4:true}); //isLoading: false,
             }
@@ -418,7 +422,7 @@ class Graph2 extends Component{
           .done();
 
         } catch (e) {
-          console.log("Token Error");
+          console.log(e);
 
         } finally {
 

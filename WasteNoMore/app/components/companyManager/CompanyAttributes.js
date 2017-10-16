@@ -82,8 +82,9 @@ export default class CompanyAttributes extends Component {
         }
         if(responseData.status == "error"){
           console.log("error, reason:", responseData.reason);
+          Alert.alert("Error",responseData.reason);
         }else if(responseData.status == "success"){
-          Alert.alert("Company Info added Successfully");
+          Alert.alert("Success","Company Info added");
         }
       }).catch((error) => {
         console.error(error);

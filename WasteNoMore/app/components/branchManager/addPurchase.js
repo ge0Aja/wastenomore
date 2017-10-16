@@ -105,16 +105,18 @@ export default class addPurchase extends Component {
         }
         if(responseData.status == "error"){
           console.log("error");
+          Alert.alert("Error","Cannot fetch sub-categories");
         }else if(responseData.status == "success"){
           this.setState({gotItems:true,items:responseData.items});
         }
       }).catch((error) => {
         console.error(error);
+            Alert.alert("Error",error);
       })
       .done();
 
     } catch (e) {
-      console.log("Token Error");
+      console.log(e);
     } finally {
 
     }
@@ -191,15 +193,16 @@ export default class addPurchase extends Component {
             { cancelable: false }
           )
         }else if(responseData.status == "success"){
-          alert("purchase record added !");
+          Alert.alert("Success","purchase record added !");
           this.resetInputs();
         }
       }).catch((error) => {
         console.error(error);
+        Alert.alert("Error",error);
       })
       .done();
     } catch (e) {
-      console.log("Token Error");
+      console.log(e);
     } finally {
 
       this.setState({submitDisabled:false});

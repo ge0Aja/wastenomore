@@ -79,7 +79,9 @@ export default class Survey extends Component {
         }
         if(responseData.status == "error"){
           console.log("error, reason:", responseData.reason);
+          Alert.alert("Error",responseData.reason);
         }else if(responseData.status == "success"){
+          Alert.alert("Success","Survey answers submitted");
           this.props.navigation.dispatch(NavigationActions.reset(
             {
               index: 0,
@@ -123,6 +125,7 @@ export default class Survey extends Component {
           }
           if(responseData.status == "error"){
             console.log("error");
+            Alert.alert("Error","Cannot fetch survey questions");
           }else if(responseData.status == "success"){
             this.setState({comps:responseData.questions,surveyVersion:responseData.version,qExist:true});
             var newState = {};

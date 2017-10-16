@@ -65,14 +65,14 @@ export default class AddAttribsWelcome extends Component {
       })
       .then((response) =>  response.json())
       .then((responseData) => {
-        console.log(responseData);
+        //console.log(responseData);
         if("message" in responseData){
           console.log(responseData.message);
         }
         if(responseData.status == "error"){
           console.log("error, reason:", responseData.reason);
         }else if(responseData.status == "success"){
-          Alert.alert("Company Info added Successfully");
+          Alert.alert("Success","Company Info added Successfully");
 
           this.props.navigation.dispatch(NavigationActions.reset(
             {
@@ -89,7 +89,7 @@ export default class AddAttribsWelcome extends Component {
         .done();
 
       } catch (e) {
-        console.log("Token Error");
+        console.log(e);
 
       } finally {
         this.setState({submitDisabled:false});
@@ -118,6 +118,7 @@ export default class AddAttribsWelcome extends Component {
           }
           if(responseData.status == "error"){
             console.log("error");
+            Alert.alert("Error","Cannot fetch attributes");
           }else if(responseData.status == "success"){
             this.setState({attrExist:true,comps:responseData.attrs});
             var newState = {};
@@ -137,7 +138,7 @@ export default class AddAttribsWelcome extends Component {
         .done();
 
       } catch (e) {
-        console.log("Token Error");
+        console.log(e);
       } finally {
 
       }

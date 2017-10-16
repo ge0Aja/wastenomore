@@ -119,11 +119,13 @@ export default class addWaste extends Component {
       })
       .then((response) => response.json())
       .then((responseData) => {
+        console.log(responseData);
         if("message" in responseData){
           console.log(responseData.message);
         }
         if(responseData.status == "error"){
           console.log("error");
+          Alert.alert("Error","Cannot fetch sub-categories");
         }else if(responseData.status == "success"){
           this.setState({gotItems:true,items:responseData.items,wasteReasons:responseData.reasons,wasteCompanies:responseData.companies});
         }
@@ -133,7 +135,7 @@ export default class addWaste extends Component {
       .done();
 
     } catch (e) {
-      console.log("Token Error");
+      console.log(e);
     } finally {
 
     }
@@ -217,7 +219,7 @@ export default class addWaste extends Component {
             { cancelable: false }
           )
         }else if(responseData.status == "success"){
-          alert("waste record added !");
+          Alert.alert("Success","waste record added !");
           this.resetInputs();
         }
       }).catch((error) => {

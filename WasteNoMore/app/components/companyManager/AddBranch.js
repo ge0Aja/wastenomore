@@ -148,6 +148,7 @@ export default class AddBranch extends Component {
         }
         if(responseData.status == "error"){
           console.log("error, reason:", responseData.reason);
+          Alert.alert("Error",responseData.reason);
         }else if(responseData.status == "success"){
           //  alert("Branch is added Successfully");
 
@@ -206,6 +207,7 @@ export default class AddBranch extends Component {
         }
         if(responseData.status == "error"){
           console.log("error, reason:", responseData.reason);
+          Alert.alert("Error",responseData.reason);
         }else if(responseData.status == "success"){
           //  alert("Branch is Edited  Successfully");
 
@@ -246,15 +248,14 @@ export default class AddBranch extends Component {
       })
       .then((response) => response.json())
       .then((responseData) => {
-        console.log(responseData);
+        //console.log(responseData);
         if("message" in responseData){
           console.log(responseData.message);
         }
         if(responseData.status == "error"){
           console.log("error, reason:", responseData.reason);
+          Alert.alert("Error",responseData.reason);
         }else if(responseData.status == "success"){
-          //alert("Branch is Deleted  Successfully");
-
           this._resetModal2();
           this.getBranches();
         }

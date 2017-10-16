@@ -195,8 +195,9 @@ export default class AddCompanyWelcome extends Component{
         }
         if(responseData.status == "error"){
           console.log("error, reason:", responseData.reason);
+          Alert.alert("Error",responseData.reason);
         }else if(responseData.status == "success"){
-          Alert.alert("Company is added Successfully");
+          Alert.alert("Success","Company is added");
           this.props.navigation.navigate('CompanyAttribs');
 
         }
